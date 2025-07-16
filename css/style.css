@@ -117,7 +117,7 @@ section h2{
 /* ---- Services Grid ---- */
 .service-grid{
   display:grid;
-  gap:1.5rem;
+  gap:2rem;
   grid-template-columns:1fr;
 }
 @media(min-width:768px){
@@ -126,7 +126,7 @@ section h2{
 .service-card{
   background:var(--gray);
   border-radius:12px;
-  padding:1.5rem;
+  padding:2rem;
   text-align:center;
   transition:.3s;
 }
@@ -135,6 +135,13 @@ section h2{
   color:var(--green);
   font-size:2.5rem;
   margin-bottom:.5rem;
+}
+.service-card img{
+  width:128px;
+  height:128px;
+  margin:0 auto 1rem auto;
+  display:block;
+  object-fit:contain;
 }
 .service-card:hover{transform:translateY(-6px);box-shadow:0 8px 20px rgba(0,0,0,.08)}
 
