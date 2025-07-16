@@ -44,6 +44,11 @@ body{
   transition:.3s;
 }
 .btn-primary:hover{background:var(--dark-blue)}
+.btn-primary.consult-btn{
+  background:var(--yellow);
+  color:#000;
+}
+.btn-primary.consult-btn:hover{filter:brightness(1.1)}
 
 /* ========= SECTIONS ========= */
 section{
