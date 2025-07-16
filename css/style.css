@@ -45,7 +45,11 @@ body{
 }
 .sticky-header .header-logo img{width:120px;}
 .nav-menu{list-style:none;display:flex;gap:1rem;}
-.nav-menu a{text-decoration:none;color:var(--dark-blue);}
+.nav-menu a{
+  text-decoration:none;
+  color:var(--dark-blue);
+  font-family:'Vazirmatn',sans-serif;
+}
 .menu-toggle{display:none}
 .hamburger{display:none;cursor:pointer;width:30px;height:24px;position:relative}
 .hamburger span,.hamburger span:before,.hamburger span:after{content:"";position:absolute;width:100%;height:3px;background:var(--dark-blue);transition:.3s}
