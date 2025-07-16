@@ -216,6 +216,30 @@ footer{
   object-fit:cover;
 }
 
+/* ---- Why Us ---- */
+#why-us .why-us-items{
+  display:flex;
+  gap:1.5rem;
+  justify-content:space-between;
+  flex-wrap:wrap;
+}
+#why-us .why-item{
+  flex:1 1 200px;
+  text-align:center;
+}
+#why-us .why-item i{
+  font-size:2rem;
+  color:var(--green);
+  margin-bottom:.5rem;
+}
+#why-us .why-item h3{
+  color:var(--dark-blue);
+  margin-bottom:.3rem;
+}
+#why-us .why-item p{
+  margin:0;
+}
+
 /* ========= RESPONSIVE ========= */
 @media(max-width:600px){
   #hero h1{font-size:1.6rem}
