@@ -78,6 +78,13 @@ section h2{
   text-align:center;
   transition:.3s;
 }
+.card img{
+  width:80px;
+  height:80px;
+  border-radius:8px;
+  margin-bottom:1rem;
+  object-fit:cover;
+}
 .card h3{color:var(--green);margin-bottom:.5rem}
 .card:hover{transform:translateY(-6px);box-shadow:0 8px 20px rgba(0,0,0,.08)}
 
@@ -116,8 +123,23 @@ footer{
   font-size:.9rem;
 }
 
+/* ---- About Images ---- */
+.about-images{
+  display:flex;
+  justify-content:center;
+  gap:1rem;
+  margin-top:1.5rem;
+}
+.about-images img{
+  width:100px;
+  height:auto;
+  border-radius:8px;
+  object-fit:cover;
+}
+
 /* ========= RESPONSIVE ========= */
 @media(max-width:600px){
   #hero h1{font-size:1.6rem}
   .cards{flex-direction:column;align-items:center}
+  .about-images{flex-direction:column}
 }
