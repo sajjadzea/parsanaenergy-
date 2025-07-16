@@ -76,6 +76,16 @@ section h2{
 .card h3{color:var(--green);margin-bottom:.5rem}
 .card:hover{transform:translateY(-6px);box-shadow:0 8px 20px rgba(0,0,0,.08)}
 
+/* ---- Service Lists & Icons ---- */
+.service-icon{
+  color:var(--green);
+  font-size:2rem;
+  margin-bottom:.5rem;
+}
+.service-list{list-style:none;padding:0;margin:0;text-align:right}
+.service-list li{display:flex;align-items:start;gap:.4rem;margin-bottom:.5rem}
+.service-list li i{color:var(--green);margin-top:.2rem}
+
 /* ========= CONTACT ========= */
 #contact ul{
   list-style:none;
