@@ -1,0 +1,108 @@
+/* ========= Root & Reset ========= */
+:root{
+  --dark-blue:#003865;  /* از دایرهٔ بیرونی لوگو */
+  --green:#006c53;      /* بخش سبز لوگو */
+  --yellow:#ffd500;     /* صاعقه */
+  --gray:#f7f8fa;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  font-family:'Vazirmatn',sans-serif;
+  line-height:1.7;
+  background:#fff;
+  color:#222;
+}
+
+/* ========= HERO ========= */
+#hero{
+  background:var(--gray);
+  text-align:center;
+  padding:4rem 1rem 6rem;
+}
+#hero .logo{
+  width:140px;
+  margin-bottom:1.5rem;
+}
+#hero h1{
+  font-size:2rem;
+  margin-bottom:.5rem;
+  color:var(--dark-blue);
+}
+#hero .brand{color:var(--green)}
+#hero .tagline{
+  font-size:1.1rem;
+  margin-bottom:1.5rem;
+}
+.btn-primary{
+  display:inline-block;
+  background:var(--green);
+  color:#fff;
+  padding:.75rem 2rem;
+  border-radius:50px;
+  text-decoration:none;
+  transition:.3s;
+}
+.btn-primary:hover{background:var(--dark-blue)}
+
+/* ========= SECTIONS ========= */
+section{
+  padding:4rem 1rem;
+  max-width:960px;
+  margin:0 auto;
+}
+section h2{
+  text-align:center;
+  margin-bottom:2rem;
+  color:var(--dark-blue);
+}
+
+/* ---- Services Cards ---- */
+.cards{
+  display:flex;
+  flex-wrap:wrap;
+  gap:1.5rem;
+  justify-content:center;
+}
+.card{
+  background:var(--gray);
+  border-radius:12px;
+  padding:1.5rem;
+  flex:1 1 250px;
+  max-width:300px;
+  text-align:center;
+  transition:.3s;
+}
+.card h3{color:var(--green);margin-bottom:.5rem}
+.card:hover{transform:translateY(-6px);box-shadow:0 8px 20px rgba(0,0,0,.08)}
+
+/* ========= CONTACT ========= */
+#contact ul{
+  list-style:none;
+  margin-bottom:2rem;
+  line-height:2;
+  text-align:center;
+}
+.btn-secondary{
+  background:var(--yellow);
+  color:#000;
+  padding:.6rem 1.5rem;
+  border-radius:8px;
+  text-decoration:none;
+}
+.btn-secondary:hover{filter:brightness(1.1)}
+
+/* ========= FOOTER ========= */
+footer{
+  background:var(--dark-blue);
+  color:#fff;
+  text-align:center;
+  padding:.8rem 0;
+  font-size:.9rem;
+}
+
+/* ========= RESPONSIVE ========= */
+@media(max-width:600px){
+  #hero h1{font-size:1.6rem}
+  .cards{flex-direction:column;align-items:center}
+}
