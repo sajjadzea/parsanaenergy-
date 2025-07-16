@@ -14,6 +14,41 @@ body{
   color:#222;
 }
 
+/* ========= MAIN HEADER ========= */
+.main-header{
+  position:sticky;
+  top:0;
+  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:.5rem 1rem;
+  box-shadow:0 2px 4px rgba(0,0,0,.1);
+  z-index:1000;
+  direction:ltr;
+}
+.header-logo img{
+  width:120px;
+  height:auto;
+}
+.nav-list{
+  list-style:none;
+  display:flex;
+  gap:1.5rem;
+}
+.nav-list a{
+  color:var(--dark-blue);
+  text-decoration:none;
+  font-weight:500;
+}
+.hamburger{
+  background:none;
+  border:none;
+  font-size:1.5rem;
+  display:none;
+  cursor:pointer;
+}
+
 /* ========= HERO ========= */
 #hero{
   background:var(--gray);
@@ -142,4 +177,18 @@ footer{
   #hero h1{font-size:1.6rem}
   .cards{flex-direction:column;align-items:center}
   .about-images{flex-direction:column}
+  .nav-list{
+    position:absolute;
+    top:100%;
+    right:0;
+    background:#fff;
+    flex-direction:column;
+    align-items:flex-start;
+    width:200px;
+    padding:1rem;
+    box-shadow:0 2px 6px rgba(0,0,0,.1);
+    display:none;
+  }
+  .nav-list.open{display:flex}
+  .hamburger{display:block}
 }
