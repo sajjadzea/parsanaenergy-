@@ -110,41 +110,31 @@ section h2{
   color:var(--dark-blue);
 }
 
-/* ---- Services Cards ---- */
-.cards{
-  display:flex;
-  flex-wrap:wrap;
+/* ---- Services Grid ---- */
+.service-grid{
+  display:grid;
   gap:1.5rem;
-  justify-content:center;
+  grid-template-columns:1fr;
 }
-.card{
+@media(min-width:768px){
+  .service-grid{grid-template-columns:repeat(3,1fr)}
+}
+.service-card{
   background:var(--gray);
   border-radius:12px;
   padding:1.5rem;
-  flex:1 1 250px;
-  max-width:300px;
   text-align:center;
   transition:.3s;
 }
-.card img{
-  width:80px;
-  height:80px;
-  border-radius:8px;
-  margin-bottom:1rem;
-  object-fit:cover;
-}
-.card h3{color:var(--green);margin-bottom:.5rem}
-.card:hover{transform:translateY(-6px);box-shadow:0 8px 20px rgba(0,0,0,.08)}
-
-/* ---- Service Lists & Icons ---- */
-.service-icon{
+.service-card h3{color:var(--green);margin-bottom:.5rem}
+.service-card .icon{
   color:var(--green);
-  font-size:2rem;
+  font-size:2.5rem;
   margin-bottom:.5rem;
 }
-.service-list{list-style:none;padding:0;margin:0;text-align:right}
-.service-list li{display:flex;align-items:start;gap:.4rem;margin-bottom:.5rem}
-.service-list li i{color:var(--green);margin-top:.2rem}
+.service-card:hover{transform:translateY(-6px);box-shadow:0 8px 20px rgba(0,0,0,.08)}
+
+
 
 /* ========= CONTACT ========= */
 #contact ul{
@@ -188,7 +178,6 @@ footer{
 /* ========= RESPONSIVE ========= */
 @media(max-width:600px){
   #hero h1{font-size:1.6rem}
-  .cards{flex-direction:column;align-items:center}
   .about-images{flex-direction:column}
   .top-bar{flex-direction:column;text-align:center}
 }
