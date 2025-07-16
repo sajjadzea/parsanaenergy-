@@ -167,9 +167,39 @@ section h2{
 footer{
   background:var(--dark-blue);
   color:#fff;
-  text-align:center;
-  padding:.8rem 0;
+  padding:2rem 1rem;
   font-size:.9rem;
+}
+
+.footer-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:1.5rem;
+  max-width:960px;
+  margin:0 auto 1rem;
+  direction:rtl;
+}
+
+.footer-grid ul{
+  list-style:none;
+  padding:0;
+  line-height:1.8;
+}
+
+.footer-grid a{
+  color:#fff;
+  text-decoration:none;
+}
+
+.footer-grid a:hover{text-decoration:underline}
+
+.social-icons{display:flex;gap:1rem;justify-content:center;}
+.social-icons a i{font-size:1.5rem;}
+
+.footer-copy{
+  text-align:center;
+  border-top:1px solid rgba(255,255,255,.2);
+  padding-top:.5rem;
 }
 
 /* ---- About Images ---- */
