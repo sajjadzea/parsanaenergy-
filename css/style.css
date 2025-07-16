@@ -14,6 +14,23 @@ body{
   color:#222;
 }
 
+/* ========= Top Bar ========= */
+.top-bar{
+  background:var(--dark-blue);
+  color:#fff;
+  font-size:.9rem;
+  padding:.3rem 1rem;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  direction:ltr;
+}
+.top-bar span{
+  display:flex;
+  align-items:center;
+  gap:.3rem;
+}
+
 /* ========= HERO ========= */
 #hero{
   background:var(--gray);
@@ -142,4 +159,5 @@ footer{
   #hero h1{font-size:1.6rem}
   .cards{flex-direction:column;align-items:center}
   .about-images{flex-direction:column}
+  .top-bar{flex-direction:column;text-align:center}
 }
