@@ -22,7 +22,7 @@ export default function DecisionTree() {
               onClick={() => handleChoice(idx)}
             >
               <span>{opt}</span>
-              <span className="arrow">←</span>
+              <i className="fa fa-arrow-left arrow" aria-hidden="true"></i>
             </button>
           ))}
         </div>
