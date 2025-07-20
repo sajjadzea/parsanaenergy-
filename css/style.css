@@ -342,3 +342,63 @@ footer{
   align-self:center;
   margin-bottom:1.5rem;
 }
+
+/* ========= Projects Gallery ========= */
+#projects .projects-grid{
+  display:grid;
+  gap:1.5rem;
+  grid-template-columns:1fr;
+}
+@media(min-width:600px){
+  #projects .projects-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(min-width:992px){
+  #projects .projects-grid{grid-template-columns:repeat(3,1fr)}
+}
+
+.project-item img{
+  width:100%;
+  height:auto;
+  border-radius:12px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.1);
+  transition:transform .3s, box-shadow .3s;
+}
+.project-item img:hover{
+  transform:translateY(-4px);
+  box-shadow:0 8px 20px rgba(0,0,0,0.15);
+}
+
+#project-modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.7);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:2000;
+  padding:1rem;
+}
+#project-modal.hidden{display:none}
+#project-modal .modal-content{
+  background:#fff;
+  padding:1rem;
+  border-radius:8px;
+  max-width:600px;
+  width:100%;
+  text-align:center;
+  position:relative;
+}
+#project-modal .modal-content img{
+  width:100%;
+  height:auto;
+  margin-bottom:1rem;
+  border-radius:8px;
+}
+.close-modal{
+  position:absolute;
+  right:.5rem;
+  top:.5rem;
+  font-size:1.5rem;
+  cursor:pointer;
+}
+
