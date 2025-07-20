@@ -5,7 +5,7 @@ body {
   text-align: right;
   font-family: 'Vazirmatn', 'IranSans', sans-serif;
   margin: 0;
-  padding: 0;
+  padding: 60px 0 0; /* space for fixed header */
 }
 
 .fade {
