@@ -16,3 +16,35 @@ body {
   from { opacity: 0; }
   to { opacity: 1; }
 }
+
+/* Decision tree option buttons */
+.decision-btn {
+  padding: 0.8rem 2.5rem;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-align: right;
+  background-color: #1db446;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+  width: 80%;
+  margin-bottom: 1rem;
+  outline: none;
+  font-family: inherit;
+}
+
+.decision-btn:focus {
+  outline: none;
+}
+
+.decision-btn:hover {
+  background-color: #159b39;
+}
+
+.decision-btn::after {
+  content: "\2190"; /* left arrow */
+  margin-left: 0.5rem;
+}
+
