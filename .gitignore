@@ -1,0 +1,8 @@
+node_modules/
+# dependencies
+**/node_modules
+# compiled output
+**/dist
+# OS or editor files
+.DS_Store
+.env
