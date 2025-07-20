@@ -228,6 +228,10 @@ footer{
   direction:rtl;
   text-align:right;
 }
+@media(max-width:600px){
+  .footer-grid{grid-template-columns:1fr;text-align:center}
+  .social-icons{justify-content:center}
+}
 
 .footer-grid ul{
   list-style:none;
@@ -318,6 +322,16 @@ footer{
   #hero h1{font-size:1.8rem}
   #hero p{font-size:1rem}
   .top-bar{flex-direction:column;text-align:center}
+  .sticky-header .header-logo img{width:100px}
+  section{padding:2rem 1rem}
+  h2{font-size:1.4rem}
+  body{font-size:.95rem}
+  #why-us .why-item{flex:1 0 100%}
+}
+
+@media(min-width:768px){
+  #contact .contact-card{display:flex;gap:2rem;align-items:flex-start}
+  #contact .map{margin-top:0}
 }
 
 /* ---- Products Grid ---- */
