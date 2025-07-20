@@ -144,33 +144,31 @@ section h2{
 /* ---- Services Grid ---- */
 .service-grid{
   display:grid;
-  gap:2rem;
+  gap:1.5rem;
   grid-template-columns:1fr;
 }
-@media(min-width:768px){
-  .service-grid{grid-template-columns:repeat(3,1fr)}
+@media(min-width:600px){
+  .service-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(min-width:992px){
+  .service-grid{grid-template-columns:repeat(4,1fr)}
 }
 .service-card{
   background:var(--gray);
   border-radius:12px;
-  padding:2rem;
+  padding:2rem 1rem;
   text-align:center;
-  transition:.3s;
+  transition:transform .3s, box-shadow .3s;
 }
-.service-card h3{color:var(--green);margin-bottom:.5rem}
+.service-card h3{color:var(--green);margin-bottom:.5rem;font-weight:700}
 .service-card .icon{
   color:var(--green);
   font-size:2.5rem;
   margin-bottom:.5rem;
+  transition:transform .3s;
 }
-.service-card img{
-  width:128px;
-  height:128px;
-  margin:0 auto 1rem auto;
-  display:block;
-  object-fit:contain;
-}
-.service-card:hover{transform:translateY(-6px);box-shadow:0 8px 20px rgba(0,0,0,.08)}
+.service-card:hover{transform:translateY(-6px);box-shadow:0 8px 20px rgba(0,0,0,.15)}
+.service-card:hover .icon{transform:translateY(-4px)}
 
 
 
