@@ -106,7 +106,7 @@ const DecisionTree = () => {
                       onChange={(e) => setCalcValues({ ...calcValues, price: e.target.value })}
                     />
                   </div>
-                  <button style={buttonStyle} onClick={handleCalc}>
+                  <button className="decision-btn" onClick={handleCalc}>
                     محاسبه
                   </button>
                 </div>
@@ -120,7 +120,7 @@ const DecisionTree = () => {
                     node.options.map((opt, idx) => (
                       <button
                         key={idx}
-                        style={buttonStyle}
+                        className="decision-btn"
                         onClick={() => handleOption(opt.next)}
                       >
                         {opt.label}
@@ -137,7 +137,7 @@ const DecisionTree = () => {
               {node.options.map((opt, idx) => (
                 <button
                   key={idx}
-                  style={buttonStyle}
+                  className="decision-btn"
                   onClick={() => handleOption(opt.next)}
                 >
                   {opt.label}
