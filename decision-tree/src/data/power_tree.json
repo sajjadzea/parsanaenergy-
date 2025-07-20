@@ -8,8 +8,9 @@
   "children": {
     "contact_load": {
       "id": "contact_load",
-      "type": "form",
-      "question": "برای برآورد بار با ما تماس بگیرید",
+      "type": "calc",
+      "question": "تماس برای برآورد بار",
+      "calcInfo": "جمع توان نامی/جریان راه‌اندازی برای تجهیزات؛ ضریب همزمانی – ماشین‌حساب بار آنلاین یا فایل اکسل ساده",
       "options": [
         { "label": "شروع مجدد", "next": "power_need" }
       ]
@@ -50,7 +51,7 @@
               "id": "diesel_gas_extra",
               "question": "دیزل/گاز + مخزن اضافی یا ترکیبی",
               "options": [
-                { "label": "ادامه", "next": "purchase_or_rent" }
+                { "label": "ادامه", "next": "hybrid_calc" }
               ]
             }
           }
@@ -118,8 +119,18 @@
       "id": "tco_calc",
       "type": "calc",
       "question": "مشاوره TCO",
+      "calcInfo": "مقایسه دیزل و گاز؛ سرمایه اولیه، سوخت سالانه، سرویس، استهلاک – برگه اکسل با ورودی kWh، قیمت سوخت، ساعات کار",
       "options": [
         { "label": "بعدی", "next": "service_need" }
+      ]
+    },
+    "hybrid_calc": {
+      "id": "hybrid_calc",
+      "type": "calc",
+      "question": "گزینه‌های ترکیبی",
+      "calcInfo": "محاسبه اندازه سوخت ذخیره و ظرفیت UPS برای تزریق صفرثانیه – صفحه اکسل ساده یا اسکریپت محاسبه مخزن",
+      "options": [
+        { "label": "بعدی", "next": "purchase_or_rent" }
       ]
     },
     "brand_filter": {
