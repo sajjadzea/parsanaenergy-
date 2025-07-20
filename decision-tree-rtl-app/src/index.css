@@ -19,6 +19,7 @@ body {
 
 /* Decision tree option buttons */
 .decision-btn {
+  width: 80%;
   padding: 0.8rem 2.5rem;
   border-radius: 8px;
   font-weight: bold;
@@ -28,11 +29,13 @@ body {
   color: #fff;
   border: none;
   cursor: pointer;
-  transition: background 0.2s;
-  width: 80%;
   margin-bottom: 1rem;
-  outline: none;
   font-family: inherit;
+  transition: background 0.2s;
+  direction: rtl;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .decision-btn:focus {
@@ -43,8 +46,8 @@ body {
   background-color: #159b39;
 }
 
-.decision-btn::after {
-  content: "\2190"; /* left arrow */
-  margin-left: 0.5rem;
+.decision-btn .arrow {
+  font-size: 1.5rem;
+  margin-right: 1rem;
 }
 

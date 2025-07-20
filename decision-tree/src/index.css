@@ -2,3 +2,37 @@
 body {
   font-family: 'Vazirmatn', sans-serif;
 }
+
+/* Decision tree option buttons */
+.decision-btn {
+  width: 80%;
+  padding: 0.8rem 2.5rem;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-align: right;
+  background-color: #1db446;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  font-family: inherit;
+  transition: background 0.2s;
+  direction: rtl;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.decision-btn:focus {
+  outline: none;
+}
+
+.decision-btn:hover {
+  background-color: #159b39;
+}
+
+.decision-btn .arrow {
+  font-size: 1.5rem;
+  margin-right: 1rem;
+}

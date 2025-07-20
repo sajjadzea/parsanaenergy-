@@ -107,7 +107,8 @@ const DecisionTree = () => {
                     />
                   </div>
                   <button className="decision-btn" onClick={handleCalc}>
-                    محاسبه
+                    <span>محاسبه</span>
+                    <span className="arrow">←</span>
                   </button>
                 </div>
               )}
@@ -123,7 +124,8 @@ const DecisionTree = () => {
                         className="decision-btn"
                         onClick={() => handleOption(opt.next)}
                       >
-                        {opt.label}
+                        <span>{opt.label}</span>
+                        <span className="arrow">←</span>
                       </button>
                     ))}
                 </div>
@@ -140,7 +142,8 @@ const DecisionTree = () => {
                   className="decision-btn"
                   onClick={() => handleOption(opt.next)}
                 >
-                  {opt.label}
+                  <span>{opt.label}</span>
+                  <span className="arrow">←</span>
                 </button>
               ))}
             </div>
