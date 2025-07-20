@@ -1,0 +1,192 @@
+{
+  "id": "power_need",
+  "question": "آیا می‌دانید چه توان برقی (kW\u200c/\u200ckVA) نیاز دارید؟",
+  "options": [
+    { "label": "خیر", "icon": "🧮", "next": "contact_load" },
+    { "label": "بله", "next": "usage" }
+  ],
+  "children": {
+    "contact_load": {
+      "id": "contact_load",
+      "type": "form",
+      "question": "برای برآورد بار با ما تماس بگیرید",
+      "options": [
+        { "label": "شروع مجدد", "next": "power_need" }
+      ]
+    },
+    "usage": {
+      "id": "usage",
+      "question": "کاربرد اصلی برق چیست؟",
+      "options": [
+        { "label": "پشتیبان اضطراری (Backup)", "next": "backup_time" },
+        { "label": "مصرف دائم (Prime / Continuous)", "next": "prime_access" },
+        { "label": "اجارهٔ کوتاه‌مدت برای پروژه/رویداد", "next": "short_rental_form" }
+      ],
+      "children": {
+        "backup_time": {
+          "id": "backup_time",
+          "question": "حداکثر زمان قطعی موردِ پوشش؟",
+          "options": [
+            { "label": "≤۸ساعت", "next": "ups_solution" },
+            { "label": "۸تا۲۴ساعت", "next": "diesel_standard" },
+            { "label": ">۲۴ساعت", "next": "diesel_gas_extra" }
+          ],
+          "children": {
+            "ups_solution": {
+              "id": "ups_solution",
+              "question": "UPS‌+ باتری (راهکار کم‌هزینه)",
+              "options": [
+                { "label": "ادامه", "next": "purchase_or_rent" }
+              ]
+            },
+            "diesel_standard": {
+              "id": "diesel_standard",
+              "question": "دیزل ژنراتور استاندارد",
+              "options": [
+                { "label": "ادامه", "next": "purchase_or_rent" }
+              ]
+            },
+            "diesel_gas_extra": {
+              "id": "diesel_gas_extra",
+              "question": "دیزل/گاز + مخزن اضافی یا ترکیبی",
+              "options": [
+                { "label": "ادامه", "next": "purchase_or_rent" }
+              ]
+            }
+          }
+        },
+        "prime_access": {
+          "id": "prime_access",
+          "question": "آیا دسترسی به گاز شهری دارید؟",
+          "options": [
+            { "label": "بله", "next": "gas_generator" },
+            { "label": "خیر", "next": "diesel_or_ups" }
+          ],
+          "children": {
+            "gas_generator": {
+              "id": "gas_generator",
+              "question": "ژنراتور گازسوز‌/CHP",
+              "options": [
+                { "label": "ادامه", "next": "purchase_or_rent" }
+              ]
+            },
+            "diesel_or_ups": {
+              "id": "diesel_or_ups",
+              "question": "دیزل ژنراتور یا دیزل‌+ UPS",
+              "options": [
+                { "label": "ادامه", "next": "purchase_or_rent" }
+              ]
+            }
+          }
+        },
+        "short_rental_form": {
+          "id": "short_rental_form",
+          "type": "form",
+          "question": "فرم درخواست اجاره ژنراتور",
+          "options": [
+            { "label": "ادامه", "next": "purchase_or_rent" }
+          ]
+        }
+      }
+    }
+  }
+, "purchase_or_rent": {
+      "id": "purchase_or_rent",
+      "question": "تصمیم به خرید یا اجاره تجهیزات؟",
+      "options": [
+        { "label": "خرید", "next": "buy_priority" },
+        { "label": "اجاره", "next": "rental_duration" }
+      ]
+    },
+    "buy_priority": {
+      "id": "buy_priority",
+      "question": "اولویت شما؟",
+      "options": [
+        { "label": "کمترین قیمت اولیه", "next": "economic_list" },
+        { "label": "هزینه کل مالکیت پایین", "icon": "🧮", "next": "tco_calc" },
+        { "label": "برند مشخص (Cummins, Perkins, …)", "next": "brand_filter" }
+      ]
+    },
+    "economic_list": {
+      "id": "economic_list",
+      "question": "لیست دیزل‌های اقتصادی",
+      "options": [
+        { "label": "بعدی", "next": "service_need" }
+      ]
+    },
+    "tco_calc": {
+      "id": "tco_calc",
+      "type": "calc",
+      "question": "مشاوره TCO",
+      "options": [
+        { "label": "بعدی", "next": "service_need" }
+      ]
+    },
+    "brand_filter": {
+      "id": "brand_filter",
+      "question": "فیلتر برند",
+      "options": [
+        { "label": "بعدی", "next": "service_need" }
+      ]
+    },
+    "rental_duration": {
+      "id": "rental_duration",
+      "question": "مدت اجاره؟",
+      "options": [
+        { "label": "<۱ماه", "next": "short_term_rate" },
+        { "label": "۱–۶ماه", "next": "price_inquiry" },
+        { "label": ">۶ماه", "next": "long_term_contract" }
+      ]
+    },
+    "short_term_rate": {
+      "id": "short_term_rate",
+      "question": "تعرفه کوتاه‌مدت",
+      "options": [
+        { "label": "بعدی", "next": "service_need" }
+      ]
+    },
+    "price_inquiry": {
+      "id": "price_inquiry",
+      "question": "استعلام قیمت و شرایط",
+      "options": [
+        { "label": "بعدی", "next": "service_need" }
+      ]
+    },
+    "long_term_contract": {
+      "id": "long_term_contract",
+      "question": "قرارداد بلندمدت با سرویس",
+      "options": [
+        { "label": "بعدی", "next": "service_need" }
+      ]
+    },
+    "service_need": {
+      "id": "service_need",
+      "question": "به خدمات نصب، راه‌اندازی یا نگه‌داری نیاز دارید؟",
+      "options": [
+        { "label": "پکیج کامل Turn-key", "next": "turnkey" },
+        { "label": "نگه‌داری دوره‌ای (۳/۶/۱۲ماهه)", "next": "periodic_maintenance" },
+        { "label": "خیر، خودم انجام می‌دهم", "next": "no_service" }
+      ]
+    },
+    "turnkey": {
+      "id": "turnkey",
+      "question": "پکیج کامل Turn-key",
+      "options": [
+        { "label": "پایان", "next": null }
+      ]
+    },
+    "periodic_maintenance": {
+      "id": "periodic_maintenance",
+      "question": "نگه‌داری دوره‌ای (۳/۶/۱۲ماهه)",
+      "options": [
+        { "label": "پایان", "next": null }
+      ]
+    },
+    "no_service": {
+      "id": "no_service",
+      "question": "خیر، خودم انجام می‌دهم",
+      "options": [
+        { "label": "پایان", "next": null }
+      ]
+    }
+}
