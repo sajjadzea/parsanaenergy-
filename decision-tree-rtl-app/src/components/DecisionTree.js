@@ -3,18 +3,20 @@ import treeData from '../data/tree.json';
 
 const containerStyle = {
   maxWidth: '480px',
+  width: '100%',
   margin: '0 auto',
   padding: '1rem',
+  boxSizing: 'border-box',
 };
 
 const buttonStyle = {
   width: '100%',
   padding: '0.75rem',
-  marginBottom: '0.5rem',
+  marginBottom: '0.75rem',
   border: 'none',
   borderRadius: '6px',
   fontSize: '1rem',
-  backgroundColor: '#28a745',
+  backgroundColor: '#10b981',
   color: '#fff',
   cursor: 'pointer',
 };
@@ -31,6 +33,7 @@ const inputStyle = {
   borderRadius: '4px',
   border: '1px solid #ccc',
   fontSize: '1rem',
+  boxSizing: 'border-box',
 };
 
 function getNode(id) {
@@ -70,7 +73,7 @@ const DecisionTree = () => {
   };
 
   return (
-    <div style={containerStyle}>
+    <div style={containerStyle} key={node ? node.id : 'root'} className="fade">
       {node && (
         <div>
           {node.question && <p style={{ fontSize: '18px', marginBottom: '10px' }}>{node.question}</p>}
@@ -79,36 +82,38 @@ const DecisionTree = () => {
           {node.type === 'calculator' && (
             <div>
               {calcResult === null && (
-                <div>
-                  <input
-                    type="number"
-                    placeholder="توان مورد نیاز (کیلووات)"
-                    style={inputStyle}
-                    value={calcValues.power}
-                    onChange={(e) => setCalcValues({ ...calcValues, power: e.target.value })}
-                  />
-                  <input
-                    type="number"
-                    placeholder="مدت استفاده روزانه (ساعت)"
-                    style={inputStyle}
-                    value={calcValues.hours}
-                    onChange={(e) => setCalcValues({ ...calcValues, hours: e.target.value })}
-                  />
-                  <input
-                    type="number"
-                    placeholder="قیمت هر کیلووات‌ساعت (ریال)"
-                    style={inputStyle}
-                    value={calcValues.price}
-                    onChange={(e) => setCalcValues({ ...calcValues, price: e.target.value })}
-                  />
+                <div style={{ marginBottom: '1rem' }}>
+                  <div style={{ display: 'grid', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                    <input
+                      type="number"
+                      placeholder="توان مورد نیاز (کیلووات)"
+                      style={inputStyle}
+                      value={calcValues.power}
+                      onChange={(e) => setCalcValues({ ...calcValues, power: e.target.value })}
+                    />
+                    <input
+                      type="number"
+                      placeholder="مدت استفاده روزانه (ساعت)"
+                      style={inputStyle}
+                      value={calcValues.hours}
+                      onChange={(e) => setCalcValues({ ...calcValues, hours: e.target.value })}
+                    />
+                    <input
+                      type="number"
+                      placeholder="قیمت هر کیلووات‌ساعت (ریال)"
+                      style={inputStyle}
+                      value={calcValues.price}
+                      onChange={(e) => setCalcValues({ ...calcValues, price: e.target.value })}
+                    />
+                  </div>
                   <button style={buttonStyle} onClick={handleCalc}>
                     محاسبه
                   </button>
                 </div>
               )}
               {calcResult !== null && (
-                <div>
-                  <p style={{ fontWeight: 'bold', marginTop: '10px' }}>
+                <div style={{ marginBottom: '1rem' }}>
+                  <p style={{ fontWeight: 'bold', marginBottom: '0.75rem' }}>
                     هزینه تقریبی: {calcResult.toLocaleString()} ریال
                   </p>
                   {node.options &&
