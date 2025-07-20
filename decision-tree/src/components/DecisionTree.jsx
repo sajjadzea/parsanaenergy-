@@ -18,10 +18,11 @@ export default function DecisionTree() {
           {node.options.map((opt, idx) => (
             <button
               key={idx}
-              className="px-4 py-2 rounded bg-green-600 text-white"
+              className="decision-btn"
               onClick={() => handleChoice(idx)}
             >
-              {opt}
+              <span>{opt}</span>
+              <span className="arrow">←</span>
             </button>
           ))}
         </div>
