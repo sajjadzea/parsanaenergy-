@@ -190,7 +190,7 @@ section h2{
 
 /* ========= FOOTER ========= */
 footer{
-  background:var(--dark-blue);
+  background:var(--green);
   color:#fff;
   padding:2rem 1rem;
   font-size:.9rem;
@@ -203,6 +203,7 @@ footer{
   max-width:960px;
   margin:0 auto 1rem;
   direction:rtl;
+  text-align:right;
 }
 
 .footer-grid ul{
@@ -218,12 +219,12 @@ footer{
 
 .footer-grid a:hover{text-decoration:underline}
 
-.social-icons{display:flex;gap:1rem;justify-content:center;}
+.social-icons{display:flex;gap:1rem;justify-content:flex-start;}
 .social-icons a i{font-size:1.5rem;}
 
 
 .footer-copy{
-  text-align:center;
+  text-align:right;
   border-top:1px solid rgba(255,255,255,.2);
   padding-top:.5rem;
 }
