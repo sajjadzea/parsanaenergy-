@@ -1,17 +1,19 @@
 /* ========= Root & Reset ========= */
 :root{
-  --dark-blue:#003865;  /* از دایرهٔ بیرونی لوگو */
-  --green:#006c53;      /* بخش سبز لوگو */
+  --primary:#20603d;    /* سبز تیره */
+  --dark-blue:#20603d;  /* هماهنگ با پالت جدید */
+  --green:#20603d;      /* رنگ اصلی */
   --yellow:#ffd500;     /* صاعقه */
-  --gray:#f7f8fa;
+  --gray:#f0f0f0;       /* طوسی روشن */
 }
 *{box-sizing:border-box;margin:0;padding:0}
 
 body{
-  font-family:'Vazirmatn',sans-serif;
+  font-family:'Vazirmatn','IranSans',sans-serif;
   line-height:1.7;
   background:#fff;
-  color:#222;
+  color:#333;
+  direction:rtl;
 }
 
 /* ========= Top Bar ========= */
@@ -23,7 +25,7 @@ body{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  direction:ltr;
+  direction:rtl;
 }
 .top-bar span{
   display:flex;
@@ -48,7 +50,7 @@ body{
 .nav-menu a{
   text-decoration:none;
   color:var(--dark-blue);
-  font-family:'Vazirmatn',sans-serif;
+  font-family:'Vazirmatn','IranSans',sans-serif;
 }
 .menu-toggle{display:none}
 .hamburger{display:none;cursor:pointer;width:30px;height:24px;position:relative}
