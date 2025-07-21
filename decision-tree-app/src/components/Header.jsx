@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './Header.css';
 
 const Header = () => {
@@ -6,12 +7,8 @@ const Header = () => {
   const toggleMenu = () => setOpen(!open);
 
   const links = [
-    { href: '#home', label: 'خانه' },
-    { href: '#about', label: 'درباره ما' },
-    { href: '#services', label: 'خدمات' },
-    { href: '#products', label: 'محصولات' },
-    { href: '#projects', label: 'پروژه‌ها' },
-    { href: '#contact', label: 'تماس با ما' },
+    { to: '/', label: 'خانه' },
+    { to: '/articles', label: 'مقالات' },
   ];
 
   return (
@@ -22,9 +19,9 @@ const Header = () => {
       </button>
       <nav className={open ? 'open' : ''}>
         {links.map((l) => (
-          <a key={l.href} href={l.href} onClick={() => setOpen(false)}>
+          <Link key={l.to} to={l.to} onClick={() => setOpen(false)}>
             {l.label}
-          </a>
+          </Link>
         ))}
       </nav>
     </header>
