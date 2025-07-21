@@ -16,22 +16,6 @@ body{
   direction:rtl;
 }
 
-/* ========= Top Bar ========= */
-.top-bar{
-  background:var(--dark-blue);
-  color:#fff;
-  font-size:.9rem;
-  padding:.3rem 1rem;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  direction:rtl;
-}
-.top-bar span{
-  display:flex;
-  align-items:center;
-  gap:.3rem;
-}
 
 /* ========= Sticky Header ========= */
 .sticky-header{
@@ -323,7 +307,6 @@ footer{
 @media(max-width:600px){
   #hero h1{font-size:1.8rem}
   #hero p{font-size:1rem}
-  .top-bar{flex-direction:column;text-align:center}
   .sticky-header .header-logo img{width:100px}
   section{padding:2rem 1rem}
   h2{font-size:1.4rem}
