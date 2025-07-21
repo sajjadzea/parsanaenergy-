@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap');
+
+body {
+  direction: rtl;
+  text-align: right;
+  font-family: 'Vazirmatn', 'IranSans', sans-serif;
+  margin: 0;
+  padding: 60px 0 0; /* space for fixed header */
+}
+
+.fade {
+  animation: fade-in 0.4s ease-in;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Decision tree option buttons */
+.decision-btn {
+  width: 80%;
+  padding: 0.8rem 2.5rem;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-align: right;
+  background-color: #20603d;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  font-family: inherit;
+  transition: background 0.2s;
+  direction: rtl;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.decision-btn:focus {
+  outline: none;
+}
+
+.decision-btn:hover {
+  background-color: #184d2d;
+}
+
+.decision-btn .arrow {
+  font-size: 1.5rem;
+  margin-right: 1rem;
+}
+
