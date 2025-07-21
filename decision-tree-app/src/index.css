@@ -51,3 +51,23 @@ body {
   margin-right: 1rem;
 }
 
+.articles-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.article-item {
+  margin-bottom: 2rem;
+}
+
+.article-item .date {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.article-detail .date {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
