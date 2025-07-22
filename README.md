@@ -6,11 +6,11 @@ with its own `package.json`.
 
 ## Modules
 
-### `landing`
+### `docs`
 Marketing landing page with basic HTML/CSS and a small React entry point.
 
 ```
-landing/
+docs/
 ├─ index.html           # main static page
 ├─ src/                 # React widget source
 │  └─ main.jsx          # entry point
@@ -20,7 +20,7 @@ landing/
 Run the site locally:
 
 ```bash
-cd landing
+cd docs
 npm install
 npm run dev       # start dev server on http://localhost:5173
 ```
@@ -66,7 +66,7 @@ npm run preview    # preview production build
 │   ├── package.json
 │   ├── src
 │   └── vite.config.js
-└── landing
+└── docs
     ├── README.md
     ├── assets
     ├── css
