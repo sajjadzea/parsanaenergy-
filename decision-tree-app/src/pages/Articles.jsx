@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { articles } from '../articles/index_backup.js';
+import { articles } from '../articles/index.js';
 
 const Articles = () => (
   <main className="articles-list">

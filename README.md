@@ -1,13 +1,8 @@
-# Parsana Energy – Landing Page 🇮🇷⚡
+# Parsana Energy Monorepo
 
-نمونهٔ اولیهٔ وب‌سایت تک‌صفحه‌ای برای معرفی خدمات «گروه مهندسی پارسانا انرژی».
+This repository contains multiple web modules:
 
-## راه‌‌اندازی سریع
+- **landing** – marketing landing page built with static HTML/CSS and a small React entry point.
+- **decision-tree-app** – React/Vite application used as the decision tree widget embedded in the landing page.
 
-```bash
-git clone https://github.com/<YOUR-USERNAME>/parsana-energy-site.git
-cd parsana-energy-site
-# فایل‌ image_2025-07-13_16-17-37.png و تصاویر سرویس‌ها را
-# (battery.jpg, generator.jpg, solar.jpg) در پوشهٔ images/ قرار دهید
-open index.html   # یا live-server برای پیش‌نمایش
-```
+Each module has its own `package.json` and Vite configuration.
