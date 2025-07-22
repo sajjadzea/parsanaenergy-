@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { getArticle } from '../articles/index.js';
+import { getArticle } from '../articles/index_backup.js';
 import ReactMarkdown from 'react-markdown';
 
 const Article = () => {
