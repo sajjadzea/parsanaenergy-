@@ -1,12 +1,18 @@
-# React + Vite
+# Decision Tree App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This React + Vite project implements the interactive decision tree widget
+embedded in the landing page.
 
-Currently, two official plugins are available:
+## Structure
+- `index.html` – application host page
+- `src/main.jsx` – entry point that mounts the React app
+- `src/` – React components and data
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Scripts
+```bash
+npm install           # install dependencies
+npm run dev           # start development server
+npm run build         # build to dist/
+npm run preview       # preview the built app
+npm run deploy        # build and publish to GitHub Pages
+```
