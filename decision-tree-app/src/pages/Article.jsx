@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { getArticle } from '../../../docs/articles/index.js';
+import { getArticle } from '../articles/index.js';
 import ReactMarkdown from 'react-markdown';
 
 const Article = () => {
@@ -15,11 +15,19 @@ const Article = () => {
     );
   }
 
+  let content;
+  if (typeof article.content === 'string') {
+    content = <ReactMarkdown>{article.content}</ReactMarkdown>;
+  } else {
+    const ArticleComponent = article.content;
+    content = <ArticleComponent />;
+  }
+
   return (
     <main className="article-detail">
       <h1>{article.title}</h1>
       <p className="date">{article.date}</p>
-      <ReactMarkdown>{article.content}</ReactMarkdown>
+      {content}
       <Link to="/articles">بازگشت به مقالات</Link>
     </main>
   );

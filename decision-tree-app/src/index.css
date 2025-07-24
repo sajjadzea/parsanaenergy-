@@ -30,3 +30,41 @@
   cursor: not-allowed;
 }
 
+/* Articles styling */
+.articles-list,
+.article-detail {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  line-height: 1.8;
+}
+
+.articles-list h1,
+.article-detail h1 {
+  margin-bottom: 1.5rem;
+  font-size: 1.75rem;
+}
+
+.article-item {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.article-item h2 {
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+}
+
+.article-item .date,
+.article-detail .date {
+  color: #888;
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+.article-detail a {
+  display: inline-block;
+  margin-top: 2rem;
+}
+
