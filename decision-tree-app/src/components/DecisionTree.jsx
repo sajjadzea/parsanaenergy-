@@ -9,22 +9,6 @@ const containerStyle = {
   boxSizing: 'border-box',
 };
 
-const buttonStyle = {
-  width: '100%',
-  padding: '0.75rem',
-  marginBottom: '0.75rem',
-  border: 'none',
-  borderRadius: '6px',
-  fontSize: '1rem',
-  backgroundColor: '#20603d',
-  color: '#fff',
-  cursor: 'pointer',
-};
-
-const backButtonStyle = {
-  ...buttonStyle,
-  backgroundColor: '#6c757d',
-};
 
 const inputStyle = {
   width: '100%',
@@ -151,7 +135,7 @@ const DecisionTree = () => {
 
           {/* Back Button */}
           <button
-            style={backButtonStyle}
+            className="decision-btn"
             onClick={handleBack}
             disabled={history.length === 1 && calcResult === null}
           >
