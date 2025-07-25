@@ -51,6 +51,7 @@ npm install
 npm run dev        # development server
 npm run build      # build to dist/
 npm run preview    # preview production build
+npm run build-widget # build and copy into docs/widget
 ```
 
 ## Repository layout

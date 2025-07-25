@@ -15,4 +15,5 @@ npm run dev           # start development server
 npm run build         # build to dist/
 npm run preview       # preview the built app
 npm run deploy        # build and publish to GitHub Pages
+npm run build-widget  # build and copy files to ../docs/widget
 ```
