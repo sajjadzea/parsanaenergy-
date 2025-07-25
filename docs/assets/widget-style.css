@@ -1,0 +1,21 @@
+.decision-btn {
+  background: #176c38;
+  color: #fff;
+  border: none;
+  border-radius: 2rem;
+  padding: 0.5rem 2rem;
+  font-weight: bold;
+  font-size: 1rem;
+  margin: 0.5rem;
+  box-shadow: 0 2px 8px rgba(23, 108, 56, 0.12);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.decision-btn:hover {
+  background: #1bb84a;
+  transform: scale(1.05);
+}
+.decision-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
