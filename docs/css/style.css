@@ -442,3 +442,10 @@ footer{
   cursor:pointer;
 }
 
+/* ===== Contact Numbers ===== */
+.landline, .mobile {
+  display: flex;
+  align-items: center;
+  gap: .3rem;
+}
+
