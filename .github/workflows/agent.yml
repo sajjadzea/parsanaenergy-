@@ -1,0 +1,32 @@
+name: Agent Move & Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  agent:
+    runs-on: ubuntu-latest
+
+    env:
+      AGENTTEST: ${{ secrets.AGENTTEST }}
+
+    steps:
+      # Step 1: checkout repo
+      - uses: actions/checkout@v4
+
+      # Step 2: set up Node (نسخه ۲۰ یا جدیدتر)
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # Step 3: نصب وابستگی‌ها و Build (در صورت وجود بسته‌ها)
+      - name: Install dependencies & Build
+        run: |
+          npm ci || true          # اگر package.json در ریشه نیست، خطا نگیر
+          npm run build || true   # در صورت نبود اسکریپت build، عبور کن
+
+      # Step 4: اجرای اسکریپت Agent
+      - name: Run agent script
+        run: |
+          export GITHUB_TOKEN="$AGENTTEST"
+          bash agent-script.sh     # یا مسیری که اسکریپت Agent تو قرار دارد
