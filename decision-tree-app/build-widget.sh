@@ -18,7 +18,12 @@ if [ $? -ne 0 ]; then
 fi
 
 npm run build
-mkdir -p ../docs/widget
+# Copy widget build to docs/widget and also place assets under docs/assets
+mkdir -p ../docs/widget ../docs/assets
 cp -r dist/* ../docs/widget/
+cp -r dist/assets/* ../docs/assets/
+
+# Update index.html paths to use docs/assets relative URLs
+sed -i 's|/parsanaenergy/assets/|../assets/|g' ../docs/widget/index.html
 
 echo "✅ نصب و build با موفقیت انجام شد، فایل‌ها به docs/widget منتقل شدند."
