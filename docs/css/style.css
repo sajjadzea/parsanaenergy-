@@ -449,3 +449,16 @@ footer{
   gap: .3rem;
 }
 
+/* ========= 404 Page ========= */
+.not-found {
+  text-align: center;
+  padding: 4rem 1rem;
+}
+.not-found h1 {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+.not-found p {
+  margin-bottom: 1rem;
+}
+
