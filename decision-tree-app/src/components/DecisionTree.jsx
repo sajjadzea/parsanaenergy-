@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import treeData from '../data/tree.json';
+import styles from './DecisionButton.module.css';
 
 const containerStyle = {
   maxWidth: '480px',
@@ -90,7 +91,7 @@ const DecisionTree = () => {
                       onChange={(e) => setCalcValues({ ...calcValues, price: e.target.value })}
                     />
                   </div>
-                  <button className="decision-btn" onClick={handleCalc}>
+                  <button className={styles.decisionButton} onClick={handleCalc}>
                     <span>محاسبه</span>
                     <span className="arrow">←</span>
                   </button>
@@ -105,7 +106,7 @@ const DecisionTree = () => {
                     node.options.map((opt, idx) => (
                       <button
                         key={idx}
-                        className="decision-btn"
+                        className={styles.decisionButton}
                         onClick={() => handleOption(opt.next)}
                       >
                         <span>{opt.label}</span>
@@ -123,7 +124,7 @@ const DecisionTree = () => {
               {node.options.map((opt, idx) => (
                 <button
                   key={idx}
-                  className="decision-btn"
+                  className={styles.decisionButton}
                   onClick={() => handleOption(opt.next)}
                 >
                   <span>{opt.label}</span>
@@ -135,7 +136,7 @@ const DecisionTree = () => {
 
           {/* Back Button */}
           <button
-            className="decision-btn"
+            className={styles.decisionButton}
             onClick={handleBack}
             disabled={history.length === 1 && calcResult === null}
           >
