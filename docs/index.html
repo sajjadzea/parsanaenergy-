@@ -99,27 +99,6 @@
     <div id="root"></div>
   </section>
 
-  <!-- ===== Decision Tree App ===== -->
-  <section id="decision-tree-app">
-    <h2>اپلیکیشن درخت تصمیم</h2>
-    <div id="decision-tree-app-container"></div>
-    <script>
-      fetch('widget/index.html', { method: 'HEAD' })
-        .then(function (response) {
-          if (response.ok) {
-            var iframe = document.createElement('iframe');
-            iframe.src = 'widget/index.html';
-            iframe.width = '100%';
-            iframe.height = '600';
-            iframe.style.border = 'none';
-            document.getElementById('decision-tree-app-container').appendChild(iframe);
-          }
-        })
-        .catch(function (error) {
-          console.error('Widget not found:', error);
-        });
-    </script>
-  </section>
 
   <!-- ===== Products ===== -->
   <section id="products" class="products">
