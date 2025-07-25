@@ -19,11 +19,13 @@ fi
 
 npm run build
 # Copy widget build to docs/widget and also place assets under docs/assets
-mkdir -p ../docs/widget ../docs/assets
-cp -r dist/* ../docs/widget/
-cp -r dist/assets/* ../docs/assets/
 
-# Update index.html paths to use docs/assets relative URLs
-sed -i 's|/parsanaenergy/assets/|../assets/|g' ../docs/widget/index.html
+# Copy the entire dist folder to docs/widget so that index.html and
+# its hashed assets live together under docs/widget/assets
+mkdir -p ../docs/widget
+cp -r dist/* ../docs/widget/
+
+# Update index.html asset paths to use the local assets folder
+sed -i 's|/parsanaenergy/assets/|assets/|g' ../docs/widget/index.html
 
 echo "✅ نصب و build با موفقیت انجام شد، فایل‌ها به docs/widget منتقل شدند."
