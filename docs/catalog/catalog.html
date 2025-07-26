@@ -9,101 +9,60 @@
   <link rel="stylesheet" href="../css/style.css" />
   <link rel="stylesheet" href="../assets/services-style.css" />
   <style>
-    #catalog-flipbook {
-      width: 7067px;
-      height: 10000px;
-      margin: auto;
-    }
-    #catalog-flipbook .page {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-    }
-    #catalog-flipbook .page img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: block;
-    }
-    @media (max-width: 768px) {
-      #catalog-flipbook {
-        width: 100%;
-        height: auto;
-      }
-      #catalog-flipbook .page {
-        height: auto;
-      }
-      #catalog-flipbook .page img {
-        width: 100%;
-        height: auto;
-      }
-    }
+    html, body { margin:0; padding:0; width:100vw; height:100vh; overflow:hidden; background:#fff; }
+    .catalog-img { width:100vw; height:100vh; object-fit:contain; display:block; margin:0 auto; background:#fff; }
+    .nav-btn { position:fixed; top:50%; transform:translateY(-50%); background:#333; color:#fff; border:none; font-size:2rem; z-index:10; padding:0.5em 1em; cursor:pointer; }
+    #prevBtn { left:0.5em; }
+    #nextBtn { right:0.5em; }
+    .catalog-counter { position:fixed; bottom:0.5em; left:50%; transform:translateX(-50%); background:rgba(0,0,0,0.6); color:#fff; padding:0.2em 0.6em; border-radius:0.3em; font-size:0.9rem; z-index:10; }
   </style>
 </head>
 <body>
-  <div class="services-catalog">
-    <header class="catalog-header">
-      <img src="../images/logo.png" alt="لوگو" class="catalog-logo" />
-      <h1>کاتالوگ پارسانا انرژی</h1>
-    </header>
-    <div class="catalog-link">
-      <a href="../index.html" class="back-btn">بازگشت به سایت</a>
-      <a href="catalog.pdf" class="contact-btn" download>دانلود PDF</a>
-    </div>
-    <div id="catalog-flipbook"></div>
-    <div class="catalog-nav">
-      <button id="prev-page" class="contact-btn" type="button">صفحه قبل</button>
-      <span id="page-number">1/1</span>
-      <button id="next-page" class="contact-btn" type="button">صفحه بعد</button>
-    </div>
-  </div>
+  <button class="nav-btn" id="prevBtn">قبلی</button>
+  <img id="catalogImg" class="catalog-img" src="catalog_pages-to-jpg-0001.jpg" loading="lazy" alt="صفحه 1" />
+  <button class="nav-btn" id="nextBtn">بعدی</button>
+  <div class="catalog-counter" id="catalogCounter">1/6</div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/3/turn.min.js"></script>
   <script>
-    const totalPages = 6;
-    const pageWidth = 7067;
-    const pageHeight = 10000;
-    const images = [];
-    for (let i = 1; i <= totalPages; i++) {
-      const num = String(i).padStart(4, '0');
-      images.push(`catalog_pages-to-jpg-${num}.jpg`);
+    const pages = [
+      "catalog_pages-to-jpg-0001.jpg",
+      "catalog_pages-to-jpg-0002.jpg",
+      "catalog_pages-to-jpg-0003.jpg",
+      "catalog_pages-to-jpg-0004.jpg",
+      "catalog_pages-to-jpg-0005.jpg",
+      "catalog_pages-to-jpg-0006.jpg"
+    ];
+    let idx = 0;
+    const img = document.getElementById('catalogImg');
+    const counter = document.getElementById('catalogCounter');
+
+    function update() {
+      counter.textContent = (idx + 1) + '/' + pages.length;
     }
 
-    const $flip = $('#catalog-flipbook');
-    images.forEach((src, i) => {
-      const page = $('<div class="page"></div>');
-      page.append(`<img src="${src}" alt="صفحه ${i + 1}" loading="lazy" />`);
-      $flip.append(page);
+    document.getElementById('prevBtn').addEventListener('click', () => {
+      if (idx > 0) {
+        idx--;
+        img.src = pages[idx];
+        update();
+      }
     });
 
-    $flip.turn({
-      width: pageWidth,
-      height: pageHeight,
-      autoCenter: true,
-      display: 'single',
-      direction: 'rtl'
+    document.getElementById('nextBtn').addEventListener('click', () => {
+      if (idx < pages.length - 1) {
+        idx++;
+        img.src = pages[idx];
+        update();
+      }
     });
-
-    function updatePage() {
-      const page = $flip.turn('page');
-      $('#page-number').text(page + '/' + totalPages);
-    }
-
-    updatePage();
-    $flip.bind('turned', updatePage);
-    $('#prev-page').on('click', () => $flip.turn('previous'));
-    $('#next-page').on('click', () => $flip.turn('next'));
   </script>
   <noscript>
-    <div>
-      <img src="catalog_pages-to-jpg-0001.jpg" alt="صفحه 1" />
-      <img src="catalog_pages-to-jpg-0002.jpg" alt="صفحه 2" />
-      <img src="catalog_pages-to-jpg-0003.jpg" alt="صفحه 3" />
-      <img src="catalog_pages-to-jpg-0004.jpg" alt="صفحه 4" />
-      <img src="catalog_pages-to-jpg-0005.jpg" alt="صفحه 5" />
-      <img src="catalog_pages-to-jpg-0006.jpg" alt="صفحه 6" />
-    </div>
+    <img class="catalog-img" src="catalog_pages-to-jpg-0001.jpg" alt="صفحه 1" />
+    <img class="catalog-img" src="catalog_pages-to-jpg-0002.jpg" alt="صفحه 2" />
+    <img class="catalog-img" src="catalog_pages-to-jpg-0003.jpg" alt="صفحه 3" />
+    <img class="catalog-img" src="catalog_pages-to-jpg-0004.jpg" alt="صفحه 4" />
+    <img class="catalog-img" src="catalog_pages-to-jpg-0005.jpg" alt="صفحه 5" />
+    <img class="catalog-img" src="catalog_pages-to-jpg-0006.jpg" alt="صفحه 6" />
   </noscript>
 </body>
 </html>
