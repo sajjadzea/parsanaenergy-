@@ -54,6 +54,10 @@ npm run preview    # preview production build
 npm run build-widget # build and copy into docs/widget
 ```
 
+Before committing changes to the repository, run `npm run build-widget`
+to refresh the files inside `docs/widget`. This keeps the deployed
+decision tree up‑to‑date.
+
 ## Repository layout
 
 ```
