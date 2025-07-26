@@ -5,9 +5,12 @@ import App from './App.jsx';
 import './index.css';
 
 const container = document.getElementById('widget-root') || document.getElementById('root');
+const isWidget = window.location.pathname.startsWith('/widget');
+const basename = isWidget ? '/widget' : undefined;
 if (container && !container._reactRootContainer) {
+  console.log('Mounting React app');
   createRoot(container).render(
-    <BrowserRouter>
+    <BrowserRouter basename={basename}>
       <App />
     </BrowserRouter>
   );
