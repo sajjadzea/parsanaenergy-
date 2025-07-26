@@ -1,0 +1,257 @@
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700&display=swap');
+
+/* Root variables */
+:root {
+  --primary: #223354; /* Navy */
+  --accent: #34B57B; /* Soft green */
+  --light-gray: #f5f5f5;
+}
+
+body {
+  font-family: 'Vazirmatn', Tahoma, sans-serif;
+  line-height: 1.9;
+  background: #fff;
+  color: #222;
+  direction: rtl;
+}
+
+/* Article container */
+.article-container {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.article-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.article-meta {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.article-main-image {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.article-body p {
+  margin-bottom: 1.2rem;
+  text-align: justify;
+}
+
+.article-body h2 {
+  font-size: 1.4rem;
+  padding-right: 0.5rem;
+  border-right: 4px solid var(--accent);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: var(--primary);
+}
+
+.article-body h3 {
+  font-size: 1.2rem;
+  padding-right: 0.5rem;
+  border-right: 4px solid var(--accent);
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--primary);
+}
+
+.article-body ol,
+.article-body ul {
+  margin: 1rem 0 1rem 1.5rem;
+  padding-right: 1rem;
+}
+
+.article-body blockquote {
+  background: var(--light-gray);
+  border-right: 4px solid var(--accent);
+  margin: 1.5rem 0;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.article-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.article-body th,
+.article-body td {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.article-body img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 1.5rem 0;
+}
+
+/* Sidebar */
+.sidebar {
+  margin-top: 2rem;
+}
+
+.author-card {
+  background: var(--light-gray);
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.author-card img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 0.5rem;
+}
+
+.related-articles h3 {
+  font-size: 1.1rem;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.related-mini-card {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.related-mini-card img {
+  width: 60px;
+  height: 60px;
+  border-radius: 6px;
+  margin-left: 0.5rem;
+}
+
+.related-mini-card a {
+  color: var(--primary);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.related-mini-card a:hover {
+  text-decoration: underline;
+}
+
+/* Suggested articles */
+.suggested-articles-grid {
+  margin-top: 3rem;
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.suggest-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.suggest-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+}
+
+.suggest-card-content {
+  padding: 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.suggest-card h4 {
+  font-size: 1rem;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.suggest-card p {
+  flex: 1;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.read-more-btn {
+  align-self: flex-start;
+  background: var(--accent);
+  color: #fff;
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.read-more-btn:hover {
+  background: var(--primary);
+}
+
+/* Share buttons */
+.share-buttons {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.share-buttons a {
+  display: inline-block;
+  margin: 0.25rem;
+  color: #fff;
+  background: var(--primary);
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+  border-radius: 50%;
+  transition: background 0.3s;
+}
+
+.share-buttons a:hover {
+  background: var(--accent);
+}
+
+/* Layout for large screens */
+@media (min-width: 992px) {
+  .layout {
+    display: flex;
+    gap: 2rem;
+  }
+  .article-main {
+    flex: 1;
+  }
+  .sidebar {
+    width: 280px;
+  }
+}
+
+/* Title size on small screens */
+@media (max-width: 600px) {
+  .article-title {
+    font-size: 1.6rem;
+  }
+}

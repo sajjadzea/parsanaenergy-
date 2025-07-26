@@ -1,36 +1,31 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>پارسـانا انرژی | تأمین پایدار برق</title>
-  <meta name="description" content="پارسـانا انرژی ارائه‌دهنده راهکارهای نوین تامین برق پایدار و تجهیزات برق اضطراری." />
-  <link rel="icon" href="/parsanaenergy/landing/assets/logo-laZP8OeM.png" />
-  <meta property="og:title" content="پارسـانا انرژی | تأمین پایدار برق" />
-  <meta property="og:description" content="پارسـانا انرژی ارائه‌دهنده راهکارهای نوین تامین برق پایدار و تجهیزات برق اضطراری." />
-  <meta property="og:image" content="/parsanaenergy/landing/assets/logo-laZP8OeM.png" />
-  <meta property="og:url" content="https://parsana-energy.ir/" />
-  <meta property="og:type" content="website" />
-
-  <!-- Google Font (Vazirmatn لاتین + فارسی) -->
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="/parsanaenergy/assets/index-D1tIbwOA.css" />
-  <script type="module" crossorigin src="/parsanaenergy/landing/assets/index-3ZHdjmRO.js"></script>
-  <link rel="stylesheet" crossorigin href="/parsanaenergy/landing/assets/index-SGlYEudu.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parsana Energy</title>
+  <!-- لود استایل‌های آیکن و کتابخانه اول -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" />
+  <!-- استایل اصلی سفارشی سایت -->
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- Bundle CSS خروجی Vite (hashed) -->
+  <link rel="stylesheet" href="./assets/index-CZpWQGqi.css" />
+  <!-- استایل ویجت (اگر لازمه) -->
+  <link rel="stylesheet" href="assets/widget-style.css" />
+  <!-- Bundle JS خروجی Vite (hashed) -->
+  <script type="module" src="./assets/index-C3QLy0nd.js"></script>
 </head>
   <body>
 
     <div class="top-bar">
-      <span class="phone"><i class="fa fa-phone"></i>  تماس :09159961614 </span>
+      <span class="phone"><i class="fa fa-phone"></i>  تماس :۰۹۱۵۰۱۰۰۶۳۳ </span>
       <span class="email"><i class="fa fa-envelope"></i> info@parsana-energy.ir</span>
       <span class="hours"><i class="fa fa-clock"></i> 8:00-18:00</span>
     </div>
 
     <div class="sticky-header">
       <a href="index.html" class="header-logo">
-        <img src="/parsanaenergy/landing/assets/logo-laZP8OeM.png" alt="Parsana Energy logo" />
+        <img src="images/logo.png" alt="Parsana Energy logo" />
       </a>
       <input type="checkbox" id="menu-toggle" class="menu-toggle" />
       <label for="menu-toggle" class="hamburger">
@@ -41,7 +36,8 @@
           <li><a href="index.html">خانه</a></li>
           <li><a href="#services">خدمات</a></li>
           <li><a href="#projects">پروژه‌ها</a></li>
-          <li><a href="#blog">بلاگ</a></li>
+          <li><a href="articles/">بلاگ</a></li>
+          <li><a href="catalog/catalog.html">کاتالوگ</a></li>
           <li><a href="#contact">تماس با ما</a></li>
         </ul>
       </nav>
@@ -94,27 +90,28 @@
   <!-- ===== Decision Tree Widget ===== -->
   <section id="decision-tree-widget">
     <h2>درخت تصمیم</h2>
-    <div id="root"></div>
+    <iframe src="widget/index.html" width="100%" height="600" style="border:none;"></iframe>
   </section>
+
 
   <!-- ===== Products ===== -->
   <section id="products" class="products">
     <h2>محصولات</h2>
     <div class="products-grid">
       <div class="product-card">
-        <img src="/parsanaenergy/landing/assets/generator-BttAxcUk.png" alt="ژنراتور">
+        <img src="images/generator.png" alt="ژنراتور">
         <h3>ژنراتور دیزلی</h3>
         <p>راهکاری مطمئن برای تامین برق در شرایط اضطراری.</p>
         <a href="#" class="btn-primary">جزئیات بیشتر</a>
       </div>
       <div class="product-card">
-        <img src="/parsanaenergy/landing/assets/battery-CdlIvizA.png" alt="باتری">
+        <img src="images/battery.png" alt="باتری">
         <h3>باتری صنعتی</h3>
         <p>ذخیره انرژی با طول عمر بالا و نگهداری آسان.</p>
         <a href="#" class="btn-primary">جزئیات بیشتر</a>
       </div>
       <div class="product-card">
-        <img src="/parsanaenergy/landing/assets/solar-CmgFlLsN.png" alt="پنل خورشیدی">
+        <img src="images/solar.png" alt="پنل خورشیدی">
         <h3>پنل خورشیدی</h3>
         <p>تولید برق پاک برای مصارف خانگی و تجاری.</p>
         <a href="#" class="btn-primary">جزئیات بیشتر</a>
@@ -127,13 +124,13 @@
     <h2>پروژه‌های ما</h2>
     <div class="projects-grid">
       <div class="project-item" data-title="پروژه 1" data-description="توضیح کوتاه درباره پروژه 1">
-        <img src="/parsanaenergy/landing/assets/generator-BttAxcUk.png" alt="پروژه 1">
+        <img src="images/generator.png" alt="پروژه 1">
       </div>
       <div class="project-item" data-title="پروژه 2" data-description="توضیح کوتاه درباره پروژه 2">
-        <img src="/parsanaenergy/landing/assets/battery-CdlIvizA.png" alt="پروژه 2">
+        <img src="images/battery.png" alt="پروژه 2">
       </div>
       <div class="project-item" data-title="پروژه 3" data-description="توضیح کوتاه درباره پروژه 3">
-        <img src="/parsanaenergy/landing/assets/solar-CmgFlLsN.png" alt="پروژه 3">
+        <img src="images/solar.png" alt="پروژه 3">
       </div>
     </div>
   </section>
@@ -188,8 +185,10 @@
     <h2>تماس با ما</h2>
     <div class="contact-card">
       <div class="contact-info">
-        <p><strong>آدرس:</strong> خراسان رضوی، مشهد، دانشگاه فردوسی، پژوهشکده نفت و گاز</p>
-        <p><strong>تلفن:</strong> <a href="tel:09159961614">09159961614</a></p>
+        <p><strong>آدرس:</strong> خراسان رضوی، مشهد، دانشگاه فردوسی، پژوهشکده نفت و گاز<br>
+          <span class="landline"><i class="fa fa-phone"></i> ۰۵۱۳۸۴۲۰۰۰۸</span>
+        </p>
+        <p><strong>موبایل:</strong> <a href="tel:09150100633">۰۹۱۵۰۱۰۰۶۳۳</a></p>
         <p><strong>ایمیل:</strong> <a href="mailto:info@parsana-energy.ir">info@parsana-energy.ir</a></p>
       </div>
       <form class="contact-form">
@@ -215,15 +214,16 @@
           <li><a href="index.html">خانه</a></li>
           <li><a href="#services">خدمات</a></li>
           <li><a href="#projects">پروژه‌ها</a></li>
-          <li><a href="#blog">بلاگ</a></li>
+          <li><a href="articles/">بلاگ</a></li>
           <li><a href="#contact">تماس با ما</a></li>
         </ul>
       </div>
       <div>
         <h3>پارسانا انرژی</h3>
         <address>
-          خراسان رضوی، مشهد، دانشگاه فردوسی، پژوهشکده نفت و گاز<br>
-          تلفن: <a href="tel:09159961614">09159961614</a><br>
+          آدرس: خراسان رضوی، مشهد، دانشگاه فردوسی، پژوهشکده نفت و گاز<br>
+          <span class="landline"><i class="fa fa-phone"></i> ۰۵۱۳۸۴۲۰۰۰۸</span><br>
+          <span class="mobile"><i class="fa fa-mobile-alt"></i> <a href="tel:09150100633">۰۹۱۵۰۱۰۰۶۳۳</a></span><br>
           ایمیل: <a href="mailto:info@parsana-energy.ir">info@parsana-energy.ir</a>
         </address>
       </div>
@@ -232,7 +232,7 @@
         <ul class="social-icons">
           <li><a href="https://instagram.com/parsanaenergy" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
           <li><a href="https://linkedin.com/company/parsanaenergy" aria-label="LinkedIn"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li>
-          <li><a href="https://wa.me/989159961614" aria-label="WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i></a></li>
+          <li><a href="https://wa.me/989150100633" aria-label="WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i></a></li>
         </ul>
       </div>
     </div>
@@ -241,8 +241,7 @@
     </div>
   </footer>
 
-  <!-- <script type="module" src="/parsanaenergy/assets/index-Dmz9T8Sa.js"></script> -->
   <!-- <script src="js/main.js"></script> -->
-  <div id="root"></div>
+  <!-- <script type="module" src="./src/main.jsx"></script> -->
 </body>
 </html>
