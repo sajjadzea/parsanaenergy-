@@ -2,8 +2,12 @@ name: Deploy Vite site to GitHub Pages
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: write
 
 jobs:
   build-and-deploy:
@@ -35,9 +39,13 @@ jobs:
           npm run build
 
       - name: Deploy to gh-pages
+        if: github.event_name == 'push'
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: docs/dist
+          github_token: ${{ secrets.AGENTTEST }}
+          publish_dir: ./docs
+          enable_jekyll: false
+          user_name: github-actions[bot]
+          user_email: 41898282+github-actions[bot]@users.noreply.github.com
           publish_branch: gh-pages
 
