@@ -58,6 +58,12 @@ Before committing changes to the repository, run `npm run build-widget`
 to refresh the files inside `docs/widget`. This keeps the deployed
 decision tree up‑to‑date.
 
+**Build and deploy order**
+1. `cd decision-tree-app && npm run build-widget`
+2. `cd docs && npm run build`
+This sequence ensures the site and widget bundles are generated
+separately with unique hashes to avoid conflicts.
+
 ## Repository layout
 
 ```

@@ -1,13 +1,16 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App.jsx';
 import './index.css';
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <BrowserRouter basename="/parsanaenergy/">
-      <App />
-    </BrowserRouter>
-  </React.StrictMode>,
-);
+const rootEl = document.getElementById('widget-root');
+if (rootEl && !rootEl._reactRootContainer) {
+  createRoot(rootEl).render(
+    <React.StrictMode>
+      <BrowserRouter basename="/parsanaenergy/">
+        <App />
+      </BrowserRouter>
+    </React.StrictMode>
+  );
+}
