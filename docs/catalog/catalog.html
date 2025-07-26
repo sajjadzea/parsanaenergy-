@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../css/style.css" />
   <link rel="stylesheet" href="../assets/services-style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/page-flip/dist/page-flip.browser.min.css" />
 </head>
 <body>
   <div class="services-catalog">
@@ -15,11 +16,37 @@
       <img src="../images/logo.png" alt="لوگو" class="catalog-logo" />
       <h1>کاتالوگ پارسانا انرژی</h1>
     </header>
-    <main class="catalog-viewer">
-      <object data="catalog.pdf" type="application/pdf" width="100%" height="600">
-        <p>کاتالوگ قابل نمایش نیست. <a href="catalog.pdf" download>دانلود کاتالوگ</a></p>
-      </object>
-    </main>
+    <div class="catalog-link">
+      <a href="../index.html" class="back-btn">بازگشت به سایت</a>
+      <a href="catalog.pdf" class="contact-btn" download>دانلود PDF</a>
+    </div>
+    <div id="catalog-flipbook" style="width: 100%; max-width: 480px; margin: auto;"></div>
   </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/page-flip/dist/page-flip.browser.min.js"></script>
+  <script>
+    const catalogImages = [
+      "catalog/catalog_pages-to-jpg-0001.jpg",
+      "catalog/catalog_pages-to-jpg-0002.jpg",
+      "catalog/catalog_pages-to-jpg-0003.jpg",
+      "catalog/catalog_pages-to-jpg-0004.jpg",
+      "catalog/catalog_pages-to-jpg-0005.jpg",
+      "catalog/catalog_pages-to-jpg-0006.jpg"
+    ];
+
+    const pageFlip = new window.PageFlip(document.getElementById("catalog-flipbook"), {
+      width: 400,
+      height: 600,
+      size: "stretch",
+      minWidth: 315,
+      maxWidth: 800,
+      minHeight: 420,
+      maxHeight: 1200,
+      showCover: false,
+      mobileScrollSupport: true
+    });
+
+    pageFlip.loadFromImages(catalogImages);
+  </script>
 </body>
 </html>
