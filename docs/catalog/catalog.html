@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../css/style.css" />
   <link rel="stylesheet" href="../assets/services-style.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/page-flip/dist/page-flip.browser.min.css" />
 </head>
 <body>
   <div class="services-catalog">
@@ -20,33 +19,58 @@
       <a href="../index.html" class="back-btn">بازگشت به سایت</a>
       <a href="catalog.pdf" class="contact-btn" download>دانلود PDF</a>
     </div>
-    <div id="catalog-flipbook" style="width: 100%; max-width: 480px; margin: auto;"></div>
+    <div id="catalog-flipbook" style="width:100%;max-width:480px;margin:auto;"></div>
+    <div class="catalog-nav">
+      <button id="prev-page" class="contact-btn" type="button">صفحه قبل</button>
+      <span id="page-number">1/1</span>
+      <button id="next-page" class="contact-btn" type="button">صفحه بعد</button>
+    </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/page-flip/dist/page-flip.browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/3/turn.min.js"></script>
   <script>
-    const catalogImages = [
-      "catalog/catalog_pages-to-jpg-0001.jpg",
-      "catalog/catalog_pages-to-jpg-0002.jpg",
-      "catalog/catalog_pages-to-jpg-0003.jpg",
-      "catalog/catalog_pages-to-jpg-0004.jpg",
-      "catalog/catalog_pages-to-jpg-0005.jpg",
-      "catalog/catalog_pages-to-jpg-0006.jpg"
-    ];
+    const totalPages = 6;
+    const images = [];
+    for (let i = 1; i <= totalPages; i++) {
+      const num = String(i).padStart(4, '0');
+      images.push(`catalog_pages-to-jpg-${num}.jpg`);
+    }
 
-    const pageFlip = new window.PageFlip(document.getElementById("catalog-flipbook"), {
-      width: 400,
-      height: 600,
-      size: "stretch",
-      minWidth: 315,
-      maxWidth: 800,
-      minHeight: 420,
-      maxHeight: 1200,
-      showCover: false,
-      mobileScrollSupport: true
+    const $flip = $('#catalog-flipbook');
+    images.forEach((src, i) => {
+      const page = $('<div class="page"></div>');
+      page.append(`<img src="${src}" alt="صفحه ${i + 1}" loading="lazy" />`);
+      $flip.append(page);
     });
 
-    pageFlip.loadFromImages(catalogImages);
+    $flip.turn({
+      width: 400,
+      height: 600,
+      autoCenter: true,
+      display: 'single',
+      direction: 'rtl'
+    });
+
+    function updatePage() {
+      const page = $flip.turn('page');
+      $('#page-number').text(page + '/' + totalPages);
+    }
+
+    updatePage();
+    $flip.bind('turned', updatePage);
+    $('#prev-page').on('click', () => $flip.turn('previous'));
+    $('#next-page').on('click', () => $flip.turn('next'));
   </script>
+  <noscript>
+    <div>
+      <img src="catalog_pages-to-jpg-0001.jpg" alt="صفحه 1" />
+      <img src="catalog_pages-to-jpg-0002.jpg" alt="صفحه 2" />
+      <img src="catalog_pages-to-jpg-0003.jpg" alt="صفحه 3" />
+      <img src="catalog_pages-to-jpg-0004.jpg" alt="صفحه 4" />
+      <img src="catalog_pages-to-jpg-0005.jpg" alt="صفحه 5" />
+      <img src="catalog_pages-to-jpg-0006.jpg" alt="صفحه 6" />
+    </div>
+  </noscript>
 </body>
 </html>
