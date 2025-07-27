@@ -7,10 +7,15 @@ import './index.css';
 const container = document.getElementById('widget-root') || document.getElementById('root');
 const isWidget = window.location.pathname.startsWith('/widget');
 const basename = isWidget ? '/widget' : undefined;
-if (container && !container._reactRootContainer) {
+
+if (!container) {
+  console.error('widget root element missing');
+} else if (!container._reactRootContainer) {
   createRoot(container).render(
     <BrowserRouter basename={basename}>
       <App />
     </BrowserRouter>
   );
+} else {
+  console.warn('widget already mounted');
 }
