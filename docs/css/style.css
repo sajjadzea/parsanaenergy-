@@ -462,3 +462,6 @@ footer{
   margin-bottom: 1rem;
 }
 
+/* ===== Resume List ===== */
+.resume-list{list-style:disc;margin:1rem 2rem;line-height:2}
+.resume-item{margin-bottom:.5rem}
