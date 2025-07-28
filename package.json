@@ -3,9 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build:widget": "cd decision-tree-app && npm i --legacy-peer-deps && npm run build-widget",
-    "build:site": "cd docs && npm i && npm run build",
-    "deploy": "npm run build:widget && npm run build:site && rsync -a --delete docs/dist/ docs/ && rm -rf docs/dist"
+    "test": "playwright install --with-deps && playwright test"
   },
   "devDependencies": {
     "@playwright/test": "^1.44.0"
