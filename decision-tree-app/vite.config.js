@@ -5,6 +5,10 @@ import markdown from 'vite-plugin-md';
 export default defineConfig({
   plugins: [react(), markdown()],
   base: '/parsanaenergy/',
+  build: {
+    outDir: 'dist',
+    emptyOutDir: true,
+  },
   server: {
     fs: {
       allow: ['..'],
