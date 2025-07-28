@@ -1,42 +1,37 @@
-name: Build & Deploy Vite site
+name: Build & Deploy
 
 on:
   push:
     branches: [main]
-    paths:
-      - "docs/**"
-      - "decision-tree-app/**"
+    paths: ["docs/**","decision-tree-app/**"]
 
 jobs:
-  deploy:
-    permissions:
-      contents: write
-      pages: write
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+    deploy:
+      runs-on: ubuntu-latest
+      permissions:
+        contents: write
+        pages: write
+      steps:
+        - uses: actions/checkout@v4
+        - uses: actions/setup-node@v4
+          with: {node-version: 18, cache: 'npm'}
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: npm
+        - name: Build widget
+          working-directory: decision-tree-app
+          run: |
+            npm ci --legacy-peer-deps
+            npm run build-widget
 
-      - name: Build decision-tree widget
-        working-directory: decision-tree-app
-        run: |
-          npm ci --legacy-peer-deps
-          npm run build-widget
+        - name: Build landing
+          working-directory: docs
+          run: |
+            npm ci --legacy-peer-deps
+            npm run build
 
-      - name: Build landing site
-        working-directory: docs
-        run: |
-          npm ci --legacy-peer-deps
-          npm run build
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: docs/dist
-          cname: parsanaenergy.ir
+        - name: Deploy
+          uses: peaceiris/actions-gh-pages@v4
+          with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            publish_dir: docs/dist
+            cname: parsanaenergy.ir
 
