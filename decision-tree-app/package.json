@@ -6,7 +6,7 @@
   "homepage": "https://sajjadzea.github.io/parsanaenergy/",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node ../scripts/update-html-hashes.js dist dist",
     "build-widget": "bash build-widget.sh",
     "lint": "eslint .",
     "preview": "vite preview",
