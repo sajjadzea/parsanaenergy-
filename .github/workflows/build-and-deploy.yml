@@ -23,16 +23,21 @@ jobs:
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
 
+
       - name: Install dependencies
         run: npm ci
 
-      - name: Run tests
-        run: npm test
+      - name: Install docs dependencies
+        working-directory: docs
+        run: npm ci
+
+      - name: Install decision tree dependencies
+        working-directory: decision-tree-app
+        run: npm ci --legacy-peer-deps
 
       - name: Build decision tree widget
         working-directory: decision-tree-app
         run: |
-          npm ci --legacy-peer-deps
           npm run build
           rm -rf ../docs/widget/*
           mkdir -p ../docs/widget
@@ -40,9 +45,16 @@ jobs:
 
       - name: Build docs site
         working-directory: docs
+        run: npm run build
+
+      - name: Run tests
         run: |
-          npm ci
-          npm run build
+          npx http-server docs -p 4173 &
+          npx playwright install --with-deps
+          npm test
+          kill $(jobs -p)
+
+      # build steps are performed before tests so the site exists
 
       - name: Deploy to gh-pages
         if: github.event_name == 'push'
