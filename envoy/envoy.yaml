@@ -1,0 +1,64 @@
+static_resources:
+  listeners:
+  - name: listener_http
+    address:
+      socket_address:
+        address: 0.0.0.0
+        port_value: 8080
+    filter_chains:
+    - filters:
+      - name: envoy.filters.network.http_connection_manager
+        typed_config:
+          "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
+          stat_prefix: ingress_http
+          route_config:
+            name: local_route
+            virtual_hosts:
+            - name: site
+              domains: ["*"]
+              routes:
+              - match: { prefix: "/" }
+                route: { cluster: site_backend }
+          http_filters:
+          - name: envoy.filters.http.header_mutation
+            typed_config:
+              "@type": type.googleapis.com/envoy.extensions.filters.http.header_mutation.v3.HeaderMutation
+              mutations:
+                response_mutations:
+                - append:
+                    header:
+                      key: Strict-Transport-Security
+                      value: "max-age=63072000; includeSubDomains; preload"
+                - append:
+                    header:
+                      key: Content-Security-Policy
+                      value: "default-src 'self'"
+                - append:
+                    header:
+                      key: X-Frame-Options
+                      value: "DENY"
+                - append:
+                    header:
+                      key: X-Content-Type-Options
+                      value: "nosniff"
+                - append:
+                    header:
+                      key: Referrer-Policy
+                      value: "same-origin"
+          - name: envoy.filters.http.router
+            typed_config: {}
+  clusters:
+  - name: site_backend
+    connect_timeout: 0.25s
+    type: logical_dns
+    lb_policy: round_robin
+    dns_lookup_family: V4_ONLY
+    load_assignment:
+      cluster_name: site_backend
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+            address:
+              socket_address:
+                address: 127.0.0.1
+                port_value: 8000
