@@ -32,6 +32,9 @@ npm run build
 npm run preview   # preview the built files
 ```
 
+The Vite configuration sets `base: '/parsanaenergy/'` so that assets load
+correctly when deploying the site under `https://<user>.github.io/parsanaenergy/`.
+
 ### `decision-tree-app`
 Interactive decision tree widget built with React and Vite.
 
@@ -53,6 +56,9 @@ npm run build      # build to dist/
 npm run preview    # preview production build
 npm run build-widget # build and copy into docs/widget
 ```
+
+This app also uses `base: '/parsanaenergy/'` in `vite.config.js` so the widget
+works correctly when served from the GitHub Pages subdirectory.
 
 Before committing changes to the repository, run `npm run build-widget`
 to refresh the files inside `docs/widget`. This keeps the deployed
