@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && npm run minify",
+    "build": "vite build && npm run minify && node ../scripts/update-html-hashes.js dist dist",
     "minify": "cssnano css/style.css css/style.min.css && terser js/articles.js -c -m -o js/articles.min.js && terser js/main.js -c -m -o js/main.min.js && terser js/services.js -c -m -o js/services.min.js",
     "preview": "vite preview",
     "predeploy": "npm run build",
