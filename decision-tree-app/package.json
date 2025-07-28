@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && node ../scripts/update-html-hashes.js dist dist",
-    "build-widget": "bash build-widget.sh",
+    "build-widget": "npm run build && mkdir -p ../docs/public/widget && rm -rf ../docs/public/widget/* && cp -a dist/. ../docs/public/widget/",
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",

@@ -1,42 +1,36 @@
-name: Deploy to GitHub Pages
+name: Build & Deploy Vite site
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
     paths:
-      - 'docs/**'
-      - 'decision-tree-app/**'
-
-permissions:
-  contents: write
+      - "docs/**"
+      - "decision-tree-app/**"
 
 jobs:
-  build-and-deploy:
+  deploy:
+    permissions:
+      contents: write
+      pages: write
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: 'npm'
-          cache-dependency-path: |
-            docs/package-lock.json
-            decision-tree-app/package-lock.json
+          cache: npm
 
-      - name: Build decision tree widget
+      - name: Build decision-tree widget
         working-directory: decision-tree-app
         run: |
-          npm ci
+          npm ci --legacy-peer-deps
           npm run build-widget
 
-      - name: Build docs site
+      - name: Build landing site
         working-directory: docs
         run: |
-          npm ci
+          npm ci --legacy-peer-deps
           npm run build
 
       - name: Deploy to GitHub Pages
@@ -44,7 +38,5 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: docs/dist
-          publish_branch: gh-pages
           cname: parsanaenergy.ir
-          enable_jekyll: false
 
