@@ -89,3 +89,15 @@ separately with unique hashes to avoid conflicts.
     ├── src
     └── vite.config.js
 ```
+
+## Envoy configuration
+
+The `envoy/envoy.yaml` file configures Envoy to inject common security headers into every response. Start your static site on port `8000` (e.g. `npm run preview` in `docs`) and launch Envoy:
+
+```bash
+docker run --rm -p 8080:8080 \
+  -v $(pwd)/envoy/envoy.yaml:/etc/envoy/envoy.yaml \
+  envoyproxy/envoy:v1.29-latest
+```
+
+Then open `http://localhost:8080`.
