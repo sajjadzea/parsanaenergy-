@@ -33,7 +33,8 @@ jobs:
       - name: Build landing
         working-directory: docs
         run: |
-          npm ci --legacy-peer-deps
+          rm -f ../docs/index.html  # remove dev entrypoint
+          npm ci --ignore-engines
           npm run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
