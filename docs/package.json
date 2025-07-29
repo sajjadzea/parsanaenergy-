@@ -6,8 +6,6 @@
   "scripts": {
     "dev": "vite",
     "minify": "cssnano css/style.css css/style.min.css && terser js/articles.js -c -m -o js/articles.min.js && terser js/main.js -c -m -o js/main.min.js && terser js/services.js -c -m -o js/services.min.js",
-    "prebuild": "rimraf dist",
-    "clean": "rimraf dist",
     "build": "vite build",
     "preview": "vite preview",
     "predeploy": "npm run build",
