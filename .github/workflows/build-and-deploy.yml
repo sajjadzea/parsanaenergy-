@@ -47,10 +47,6 @@ jobs:
         working-directory: docs
         run: npm run build
 
-      - name: Copy docs build output
-        run: |
-          rsync -a --delete docs/dist/ docs/
-          rm -rf docs/dist
 
       - name: Run tests
         run: |
