@@ -16,13 +16,13 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  build_site:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20.19.x
+          node-version: 20
           cache: 'npm'
       - name: Build decision-tree widget
         continue-on-error: true
@@ -41,7 +41,7 @@ jobs:
           path: docs/dist
   deploy:
     if: ${{ always() }}
-    needs: build
+    needs: build_site
     runs-on: ubuntu-latest
     environment:
       name: github-pages
