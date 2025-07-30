@@ -38,17 +38,21 @@ jobs:
           node-version: 20
           cache: 'npm'
       - name: Build decision-tree widget
-        continue-on-error: true
         working-directory: decision-tree-app
         run: |
           npm ci --legacy-peer-deps
-          npm run build-widget
+          npm run build
       - name: Build site
         working-directory: docs
         run: |
           npm ci --ignore-engines
           npm run build
+      - name: Copy widget to dist
+        run: |
+          mkdir -p docs/dist/widget
+          cp -r decision-tree-app/dist/* docs/dist/widget/
       - name: Copy CNAME
+        if: ${{ hashFiles('docs/CNAME') != '' }}
         run: cp docs/CNAME docs/dist/CNAME
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
@@ -56,7 +60,6 @@ jobs:
           path: docs/dist
           name: github-pages
   deploy:
-    if: ${{ always() }}
     needs: build_site
     runs-on: ubuntu-latest
     environment:
