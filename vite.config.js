@@ -2,6 +2,8 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
+  base: '/',
+  build: { outDir: 'dist', emptyOutDir: true },
+  resolve: { alias: { '@widget': '/widget' } },
   plugins: [react()],
-  base: '/parsanaenergy/',
 });

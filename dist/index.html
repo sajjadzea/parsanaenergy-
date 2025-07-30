@@ -4,6 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Parsana Energy</title>
+<meta http-equiv="Strict-Transport-Security" content="max-age=63072000; includeSubDomains; preload" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'" />
+<meta http-equiv="X-Frame-Options" content="DENY" />
+<meta http-equiv="X-Content-Type-Options" content="nosniff" />
+<meta http-equiv="Referrer-Policy" content="same-origin" />
   <meta name="description" content="مشاوره، فروش و اجاره تجهیزات برق اضطراری و انرژی خورشیدی" />
   <link rel="canonical" href="https://parsanaenergy.ir/" />
   <meta property="og:title" content="Parsana Energy" />
@@ -17,11 +22,8 @@
   <meta name="twitter:image" content="https://parsanaenergy.ir/images/logo.png" />
   <link rel="icon" href="/parsanaenergy/images/favicon.ico" />
   <!-- استایل اصلی سفارشی سایت -->
-  <!-- Bundle CSS خروجی Vite (hashed) -->
-  <!-- استایل ویجت (اگر لازمه) -->
-  <!-- Bundle JS خروجی Vite (hashed) -->
-  <script type="module" crossorigin src="/parsanaenergy/assets/index-Cxu1Pxt8.js"></script>
-  <link rel="stylesheet" crossorigin href="/parsanaenergy/assets/index-E4_dY-yQ.css">
+  <script type="module" crossorigin src="/assets/index-DTCWKPdK.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-B3myJYwK.css">
 </head>
   <body>
 
@@ -33,7 +35,7 @@
 
     <div class="sticky-header">
       <a href="index.html" class="header-logo">
-        <img src="/parsanaenergy/assets/logo-laZP8OeM.png" alt="Parsana Energy logo" />
+        <img src="/assets/logo-laZP8OeM.png" alt="Parsana Energy logo" />
       </a>
       <input type="checkbox" id="menu-toggle" class="menu-toggle" />
       <label for="menu-toggle" class="hamburger">
@@ -97,14 +99,14 @@
 
   <!-- ===== Decision Tree Widget ===== -->
   <section id="decision-tree" class="my-16">
-    <h2>درخت تصمیم‌گیری</h2>
+    <h2 class="text-center text-2xl font-bold mb-6">درخت تصمیم‌گیری</h2>
     <iframe
-      src="widget/index.html"
       id="decision-tree-widget"
-      style="width:100%;min-height:600px;border:none;"
+      src="./widget/index.html"
       loading="lazy"
-      title="Decision Tree"
-    ></iframe>
+      style="width:100%;min-height:650px;border:none"
+      title="Decision Tree Widget">
+    </iframe>
   </section>
 
 
@@ -113,19 +115,19 @@
     <h2>محصولات</h2>
     <div class="products-grid">
       <div class="product-card">
-        <img src="/parsanaenergy/assets/generator-BttAxcUk.png" alt="ژنراتور" loading="lazy">
+        <img src="/assets/generator-BttAxcUk.png" alt="ژنراتور" loading="lazy">
         <h3>ژنراتور دیزلی</h3>
         <p>راهکاری مطمئن برای تامین برق در شرایط اضطراری.</p>
         <a href="#" class="btn-primary">جزئیات بیشتر</a>
       </div>
       <div class="product-card">
-        <img src="/parsanaenergy/assets/battery-CdlIvizA.png" alt="باتری" loading="lazy">
+        <img src="/assets/battery-CdlIvizA.png" alt="باتری" loading="lazy">
         <h3>باتری صنعتی</h3>
         <p>ذخیره انرژی با طول عمر بالا و نگهداری آسان.</p>
         <a href="#" class="btn-primary">جزئیات بیشتر</a>
       </div>
       <div class="product-card">
-        <img src="/parsanaenergy/assets/solar-CmgFlLsN.png" alt="پنل خورشیدی" loading="lazy">
+        <img src="/assets/solar-CmgFlLsN.png" alt="پنل خورشیدی" loading="lazy">
         <h3>پنل خورشیدی</h3>
         <p>تولید برق پاک برای مصارف خانگی و تجاری.</p>
         <a href="#" class="btn-primary">جزئیات بیشتر</a>
@@ -138,13 +140,13 @@
     <h2>پروژه‌های ما</h2>
     <div class="projects-grid">
       <div class="project-item" data-title="پروژه 1" data-description="توضیح کوتاه درباره پروژه 1">
-        <img src="/parsanaenergy/assets/generator-BttAxcUk.png" alt="پروژه 1" loading="lazy">
+        <img src="/assets/generator-BttAxcUk.png" alt="پروژه 1" loading="lazy">
       </div>
       <div class="project-item" data-title="پروژه 2" data-description="توضیح کوتاه درباره پروژه 2">
-        <img src="/parsanaenergy/assets/battery-CdlIvizA.png" alt="پروژه 2" loading="lazy">
+        <img src="/assets/battery-CdlIvizA.png" alt="پروژه 2" loading="lazy">
       </div>
       <div class="project-item" data-title="پروژه 3" data-description="توضیح کوتاه درباره پروژه 3">
-        <img src="/parsanaenergy/assets/solar-CmgFlLsN.png" alt="پروژه 3" loading="lazy">
+        <img src="/assets/solar-CmgFlLsN.png" alt="پروژه 3" loading="lazy">
       </div>
     </div>
   </section>
@@ -262,7 +264,6 @@
   </footer>
 
   <div id="root"></div>
-  <!-- <script src="js/main.js"></script> -->
-  <!-- <script type="module" src="./src/main.jsx"></script> -->
+  <!-- اسکریپت ورودی پروژه Vite برای ساخت -->
 </body>
 </html>

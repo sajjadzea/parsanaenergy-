@@ -4,6 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Parsana Energy</title>
+<meta http-equiv="Strict-Transport-Security" content="max-age=63072000; includeSubDomains; preload" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'" />
+<meta http-equiv="X-Frame-Options" content="DENY" />
+<meta http-equiv="X-Content-Type-Options" content="nosniff" />
+<meta http-equiv="Referrer-Policy" content="same-origin" />
   <meta name="description" content="مشاوره، فروش و اجاره تجهیزات برق اضطراری و انرژی خورشیدی" />
   <link rel="canonical" href="https://parsanaenergy.ir/" />
   <meta property="og:title" content="Parsana Energy" />
@@ -17,12 +22,6 @@
   <meta name="twitter:image" content="https://parsanaenergy.ir/images/logo.png" />
   <link rel="icon" href="/parsanaenergy/images/favicon.ico" />
   <!-- استایل اصلی سفارشی سایت -->
-  <!-- Bundle CSS خروجی Vite (hashed) -->
-  <link rel="preload" href="./assets/index-E4_dY-yQ.css" as="style" />
-  <!-- استایل ویجت (اگر لازمه) -->
-  <link rel="stylesheet" href="assets/widget-style.css" />
-  <!-- Bundle JS خروجی Vite (hashed) -->
-  <script type="module" src="./assets/index-BmGFh0jB.js"></script>
 </head>
   <body>
 
@@ -98,14 +97,14 @@
 
   <!-- ===== Decision Tree Widget ===== -->
   <section id="decision-tree" class="my-16">
-    <h2>درخت تصمیم‌گیری</h2>
+    <h2 class="text-center text-2xl font-bold mb-6">درخت تصمیم‌گیری</h2>
     <iframe
-      src="widget/index.html"
       id="decision-tree-widget"
-      style="width:100%;min-height:600px;border:none;"
+      src="./widget/index.html"
       loading="lazy"
-      title="Decision Tree"
-    ></iframe>
+      style="width:100%;min-height:650px;border:none"
+      title="Decision Tree Widget">
+    </iframe>
   </section>
 
 
@@ -263,7 +262,7 @@
   </footer>
 
   <div id="root"></div>
-  <!-- <script src="js/main.js"></script> -->
-  <!-- <script type="module" src="./src/main.jsx"></script> -->
+  <!-- اسکریپت ورودی پروژه Vite برای ساخت -->
+  <script type="module" src="/src/main.jsx"></script>
 </body>
 </html>
