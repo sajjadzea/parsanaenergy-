@@ -44,14 +44,17 @@ jobs:
           npm ci --legacy-peer-deps
           npm run build-widget
       - name: Build site
+        working-directory: docs
         run: |
-          cd docs
           npm ci --ignore-engines
           npm run build
+      - name: Copy CNAME
+        run: cp docs/CNAME docs/dist/CNAME
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: docs/dist
+          name: github-pages
   deploy:
     if: ${{ always() }}
     needs: build_site
@@ -68,5 +71,5 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
         with:
-          cname: parsanaenergy.ir
+          artifact_name: github-pages
 
