@@ -43,10 +43,9 @@ jobs:
         run: |
           npm ci --legacy-peer-deps
           npm run build-widget
-      - name: Build landing
-        working-directory: docs
+      - name: Build site
         run: |
-          rm -f ../docs/index.html  # remove dev entrypoint
+          cd docs
           npm ci --ignore-engines
           npm run build
       - name: Upload artifact
