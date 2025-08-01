@@ -3,7 +3,6 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
-    paths: ["docs/**","decision-tree-app/**"]
   workflow_dispatch:
 
 permissions:
@@ -51,13 +50,15 @@ jobs:
         run: |
           mkdir -p docs/dist/widget
           cp -r decision-tree-app/dist/* docs/dist/widget/
-      - name: Copy CNAME
-        if: ${{ hashFiles('docs/CNAME') != '' }}
-        run: cp docs/CNAME docs/dist/CNAME
+      - name: Prepare static folder
+        run: |
+          cd docs/dist
+          touch .nojekyll
+          if [ -f ../../docs/CNAME ]; then cp ../../docs/CNAME ./CNAME; fi
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: docs/dist
+          path: ./docs/dist
           name: github-pages
   deploy:
     needs: build_site
