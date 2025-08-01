@@ -1,8 +1,16 @@
 {
   "name": "parsanaenergy-root",
   "private": true,
+  "packageManager": "pnpm@8.0.0",
+  "workspaces": [
+    "docs",
+    "decision-tree-app"
+  ],
   "type": "module",
   "scripts": {
+    "build": "pnpm -r run build",
+    "dev": "pnpm -r run dev",
+    "lint": "pnpm -r run lint",
     "test": "playwright test || true",
     "build:widget": "cd decision-tree-app && npm i --legacy-peer-deps && npm run build-widget",
     "build:site": "cd docs && npm i && npm run build",
