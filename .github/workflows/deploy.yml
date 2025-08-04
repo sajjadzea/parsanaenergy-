@@ -1,0 +1,93 @@
+name: Deploy Parsana Energy to GitHub Pages
+
+on:
+  push:
+    branches: ["main", "master"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Debug - List directory structure
+        run: |
+          echo "📁 Repository structure:"
+          find . -name "package.json" -type f
+          ls -la docs/ || echo "docs directory not found"
+          ls -la decision-tree-app/ || echo "decision-tree-app directory not found"
+
+      - name: Install decision-tree-app dependencies
+        run: |
+          cd decision-tree-app
+          if [ -f "package.json" ]; then
+            npm ci || npm install
+          else
+            echo "❌ No package.json found in decision-tree-app"
+            exit 1
+          fi
+
+      - name: Build decision-tree widget
+        run: |
+          cd decision-tree-app
+          
+          # Check if build-widget script exists
+          if npm run | grep -q "build-widget"; then
+            echo "✅ Running build-widget script"
+            npm run build-widget
+          else
+            echo "⚠️ build-widget script not found, running build instead"
+            npm run build
+            
+            # Manually copy to docs/widget
+            mkdir -p ../docs/widget
+            cp -r dist/* ../docs/widget/ || echo "Failed to copy widget files"
+          fi
+
+      - name: Install docs dependencies
+        run: |
+          cd docs
+          if [ -f "package.json" ]; then
+            npm ci || npm install
+          else
+            echo "❌ No package.json found in docs"
+            exit 1
+          fi
+
+      - name: Build docs site
+        run: |
+          cd docs
+          npm run build
+          
+          echo "📦 Built files:"
+          ls -la dist/ || echo "No dist directory created"
+
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact to GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'docs/dist'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

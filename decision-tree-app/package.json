@@ -5,13 +5,11 @@
   "type": "module",
   "homepage": "https://sajjadzea.github.io/parsanaenergy/",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build && node ../scripts/update-html-hashes.js dist dist",
-    "build-widget": "npm run build && mkdir -p ../docs/widget && rsync -a --delete dist/ ../docs/widget/",
+    "dev": "vite --host",
+    "build": "vite build",
+    "build-widget": "vite build && mkdir -p ../docs/widget && cp -r dist/* ../docs/widget/",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "preview": "vite preview --host"
   },
   "dependencies": {
     "react": "18.2.0",
