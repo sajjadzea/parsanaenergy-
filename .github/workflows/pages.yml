@@ -43,6 +43,11 @@ jobs:
           version: 8
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
+      - name: Copy static pages
+        run: |
+          cp docs/404.html docs/dist/404.html
+          rm -rf docs/dist/articles
+          cp -r docs/articles docs/dist/articles
       - name: Copy widget to dist
         run: |
           mkdir -p docs/dist/widget
