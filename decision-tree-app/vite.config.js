@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 import markdown from 'vite-plugin-md';
 
 export default defineConfig({
-  base: '/',
+  base: '/parsanaenergy/',
   plugins: [react(), markdown()],
   build: {
     outDir: 'dist',
