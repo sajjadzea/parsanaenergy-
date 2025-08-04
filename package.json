@@ -14,7 +14,7 @@
     "test": "playwright test || true",
     "build:widget": "cd decision-tree-app && npm i --legacy-peer-deps && npm run build-widget",
     "build:site": "cd docs && npm i && npm run build",
-    "deploy": "npm run build:widget && npm run build:site && node scripts/update-html-hashes.js docs/dist docs docs/articles docs/blog docs/catalog docs/services docs/widget && rm -rf docs/dist"
+    "deploy": "npm run build:widget && npm run build:site && node scripts/update-html-hashes.js docs/dist docs docs/public/articles docs/public/blog docs/catalog docs/services docs/widget && rm -rf docs/dist"
   },
   "devDependencies": {
     "@playwright/test": "^1.44.0"

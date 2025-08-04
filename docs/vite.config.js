@@ -6,14 +6,14 @@ import { fileURLToPath } from 'url';
 const root = dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
-  base: '/',
+  base: '/parsanaenergy/',
+  publicDir: 'public',
   build: {
     outDir: 'dist',
     emptyOutDir: true,
     rollupOptions: {
       input: {
         main: resolve(root, 'index.html'),
-        articles: resolve(root, 'articles/index.html'),
       },
     },
   },
