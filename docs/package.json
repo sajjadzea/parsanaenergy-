@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "minify": "cssnano css/style.css css/style.min.css && terser js/articles.js -c -m -o js/articles.min.js && terser js/main.js -c -m -o js/main.min.js && terser js/services.js -c -m -o js/services.min.js",
-    "build": "rimraf dist && vite build",
+    "build": "rimraf dist && vite build && cp -r public/articles dist/articles",
     "preview": "vite preview",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"

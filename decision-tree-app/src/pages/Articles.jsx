@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { articles } from '../../../docs/articles/index.js';
+import { articles } from '../../../docs/public/articles/index.js';
 
 const Articles = () => (
   <main className="articles-list">
