@@ -1,0 +1,63 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - name: Enable corepack
+        run: corepack enable
+      - name: Install dependencies
+        run: pnpm install
+      - name: Build site
+        run: pnpm --filter docs... build
+      - name: Copy static files
+        run: |
+          cp docs/404.html docs/dist/
+          cp docs/CNAME docs/dist/
+          cp -r docs/public/articles docs/dist/articles
+          touch docs/dist/.nojekyll
+      - name: Verify build output
+        run: |
+          set -e
+          for f in 404.html CNAME .nojekyll; do
+            [ -e "docs/dist/$f" ] || { echo "$f missing"; exit 1; }
+          done
+          [ -d docs/dist/articles ] || { echo "articles/ missing"; exit 1; }
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/dist
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - id: deployment
+        uses: actions/deploy-pages@v4
+      - name: Verify deployed routes
+        run: |
+          scripts/verify-deployment.sh "${{ steps.deployment.outputs.page_url }}"

@@ -4,6 +4,17 @@ This repository hosts several independent front‑end applications. Each
 folder under the root is a self‑contained [Vite](https://vitejs.dev/) project
 with its own `package.json`.
 
+## CI/CD
+
+The repository uses a single GitHub Actions workflow (`build-and-deploy.yml`) to
+build and publish the site to GitHub Pages. The workflow installs dependencies
+with `pnpm`, builds the `docs` site, copies required static assets (`404.html`,
+`CNAME`, `articles/`, `.nojekyll`), and verifies that they exist in the output
+before deployment. After the site is deployed, the helper script
+`scripts/verify-deployment.sh` checks that `/`, `/articles/`, and `/404.html`
+return HTTP 200. Update the workflow and these checks whenever new pages or
+features are introduced.
+
 ## Modules
 
 ### `docs`
