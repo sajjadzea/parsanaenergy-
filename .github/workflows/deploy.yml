@@ -22,63 +22,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js 18
-        uses: actions/setup-node@v4
+      # Use pnpm/action-setup@v4 to avoid Node 20 URLSearchParams issues
+      - uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: 'npm'
-
-      - name: Debug - List directory structure
-        run: |
-          echo "📁 Repository structure:"
-          find . -name "package.json" -type f
-          ls -la docs/ || echo "docs directory not found"
-          ls -la decision-tree-app/ || echo "decision-tree-app directory not found"
-
-      - name: Install decision-tree-app dependencies
-        run: |
-          cd decision-tree-app
-          if [ -f "package.json" ]; then
-            npm ci || npm install
-          else
-            echo "❌ No package.json found in decision-tree-app"
-            exit 1
-          fi
+          node-version: 18
+      - uses: pnpm/action-setup@v4
+        with:
+          run_install: true
 
       - name: Build decision-tree widget
-        run: |
-          cd decision-tree-app
-          
-          # Check if build-widget script exists
-          if npm run | grep -q "build-widget"; then
-            echo "✅ Running build-widget script"
-            npm run build-widget
-          else
-            echo "⚠️ build-widget script not found, running build instead"
-            npm run build
-            
-            # Manually copy to docs/widget
-            mkdir -p ../docs/widget
-            cp -r dist/* ../docs/widget/ || echo "Failed to copy widget files"
-          fi
-
-      - name: Install docs dependencies
-        run: |
-          cd docs
-          if [ -f "package.json" ]; then
-            npm ci || npm install
-          else
-            echo "❌ No package.json found in docs"
-            exit 1
-          fi
+        run: pnpm --filter decision-tree-app run build-widget
 
       - name: Build docs site
-        run: |
-          cd docs
-          npm run build
-          
-          echo "📦 Built files:"
-          ls -la dist/ || echo "No dist directory created"
+        run: pnpm --filter docs run build
 
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v4
