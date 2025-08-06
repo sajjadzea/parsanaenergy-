@@ -9,12 +9,12 @@
 
 ## راه‌اندازی و توسعه
 ```bash
-npm install
-npm run dev        # اجرای سرور توسعه
+pnpm install
+pnpm dev        # اجرای سرور توسعه
 ```
 
 ## ساخت نسخهٔ نهایی
 ```bash
-npm run build
-npm run preview    # مشاهدهٔ خروجی build
+pnpm build
+pnpm preview    # مشاهدهٔ خروجی build
 ```

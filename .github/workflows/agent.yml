@@ -14,16 +14,17 @@ jobs:
       # Step 1: checkout repo
       - uses: actions/checkout@v4
 
-      # Step 2: set up Node (نسخه ۲۰ یا جدیدتر)
+      # Step 2: set up Node 18 and pnpm (avoids URLSearchParams bug on Node 20)
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 18
+      - uses: pnpm/action-setup@v4
+        with:
+          run_install: true
 
-      # Step 3: نصب وابستگی‌ها و Build (در صورت وجود بسته‌ها)
-      - name: Install dependencies & Build
-        run: |
-          npm ci || true          # اگر package.json در ریشه نیست، خطا نگیر
-          npm run build || true   # در صورت نبود اسکریپت build، عبور کن
+      # Step 3: Build (if script exists)
+      - name: Build project
+        run: pnpm build || true
 
       # Step 4: اجرای اسکریپت Agent
       - name: Run agent script

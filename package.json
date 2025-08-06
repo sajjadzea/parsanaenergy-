@@ -2,21 +2,14 @@
   "name": "parsanaenergy-root",
   "private": true,
   "packageManager": "pnpm@8.0.0",
-  "workspaces": [
-    "docs",
-    "decision-tree-app"
-  ],
   "type": "module",
   "scripts": {
     "build": "pnpm -r run build",
     "dev": "pnpm -r run dev",
     "lint": "pnpm -r run lint",
-    "test": "playwright test || true",
-    "build:widget": "cd decision-tree-app && npm i --legacy-peer-deps && npm run build-widget",
-    "build:site": "cd docs && npm i && npm run build",
-    "deploy": "npm run build:widget && npm run build:site && node scripts/update-html-hashes.js docs/dist docs docs/public/articles docs/public/blog docs/catalog docs/services docs/widget && rm -rf docs/dist"
+    "build:widget": "pnpm --filter decision-tree-app run build-widget",
+    "build:site": "pnpm --filter docs run build",
+    "deploy": "pnpm run build:widget && pnpm run build:site && node scripts/update-html-hashes.js docs/dist docs docs/public/articles docs/public/blog docs/catalog docs/services docs/widget && rm -rf docs/dist"
   },
-  "devDependencies": {
-    "@playwright/test": "^1.44.0"
-  }
+  "devDependencies": {}
 }

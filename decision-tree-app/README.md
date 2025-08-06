@@ -10,10 +10,10 @@ embedded in the landing page.
 
 ## Scripts
 ```bash
-npm install           # install dependencies
-npm run dev           # start development server
-npm run build         # build to dist/
-npm run preview       # preview the built app
-npm run deploy        # build and publish to GitHub Pages
-npm run build-widget  # build and copy files to ../docs/widget
+pnpm install          # install dependencies
+pnpm dev              # start development server
+pnpm build            # build to dist/
+pnpm preview          # preview the built app
+pnpm run deploy       # build and publish to GitHub Pages
+pnpm run build-widget # build and copy files to ../docs/widget
 ```

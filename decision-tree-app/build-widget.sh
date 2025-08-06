@@ -3,8 +3,8 @@
 # Build the decision-tree-app and copy the output to docs/widget
 set -e
 
-npm ci --legacy-peer-deps
-npm run build
+# Dependencies are installed via pnpm-workspace at the repo root
+pnpm run build
 
 # Replace docs/widget contents with the new build
 mkdir -p ../docs/widget/assets

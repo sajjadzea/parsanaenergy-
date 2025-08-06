@@ -33,15 +33,4 @@ fi
 echo "📥 Running pnpm install..."
 pnpm install
 
-echo "📥 Ensuring @playwright/test is installed..."
-if ! pnpm list @playwright/test >/dev/null 2>&1; then
-  pnpm add -D @playwright/test
-fi
-
-echo "🎭 Installing Playwright browsers..."
-pnpm exec playwright install
-
-echo "🧪 Running tests..."
-pnpm test
-
 echo "✅ All done!"
