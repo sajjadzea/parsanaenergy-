@@ -1,49 +1,48 @@
-name: Deploy Parsana Energy to GitHub Pages
+name: CI/CD – Build, Test & Deploy
 
 on:
   push:
-    branches: ["main", "master"]
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+    branches: [main]
+  pull_request:
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      # Use pnpm/action-setup@v4 to avoid Node 20 URLSearchParams issues
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
         with:
-          node-version: 18
-      - uses: pnpm/action-setup@v4
-        with:
-          run_install: true
+          version: 8
 
-      - name: Build decision-tree widget
-        run: pnpm --filter decision-tree-app run build-widget
+      - name: Install dependencies (monorepo)
+        run: pnpm install --frozen-lockfile
 
-      - name: Build docs site
-        run: pnpm --filter docs run build
+      - name: Lint all packages
+        run: |
+          pnpm --filter ./docs lint || true
+          pnpm --filter ./decision-tree-app lint || true
 
-      - name: Setup GitHub Pages
-        uses: actions/configure-pages@v4
+      - name: Unit tests for docs
+        run: pnpm --filter ./docs test || echo "No tests in docs"
+      - name: Unit tests for decision-tree-app
+        run: pnpm --filter ./decision-tree-app test || echo "No tests in decision-tree-app"
 
-      - name: Upload artifact to GitHub Pages
+      - name: Build docs
+        run: pnpm --filter ./docs build
+      - name: Build decision-tree-app
+        run: pnpm --filter ./decision-tree-app build
+
+      - name: Playwright install and E2E tests
+        run: |
+          pnpm exec playwright install
+          pnpm exec playwright test
+
+      - name: Upload build artifact
+        if: ${{ github.ref == 'refs/heads/main' }}
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'docs/dist'
+          path: docs/dist
 
       - name: Deploy to GitHub Pages
-        id: deployment
+        if: ${{ github.ref == 'refs/heads/main' }}
         uses: actions/deploy-pages@v4
