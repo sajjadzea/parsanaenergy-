@@ -2,6 +2,8 @@ node_modules/
 # dependencies
 **/node_modules
 # compiled output
+docs/dist
+decision-tree-app/dist
 **/dist
 # OS or editor files
 .DS_Store
