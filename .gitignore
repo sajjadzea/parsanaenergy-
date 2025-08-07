@@ -6,3 +6,5 @@ node_modules/
 # OS or editor files
 .DS_Store
 .env
+docs/dist
+docs/dist
