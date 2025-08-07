@@ -11,5 +11,9 @@
     "build:site": "pnpm --filter docs run build",
     "deploy": "pnpm run build:widget && pnpm run build:site && node scripts/update-html-hashes.js docs/dist docs docs/public/articles docs/public/blog docs/catalog docs/services docs/widget && rm -rf docs/dist"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "eslint": "^9.30.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react": "^7.37.5"
+  }
 }
