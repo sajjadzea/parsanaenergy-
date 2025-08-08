@@ -34,26 +34,27 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: pnpm
+          # NOTE: we don't set cache: 'pnpm' before pnpm is available via Corepack
 
-      - name: Enable Corepack (use pnpm from packageManager)
+      - name: Enable Corepack + lock pnpm to packageManager
         run: |
           corepack enable
+          # If package.json has "packageManager": "pnpm@8.15.8" this will activate that version
+          corepack use pnpm@8.15.8
           pnpm -v
 
-      - name: Resolve pnpm store path
-        run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-
       - name: Cache pnpm store
+        id: pnpm-cache
         uses: actions/cache@v4
         with:
-          path: ${{ env.STORE_PATH }}
+          path: ~/.local/share/pnpm/store
           key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml','docs/pnpm-lock.yaml','decision-tree-app/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-
 
       - name: Install (workspace)
         run: |
+          pnpm -v
           pnpm -w install --no-frozen-lockfile
           pnpm -C docs install --no-frozen-lockfile || true
           pnpm -C decision-tree-app install --no-frozen-lockfile || true
@@ -84,6 +85,8 @@ jobs:
     environment:
       name: github-pages
     steps:
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
@@ -98,6 +101,8 @@ jobs:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
       - name: Deploy PR Preview
         id: deployment
         uses: actions/deploy-pages@v4
