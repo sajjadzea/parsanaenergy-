@@ -1,0 +1,13 @@
+{
+  "name": "@parsana/typography",
+  "version": "0.1.0",
+  "private": false,
+  "type": "module",
+  "main": "index.css",
+  "files": ["index.css", "README.md", "fonts.css"],
+  "license": "MIT",
+  "dependencies": {
+    "@fontsource-variable/vazirmatn": "^5.0.0",
+    "@fontsource-variable/inter": "^5.0.0"
+  }
+}

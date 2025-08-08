@@ -1,0 +1,65 @@
+/* ===== @parsana/typography – Persian-first (RTL) base ===== */
+@import "@fontsource-variable/vazirmatn/index.css";
+@import "@fontsource-variable/inter/index.css";
+
+:root{
+  --font-sans: "Vazirmatn","Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --leading: 1.75;
+  /* Fluid type scale */
+  --size-0: clamp(13px, 0.25vw + 12px, 14px);
+  --size-1: clamp(15px, 0.35vw + 14px, 16px); /* body */
+  --size-2: clamp(17px, 0.6vw + 14px, 19px);
+  --size-3: clamp(21px, 1vw + 16px, 25px);
+  --size-4: clamp(26px, 1.6vw + 18px, 32px);
+  --size-5: clamp(32px, 2.2vw + 20px, 40px);
+}
+
+html[lang="fa"]{ direction: rtl; }
+body{
+  font-family: var(--font-sans);
+  font-size: var(--size-1);
+  line-height: var(--leading);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  margin: 0;
+  color: #111;
+}
+
+h1,h2,h3,h4,h5,h6{
+  font-family: var(--font-sans);
+  margin: 0 0 .7em;
+  letter-spacing: normal;
+}
+h1{ font-size: var(--size-5); line-height: 1.2; font-weight: 700; }
+h2{ font-size: var(--size-4); line-height: 1.25; font-weight: 700; }
+h3{ font-size: var(--size-3); line-height: 1.3; font-weight: 600; }
+h4{ font-size: var(--size-2); line-height: 1.35; font-weight: 600; }
+
+p, li{ font-size: var(--size-1); margin: 0 0 1em; }
+a{ text-decoration: none; }
+a:hover, a:focus{ text-decoration: underline; }
+
+ul,ol{ padding-inline-start: 1.2em; margin: 0 0 1em; }
+
+table{ width: 100%; border-collapse: collapse; font-size: var(--size-0); }
+th,td{ padding: .6em .8em; border-bottom: 1px solid #eee; }
+
+input,select,textarea,button{
+  font-family: var(--font-sans);
+  font-size: var(--size-1);
+  line-height: 1.4;
+}
+
+:lang(en), code, pre, .ltr{
+  direction: ltr; unicode-bidi: isolate;
+  font-family: "Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+
+p{
+  text-wrap: pretty;
+  hanging-punctuation: first allow-end;
+}
+
+.readable, article, .post-content{
+  max-width: 68ch; margin-inline: auto;
+}
