@@ -64,4 +64,6 @@ jobs:
     steps:
       - uses: actions/configure-pages@v5
       - uses: actions/deploy-pages@v4
+ codex/fix-build-and-pages-deploy-workflow
+
 
