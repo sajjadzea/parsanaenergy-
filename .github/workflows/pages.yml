@@ -34,17 +34,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          # ⛔️ cache: 'pnpm' را حذف کردیم تا قبل از نصب pnpm اجرا نشود
+          cache: pnpm
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9
-          run_install: false
+      - name: Enable Corepack (use pnpm from packageManager)
+        run: |
+          corepack enable
+          pnpm -v
 
-      # کش pnpm-store بعد از نصب pnpm
       - name: Resolve pnpm store path
-        id: pnpm-store
         run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
       - name: Cache pnpm store
@@ -57,7 +54,6 @@ jobs:
 
       - name: Install (workspace)
         run: |
-          pnpm -v
           pnpm -w install --no-frozen-lockfile
           pnpm -C docs install --no-frozen-lockfile || true
           pnpm -C decision-tree-app install --no-frozen-lockfile || true
