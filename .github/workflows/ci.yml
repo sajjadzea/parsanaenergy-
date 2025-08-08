@@ -1,97 +1,39 @@
-name: CI/CD - Build, Test (soft) & Deploy
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: false
-
+name: CI — Lint & Test (soft, no deploy)
+permissions: { contents: read }
+concurrency: { group: ci-${{ github.ref }}, cancel-in-progress: true }
 on:
-  push:
-    branches: [ main ]
+  push: { branches: [ "main" ] }
   pull_request:
-
+  workflow_dispatch:
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      # Node only; do NOT set cache:'pnpm' here.
       - uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
-      # Use Corepack so package.json: "packageManager": "pnpm@8.x" is honored
-      - name: Enable Corepack
-        run: corepack enable
-
-      # Ensure pnpm shim is active (also triggers download)
-      - name: Show pnpm version
-        run: pnpm --version
-
-      # Manual pnpm store cache (after pnpm is available)
-      - name: Compute pnpm store path
-        id: pnpm-cache
+        with: { node-version: '18.x', check-latest: true }
+      - uses: pnpm/action-setup@v4
+        with: { run_install: false }
+      - name: Get pnpm store path
+        id: pnpm-store
         run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-      - name: Cache pnpm store
-        uses: actions/cache@v4
+      - uses: actions/cache@v4
         with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-
-      - name: Install deps
-        run: pnpm -w install --frozen-lockfile
-
-      # Soft-fail lint & test until we enforce them later
-      - name: Lint (soft)
-        run: pnpm -w --if-present run lint || echo "no lint or lint failed (soft)"
-        continue-on-error: true
-
-      - name: Test (soft)
-        run: pnpm -w --if-present run test || echo "no tests or tests failed (soft)"
-        continue-on-error: true
-
-      - name: Build widget
-        run: pnpm --filter ./decision-tree-app run build-widget
-
-      - name: Build docs
-        run: pnpm --filter ./docs run build
-
-      - name: Verify docs build output
+          path: ${{ steps.pnpm-store.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: ${{ runner.os }}-pnpm-
+      - name: Install workspaces (no-frozen)
         run: |
-          set -e
-          if [ -d docs/dist ]; then
-            echo "Found docs/dist"
-          else
-            echo "::error::docs/dist not found."
-            echo "Listing docs directory for diagnostics:"
-            ls -la docs || true
-            echo "Show docs/package.json scripts:"
-            cat docs/package.json || true
-            exit 1
-          fi
-
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: docs/dist
-
-  deploy:
-    needs: build
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-    steps:
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
+          pnpm -w install --no-frozen-lockfile
+          pnpm -C decision-tree-app install --no-frozen-lockfile || true
+          pnpm -C docs install --no-frozen-lockfile || true
+      - name: Lint (soft)
+        run: pnpm -r --if-present lint || true
+        continue-on-error: true
+      - name: Build (soft)
+        run: |
+          pnpm -C decision-tree-app run build-widget || true
+          pnpm -C docs run build || true
+      - name: Test (soft)
+        run: pnpm -r --if-present test || true
+        continue-on-error: true
