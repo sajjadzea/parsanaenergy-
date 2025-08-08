@@ -1,6 +1,0 @@
-cat > .eslintrc.json <<'JSON'
-{
-  "extends": ["eslint:recommended", "plugin:react/recommended", "prettier"],
-  "env": { "browser": true, "node": true, "es2021": true }
-}
-JSON

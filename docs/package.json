@@ -6,7 +6,8 @@
     "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview --host",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "lint": "eslint \"**/*.{js,jsx,ts,tsx}\" --max-warnings=0"
   },
   "devDependencies": {
     "vite": "^5.0.0",
