@@ -70,6 +70,18 @@ decision tree up‑to‑date.
 This sequence ensures the site and widget bundles are generated
 separately with unique hashes to avoid conflicts.
 
+## Custom domain
+
+GitHub Pages deployment can optionally use a custom domain. The workflow
+reads the `CUSTOM_DOMAIN_MODE` environment variable:
+
+- `none` (default): deploy without a `CNAME` file
+- `apex`: add `parsanaenergy.ir` as the custom domain
+- `www`: add `www.parsanaenergy.ir` as the custom domain
+
+Set `CUSTOM_DOMAIN_MODE` at the workflow or repository level to switch
+between these modes.
+
 ## Envoy configuration
 
 The `envoy/envoy.yaml` file configures Envoy to inject common security headers into every response. Start your static site on port `8000` (e.g. `pnpm preview` in `docs`) and launch Envoy:
