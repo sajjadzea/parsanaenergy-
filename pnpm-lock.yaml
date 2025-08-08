@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 importers:
 
   .:
@@ -1506,7 +1510,7 @@ packages:
       '@types/markdown-it': 12.2.3
       '@yankeeinlondon/happy-wrapper': 2.10.1(terser@5.43.1)
       fp-ts: 2.16.10
-      inferred-types: 0.37.6(happy-dom@8.9.0)(terser@5.43.1)
+      inferred-types: 0.37.6(terser@5.43.1)
       markdown-it: 13.0.2
       vite-plugin-md: 0.22.5(@vitejs/plugin-vue@6.0.1)(terser@5.43.1)(vite@7.0.4)
     transitivePeerDependencies:
@@ -1531,7 +1535,7 @@ packages:
     resolution: {integrity: sha512-ZrHqB3PAin0QmxeNV3Ly3c6IDXKelGGLmGJGWoqwxI1jJjXNU80i6KWsJ0sAhzTg/UIsAtgBFcJkXS7F1ZM6eQ==}
     engines: {node: '>=14.0'}
     dependencies:
-      inferred-types: 0.37.6(happy-dom@8.9.0)(terser@5.43.1)
+      inferred-types: 0.37.6(terser@5.43.1)
       js-yaml: 4.1.0
       kind-of: 6.0.3
       section-matter: 1.0.0
@@ -1745,6 +1749,29 @@ packages:
       bumpp: 8.2.1
       callsites: 4.2.0
       inferred-types: 0.37.6(happy-dom@8.9.0)(terser@5.43.1)
+      vitest: 0.25.8(happy-dom@8.9.0)(terser@5.43.1)
+    transitivePeerDependencies:
+      - '@edge-runtime/vm'
+      - '@vitest/browser'
+      - '@vitest/ui'
+      - happy-dom
+      - jsdom
+      - less
+      - lightningcss
+      - sass
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+    dev: true
+
+  /brilliant-errors@0.7.3(terser@5.43.1):
+    resolution: {integrity: sha512-WT9BkAze4SUOJfr7LUwJWNDAvynEAvUMvMPuFKu8QQKnRq+WMx3DAtHfOBJjHmHRxf748JY3CNVytSk6HH2yGg==}
+    engines: {node: '>=14.0.0'}
+    dependencies:
+      bumpp: 8.2.1
+      callsites: 4.2.0
+      inferred-types: 0.37.6(terser@5.43.1)
       vitest: 0.25.8(happy-dom@8.9.0)(terser@5.43.1)
     transitivePeerDependencies:
       - '@edge-runtime/vm'
@@ -2853,6 +2880,25 @@ packages:
     resolution: {integrity: sha512-CfL5g1wR5rVwX2K5S6wSL+h9eODScum/LBwlhGRrcBIvfYppvUQM0aeRJ1BZS+QE38kGzd3v+U526+nQR7ZUkg==}
     dependencies:
       brilliant-errors: 0.7.3(happy-dom@8.9.0)(terser@5.43.1)
+    transitivePeerDependencies:
+      - '@edge-runtime/vm'
+      - '@vitest/browser'
+      - '@vitest/ui'
+      - happy-dom
+      - jsdom
+      - less
+      - lightningcss
+      - sass
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+    dev: true
+
+  /inferred-types@0.37.6(terser@5.43.1):
+    resolution: {integrity: sha512-CfL5g1wR5rVwX2K5S6wSL+h9eODScum/LBwlhGRrcBIvfYppvUQM0aeRJ1BZS+QE38kGzd3v+U526+nQR7ZUkg==}
+    dependencies:
+      brilliant-errors: 0.7.3(terser@5.43.1)
     transitivePeerDependencies:
       - '@edge-runtime/vm'
       - '@vitest/browser'
