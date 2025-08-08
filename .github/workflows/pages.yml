@@ -61,12 +61,12 @@ jobs:
       - name: Build docs
         run: pnpm -C docs run build
 
-      - name: HOTFIX — copy static assets
+      - name: HOTFIX - copy static assets
         run: |
           rsync -a docs/images/ docs/dist/images/ || true
           rsync -a docs/js/ docs/dist/js/ || true
 
-      - name: HOTFIX — normalize base hrefs
+      - name: HOTFIX - normalize base hrefs
         run: |
           find docs/dist -name '*.html' -print0 | xargs -0 sed -i 's#<base href="/parsanaenergy/">##g'
           find docs/dist -name '*.html' -print0 | xargs -0 sed -i 's#"/parsanaenergy/#"/#g'
@@ -101,4 +101,3 @@ jobs:
         uses: actions/configure-pages@v5
       - name: Deploy PR Preview
         uses: actions/deploy-pages@v4
-
