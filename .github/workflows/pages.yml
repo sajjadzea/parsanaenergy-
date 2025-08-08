@@ -1,10 +1,4 @@
-name: Deploy to GitHub Pages
-
-on:
-  push:
-    branches: ["main"]
-    paths:
-      - "docs/**"
+name: Pages Build and Deploy
 
 permissions:
   contents: read
@@ -12,20 +6,80 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: pages-${{ github.ref }}
   cancel-in-progress: true
 
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v2
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
-          path: docs
-      - id: deployment
-        uses: actions/deploy-pages@v2
+          fetch-depth: 1
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+          check-latest: true
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Install workspaces (no frozen)
+        run: |
+          pnpm -v
+          pnpm -w install --no-frozen-lockfile
+          pnpm -C decision-tree-app install --no-frozen-lockfile || true
+          pnpm -C docs install --no-frozen-lockfile || true
+
+      - name: Build docs
+        run: pnpm -C docs run build
+
+      - name: Write CNAME
+        run: echo "www.parsanaenergy.ir" > docs/dist/CNAME
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/dist
+
+  deploy:
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+    steps:
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+      - name: Print Production URL
+        run: echo "Production URL: ${{ steps.deployment.outputs.page_url }}" >> $GITHUB_STEP_SUMMARY
+
+  preview:
+    needs: build
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Deploy PR Preview
+        id: deployment
+        uses: actions/deploy-pages@v4
+        with:
+          preview: true
+      - name: Print Preview URL
+        run: echo "Preview URL: ${{ steps.deployment.outputs.page_url }}" >> $GITHUB_STEP_SUMMARY
