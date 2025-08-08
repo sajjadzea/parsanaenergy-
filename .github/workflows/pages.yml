@@ -9,6 +9,10 @@ concurrency:
   group: pages-${{ github.ref }}
   cancel-in-progress: true
 
+defaults:
+  run:
+    shell: bash
+
 on:
   push:
     branches:
@@ -46,8 +50,10 @@ jobs:
       - name: Build docs
         run: pnpm -C docs run build
 
-      - name: Write CNAME
-        run: echo "www.parsanaenergy.ir" > docs/dist/CNAME
+      - name: Inject CNAME (custom domain)
+        run: |
+          mkdir -p docs/dist
+          echo "www.parsanaenergy.ir" > docs/dist/CNAME
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -66,8 +72,9 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-      - name: Print Production URL
-        run: echo "Production URL: ${{ steps.deployment.outputs.page_url }}" >> $GITHUB_STEP_SUMMARY
+      - name: Summarize Production URL
+        run: |
+          echo "Production URL: ${{ steps.deployment.outputs.page_url }}" >> "$GITHUB_STEP_SUMMARY"
 
   preview:
     needs: build
@@ -81,5 +88,6 @@ jobs:
         uses: actions/deploy-pages@v4
         with:
           preview: true
-      - name: Print Preview URL
-        run: echo "Preview URL: ${{ steps.deployment.outputs.page_url }}" >> $GITHUB_STEP_SUMMARY
+      - name: Summarize Preview URL
+        run: |
+          echo "Preview URL: ${{ steps.deployment.outputs.page_url }}" >> "$GITHUB_STEP_SUMMARY"
