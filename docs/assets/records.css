@@ -1,0 +1,65 @@
+.records-page, .timeline-page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+.records-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.record-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+}
+.record-card .icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.timeline {
+  position: relative;
+  margin: 2rem auto;
+  padding-right: 2rem;
+  border-right: 2px solid #ccc;
+}
+.timeline-item {
+  position: relative;
+  padding: 1rem 1.5rem 1rem 0;
+  margin-bottom: 2rem;
+}
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  right: -9px;
+  top: 1rem;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border: 2px solid var(--primary, #20603d);
+  border-radius: 50%;
+}
+@media (max-width: 600px) {
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+  .timeline {
+    padding-right: 1rem;
+  }
+  .timeline-item {
+    padding-right: 1rem;
+  }
+  .timeline-item::before {
+    right: -9px;
+  }
+}
