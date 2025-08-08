@@ -1,7 +1,7 @@
 {
   "name": "parsanaenergy-root",
   "private": true,
-  "packageManager": "pnpm@8.0.0",
+  "packageManager": "pnpm@8.15.8",
   "type": "module",
   "scripts": {
     "build": "pnpm -r run build",
@@ -9,7 +9,7 @@
     "lint": "eslint \"docs/**/*.{js,jsx,ts,tsx}\" \"decision-tree-app/**/*.{js,jsx,ts,tsx}\" --max-warnings=0",
     "build:widget": "pnpm --filter decision-tree-app run build-widget",
     "build:site": "pnpm --filter docs run build",
-    "deploy": "pnpm run build:widget && pnpm run build:site && node scripts/update-html-hashes.js docs/dist docs docs/public/articles docs/public/blog docs/catalog docs/services docs/widget && rm -rf docs/dist"
+    "preview:dist": "pnpm -C docs preview"
   },
   "devDependencies": {
     "@eslint/js": "^9.30.1",
