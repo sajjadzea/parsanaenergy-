@@ -18,5 +18,8 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "terser": "^5.43.1"
+  },
+  "engines": {
+    "node": ">=18 <20"
   }
 }
