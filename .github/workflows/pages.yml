@@ -101,8 +101,10 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-      - name: Print Production URL
-        run: echo "Production URL: ${{ steps.deployment.outputs.page_url }}" >> $GITHUB_STEP_SUMMARY
++      - name: Export Production URL to env
++        run: echo "PAGE_URL=${{ steps.deployment.outputs.page_url }}" >> "$GITHUB_ENV"
++      - name: Print Production URL
++        run: echo "Production URL: $PAGE_URL" >> "$GITHUB_STEP_SUMMARY"
 
   preview:
     needs: build
@@ -116,5 +118,7 @@ jobs:
         uses: actions/deploy-pages@v4
         with:
           preview: true
-      - name: Print Preview URL
-        run: echo "Preview URL: ${{ steps.deployment.outputs.page_url }}" >> $GITHUB_STEP_SUMMARY
++      - name: Export Preview URL to env
++        run: echo "PREVIEW_URL=${{ steps.deployment.outputs.page_url }}" >> "$GITHUB_ENV"
++      - name: Print Preview URL
++        run: echo "Preview URL: $PREVIEW_URL" >> "$GITHUB_STEP_SUMMARY"
