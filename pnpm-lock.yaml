@@ -29,6 +29,15 @@ importers:
 
   decision-tree-app:
     dependencies:
+      '@fontsource-variable/inter':
+        specifier: ^5.0.0
+        version: 5.2.6
+      '@fontsource-variable/vazirmatn':
+        specifier: ^5.0.0
+        version: 5.2.6
+      '@parsana/typography':
+        specifier: workspace:*
+        version: link:../packages/typography
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -78,6 +87,15 @@ importers:
 
   docs:
     dependencies:
+      '@fontsource-variable/inter':
+        specifier: ^5.0.0
+        version: 5.2.6
+      '@fontsource-variable/vazirmatn':
+        specifier: ^5.0.0
+        version: 5.2.6
+      '@parsana/typography':
+        specifier: workspace:*
+        version: link:../packages/typography
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -94,6 +112,15 @@ importers:
       vite:
         specifier: ^5.0.0
         version: 5.0.0(terser@5.43.1)
+
+  packages/typography:
+    dependencies:
+      '@fontsource-variable/inter':
+        specifier: ^5.0.0
+        version: 5.2.6
+      '@fontsource-variable/vazirmatn':
+        specifier: ^5.0.0
+        version: 5.2.6
 
 packages:
 
@@ -999,6 +1026,14 @@ packages:
       '@eslint/core': 0.15.1
       levn: 0.4.1
     dev: true
+
+  /@fontsource-variable/inter@5.2.6:
+    resolution: {integrity: sha512-jks/bficUPQ9nn7GvXvHtlQIPudW7Wx8CrlZoY8bhxgeobNxlQan8DclUJuYF2loYRrGpfrhCIZZspXYysiVGg==}
+    dev: false
+
+  /@fontsource-variable/vazirmatn@5.2.6:
+    resolution: {integrity: sha512-jFH7+BjyFWbHl1VqhZ7mrWiKnPl8SH301DkaV147E3RW/gO7mJ2xvbrrNeor99XaJR2jsLHi+CUeooihY4I6oA==}
+    dev: false
 
   /@humanfs/core@0.19.1:
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}

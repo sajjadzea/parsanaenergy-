@@ -16,6 +16,9 @@
     "terser": "^5.43.1"
   },
   "dependencies": {
+    "@parsana/typography": "workspace:*",
+    "@fontsource-variable/vazirmatn": "^5.0.0",
+    "@fontsource-variable/inter": "^5.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   }
