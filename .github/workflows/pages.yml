@@ -1,7 +1,10 @@
-name: Pages - Build & Deploy (main) + PR Preview
+name: Pages – Build & Deploy (main) + PR Preview
 
-env:
-  CUSTOM_DOMAIN_MODE: none
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -12,32 +15,25 @@ concurrency:
   group: pages-${{ github.ref }}
   cancel-in-progress: true
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-  workflow_dispatch:
-
 jobs:
   build:
+    name: Build site (widget + docs)
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18.x'
-          check-latest: true
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          run_install: false
+          version: 8
+
+      - name: Setup Node (use .nvmrc)
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: 'pnpm'
 
       - name: Get pnpm store path
         id: pnpm-store
@@ -48,77 +44,61 @@ jobs:
         with:
           path: ${{ steps.pnpm-store.outputs.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
+          restore-keys: ${{ runner.os }}-pnpm-
 
       - name: Install workspaces (no frozen)
         run: |
-          pnpm -v
           pnpm -w install --no-frozen-lockfile
-          pnpm -C decision-tree-app install --no-frozen-lockfile || true
-          pnpm -C docs install --no-frozen-lockfile || true
 
-      - name: Build widget
-        run: pnpm -C decision-tree-app run build-widget || true
-
-      - name: Build docs
-        run: pnpm -C docs run build
-
-      - name: HOTFIX - copy static assets
+      # 1) Build widget (decision-tree-app) و کپی خروجی به docs/widget
+      - name: Build widget and copy to docs/widget
         run: |
-          rsync -a docs/images/ docs/dist/images/ || true
-          rsync -a docs/js/ docs/dist/js/ || true
+          pnpm --filter decision-tree-app run build-widget
 
-      - name: HOTFIX - normalize base hrefs
-        run: |
-          find docs/dist -name '*.html' -print0 | xargs -0 sed -i 's#<base href="/parsanaenergy/">##g'
-          find docs/dist -name '*.html' -print0 | xargs -0 sed -i 's#"/parsanaenergy/#"/#g'
-          find docs/dist -name '*.html' -print0 | xargs -0 sed -i "s#'/parsanaenergy/#'/#g"
+      # 2) Build سایت اصلی docs (vite)
+      - name: Build docs site
+        working-directory: docs
+        run: pnpm run build
 
-      - name: Configure custom domain
-        if: env.CUSTOM_DOMAIN_MODE != 'none'
-        run: |
-          if [ "$CUSTOM_DOMAIN_MODE" = "apex" ]; then
-            echo "parsanaenergy.ir" > docs/dist/CNAME
-          else
-            echo "www.parsanaenergy.ir" > docs/dist/CNAME
-          fi
-
-      - name: Upload artifact
+      # 3) آپلود آرتیفکت Pages از docs/dist
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: docs/dist
 
   deploy:
+    name: Deploy to GitHub Pages (main)
+    if: github.event_name != 'pull_request'
     needs: build
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Summarize Production URL
+        run: echo "Production URL: ${{ steps.deployment.outputs.page_url }}" >> "$GITHUB_STEP_SUMMARY"
+
+  preview:
+    name: Deploy PR Preview
+    if: github.event_name == 'pull_request'
+    needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
     steps:
       - name: Configure Pages
         uses: actions/configure-pages@v5
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-+      - name: Export Production URL to env
-+        run: echo "PAGE_URL=${{ steps.deployment.outputs.page_url }}" >> "$GITHUB_ENV"
-+      - name: Print Production URL
-+        run: echo "Production URL: $PAGE_URL" >> "$GITHUB_STEP_SUMMARY"
 
-  preview:
-    needs: build
-    if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
-      - name: Deploy PR Preview
+      - name: Deploy (Preview)
         id: deployment
         uses: actions/deploy-pages@v4
-        with:
-          preview: true
-+      - name: Export Preview URL to env
-+        run: echo "PREVIEW_URL=${{ steps.deployment.outputs.page_url }}" >> "$GITHUB_ENV"
-+      - name: Print Preview URL
-+        run: echo "Preview URL: $PREVIEW_URL" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Summarize Preview URL
+        run: echo "Preview URL: ${{ steps.deployment.outputs.page_url }}" >> "$GITHUB_STEP_SUMMARY"
