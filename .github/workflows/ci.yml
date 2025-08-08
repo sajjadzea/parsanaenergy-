@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'pnpm'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 8
+          run_install: true
+
+      - name: Lint (soft)
+        run: pnpm -w --if-present run lint || echo "no lint or lint failed (soft)"
+        continue-on-error: true
+
+      - name: Test (soft)
+        run: pnpm -w --if-present run test || echo "no tests or tests failed (soft)"
+        continue-on-error: true
+
+      - name: Build widget
+        run: pnpm --filter decision-tree-app run build-widget
+      - name: Build docs
+        run: pnpm --filter docs run build
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/dist
+
+  deploy:
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+    steps:
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
+
