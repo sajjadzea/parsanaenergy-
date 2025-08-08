@@ -1,18 +1,17 @@
-name: CI/CD - Build, Test (soft) & Deploy
+name: CI - Lint, Test, Build
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: pages
-  cancel-in-progress: false
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
 on:
   push:
     branches: [ main ]
   pull_request:
+  workflow_dispatch:
 
 jobs:
   build:
@@ -20,20 +19,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Node only; do NOT set cache:'pnpm' here.
       - uses: actions/setup-node@v4
         with:
           node-version: 18
 
-      # Use Corepack so package.json: "packageManager": "pnpm@8.x" is honored
       - name: Enable Corepack
         run: corepack enable
 
-      # Ensure pnpm shim is active (also triggers download)
       - name: Show pnpm version
         run: pnpm --version
 
-      # Manual pnpm store cache (after pnpm is available)
       - name: Compute pnpm store path
         id: pnpm-cache
         run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
@@ -49,7 +44,6 @@ jobs:
       - name: Install deps
         run: pnpm -w install --frozen-lockfile
 
-      # Soft-fail lint & test until we enforce them later
       - name: Lint (soft)
         run: pnpm -w --if-present run lint || echo "no lint or lint failed (soft)"
         continue-on-error: true
@@ -77,21 +71,3 @@ jobs:
             cat docs/package.json || true
             exit 1
           fi
-
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: docs/dist
-
-  deploy:
-    needs: build
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-    steps:
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4

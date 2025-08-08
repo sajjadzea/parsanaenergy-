@@ -1,0 +1,89 @@
+name: Pages — Build & Deploy (main) + PR Preview
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      # Install pnpm first so caching logic doesn't fail
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8
+          run_install: false
+      # Then set Node 18
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+          check-latest: true
+      # Cache pnpm store explicitly (reliable on all runners)
+      - name: Get pnpm store path
+        id: pnpm-store
+        run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+      - name: Cache pnpm store
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-store.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      - name: Install
+        run: |
+          corepack enable || true
+          pnpm -w install --frozen-lockfile
+      - name: Build widget
+        run: pnpm --filter ./decision-tree-app run build-widget
+      - name: Build docs
+        run: pnpm --filter ./docs run build
+      - name: HOTFIX — copy missing assets into dist
+        run: |
+          rsync -a docs/images/ docs/dist/images/ || true
+          rsync -a docs/js/ docs/dist/js/ || true
+      - name: HOTFIX — normalize base hrefs (/parsanaenergy/ -> /) in built HTML
+        run: |
+          find docs/dist -name '*.html' -print0 | xargs -0 sed -i 's#<base href="/parsanaenergy/">##g'
+          find docs/dist -name '*.html' -print0 | xargs -0 sed -i 's#"/parsanaenergy/#"/#g'
+          find docs/dist -name '*.html' -print0 | xargs -0 sed -i "s#'/parsanaenergy/#'/#g"
+      - name: Ensure CNAME for custom domain
+        run: |
+          echo "www.parsanaenergy.ir" > docs/dist/CNAME
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with: { path: 'docs/dist' }
+
+  deploy:
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: { name: github-pages }
+    steps:
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
+
+  preview:
+    needs: build
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Deploy PR Preview
+        uses: actions/deploy-pages@v4
