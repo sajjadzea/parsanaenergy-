@@ -2,6 +2,9 @@
   "name": "parsanaenergy-root",
   "private": true,
   "packageManager": "pnpm@8.0.0",
+  "engines": {
+    "node": ">=18 <20"
+  },
   "type": "module",
   "scripts": {
     "build": "pnpm -r run build",
