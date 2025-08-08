@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{title}}</title>
+  <link rel="canonical" href="{{canonical}}" />
+  <meta property="og:title" content="{{title}}" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="{{canonical}}" />
+  <meta property="og:image" content="{{cover}}" />
+  <link rel="stylesheet" href="/css/style.min.css" />
+  <link rel="stylesheet" href="/assets/articles-style.css" />
+</head>
+<body>
+  <main class="article">
+    <h1>{{title}}</h1>
+    <div class="article-meta">{{date}} · Parsana Energy · {{readingTime}} دقیقه مطالعه</div>
+    <img src="{{cover}}" alt="{{title}}" class="article-cover" loading="lazy" width="1200" height="675" />
+    {{content}}
+  </main>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "{{title}}",
+    "datePublished": "{{date}}",
+    "author": {
+      "@type": "Organization",
+      "name": "Parsana Energy"
+    },
+    "image": "{{cover}}",
+    "mainEntityOfPage": "{{canonical}}"
+  }
+  </script>
+</body>
+</html>
