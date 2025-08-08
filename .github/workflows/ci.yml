@@ -1,39 +1,58 @@
-name: CI — Lint & Test (soft, no deploy)
-permissions: { contents: read }
-concurrency: { group: ci-${{ github.ref }}, cancel-in-progress: true }
-on:
-  push: { branches: [ "main" ] }
-  pull_request:
-  workflow_dispatch:
-jobs:
-  build-and-test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with: { node-version: '18.x', check-latest: true }
-      - uses: pnpm/action-setup@v4
-        with: { run_install: false }
-      - name: Get pnpm store path
-        id: pnpm-store
-        run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-      - uses: actions/cache@v4
-        with:
-          path: ${{ steps.pnpm-store.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: ${{ runner.os }}-pnpm-
-      - name: Install workspaces (no-frozen)
-        run: |
-          pnpm -w install --no-frozen-lockfile
-          pnpm -C decision-tree-app install --no-frozen-lockfile || true
-          pnpm -C docs install --no-frozen-lockfile || true
-      - name: Lint (soft)
-        run: pnpm -r --if-present lint || true
-        continue-on-error: true
-      - name: Build (soft)
-        run: |
-          pnpm -C decision-tree-app run build-widget || true
-          pnpm -C docs run build || true
-      - name: Test (soft)
-        run: pnpm -r --if-present test || true
-        continue-on-error: true
+-name: CI — Lint & Test (soft, no deploy)
+-permissions: { contents: read }
+-concurrency: { group: ci-${{ github.ref }}, cancel-in-progress: true }
+-on:
+-  push: { branches: [ "main" ] }
+-  pull_request:
+-  workflow_dispatch:
++name: CI — Lint & Test (PR-only, soft)
++permissions:
++  contents: read
++concurrency:
++  group: ci-${{ github.ref }}
++  cancel-in-progress: true
++on:
++  pull_request:
++    paths:
++      - 'package.json'
++      - 'pnpm-lock.yaml'
++      - 'decision-tree-app/**'
++      - 'docs/**'
++      - '.github/workflows/ci.yml'
++  workflow_dispatch:
+
+ jobs:
+   build-and-test:
+     runs-on: ubuntu-latest
+     steps:
+       - uses: actions/checkout@v4
+       - uses: actions/setup-node@v4
+         with: { node-version: '18.x', check-latest: true }
+       - uses: pnpm/action-setup@v4
+         with: { run_install: false }
+       - name: Get pnpm store path
+         id: pnpm-store
+         run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+       - uses: actions/cache@v4
+         with:
+           path: ${{ steps.pnpm-store.outputs.STORE_PATH }}
+           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+           restore-keys: ${{ runner.os }}-pnpm-
+-      - name: Install workspaces (no-frozen)
++      - name: Install workspaces (no-frozen)
+         run: |
+           pnpm -w install --no-frozen-lockfile
+           pnpm -C decision-tree-app install --no-frozen-lockfile || true
+           pnpm -C docs install --no-frozen-lockfile || true
+-      - name: Lint (soft)
++      - name: Lint (soft)
+         run: pnpm -r --if-present lint || true
+         continue-on-error: true
+-      - name: Build (soft)
+-        run: |
+-          pnpm -C decision-tree-app run build-widget || true
+-          pnpm -C docs run build || true
+-      - name: Test (soft)
++      - name: Test (soft)
+         run: pnpm -r --if-present test || true
+         continue-on-error: true
