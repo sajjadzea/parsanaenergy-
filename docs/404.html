@@ -37,5 +37,11 @@
     <p>محتوایی یافت نشد.</p>
     <a class="btn-primary" href="index.html">بازگشت به صفحه اصلی</a>
   </main>
+  <script>
+    var l = window.location;
+    if (!l.pathname.includes('.') && !l.pathname.endsWith('/index.html')) {
+      window.location.replace('/index.html');
+    }
+  </script>
 </body>
 </html>
