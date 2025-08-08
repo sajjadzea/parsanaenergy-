@@ -4,14 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Parsana Energy</title>
-<meta http-equiv="Strict-Transport-Security" content="max-age=63072000; includeSubDomains; preload" />
- codex/fix-build-and-pages-deploy-workflow
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:" />
-
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:" />
- main
-<meta http-equiv="X-Content-Type-Options" content="nosniff" />
-<meta http-equiv="Referrer-Policy" content="same-origin" />
+  <meta http-equiv="Strict-Transport-Security" content="max-age=63072000; includeSubDomains; preload" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="Referrer-Policy" content="same-origin" />
   <meta name="description" content="مشاوره، فروش و اجاره تجهیزات برق اضطراری و انرژی خورشیدی" />
   <link rel="canonical" href="https://parsanaenergy.ir/" />
   <meta property="og:title" content="Parsana Energy" />
@@ -24,6 +20,7 @@
   <meta name="twitter:description" content="مشاوره، فروش و اجاره تجهیزات برق اضطراری و انرژی خورشیدی" />
   <meta name="twitter:image" content="https://parsanaenergy.ir/images/logo.png" />
   <link rel="icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="assets/css/site.css?v=2025-08-08-1" />
   <!-- استایل اصلی سفارشی سایت -->
 </head>
   <body>
@@ -104,7 +101,7 @@
     <h2 class="text-center text-2xl font-bold mb-6">درخت تصمیم‌گیری</h2>
     <iframe
       id="decision-tree-widget"
-      src="./widget/index.html"
+      src="widget/index.html"
       loading="lazy"
       style="width:100%;min-height:650px;border:none"
       title="Decision Tree Widget">
