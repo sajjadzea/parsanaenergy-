@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "pnpm -r run build",
+    "postbuild": "node update-hashed-assets.js",
     "dev": "pnpm -r run dev",
     "lint": "eslint \"docs/**/*.{js,jsx,ts,tsx}\" \"decision-tree-app/**/*.{js,jsx,ts,tsx}\" --max-warnings=0",
     "build:widget": "pnpm --filter decision-tree-app run build-widget",
