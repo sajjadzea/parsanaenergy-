@@ -7,10 +7,13 @@ function formatDate(iso){
 }
 
 function renderCard(post){
+  const cover = !post.cover || post.cover === 'TODO'
+    ? '/images/articles/default.webp'
+    : post.cover;
   return `
   <article class="card">
     <a href="/articles/${post.slug}/" class="card-cover" aria-label="${post.title}">
-      <img src="${post.cover}" alt="${post.title}" loading="lazy" width="1200" height="675">
+      <img src="${cover}" alt="${post.title}" loading="lazy" width="1200" height="675">
     </a>
     <div class="card-body">
       <div class="card-meta">${formatDate(post.date)} · ${post.readingTime} دقیقه مطالعه</div>

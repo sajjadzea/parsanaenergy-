@@ -50,7 +50,9 @@ async function processMarkdown(file) {
   const date = stats.mtime.toISOString().split('T')[0];
 
   const coverPath = path.join('docs', 'images', 'articles', `${slug}.webp`);
-  const cover = (await fileExists(coverPath)) ? `/images/articles/${slug}.webp` : 'TODO';
+  const cover = (await fileExists(coverPath))
+    ? `/images/articles/${slug}.webp`
+    : '/images/articles/default.webp';
 
   const categoryMap = {
     'monthly-generator-pm-checklist': ['ژنراتور'],
