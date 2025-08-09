@@ -12,7 +12,7 @@
     "preview:dist": "pnpm -C docs preview",
     "sync:typography": "node scripts/sync-typography.mjs",
     "prebuild:docs": "pnpm sync:typography",
-    "prebuild:site": "node scripts/generate-posts.mjs && node scripts/generate-articles.mjs"
+    "prebuild:site": "pnpm node scripts/generate-posts.mjs && pnpm node scripts/generate-articles.mjs && pnpm node scripts/minify-articles.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^9.30.1",
