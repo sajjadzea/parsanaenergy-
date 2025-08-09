@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "prebuild": "node ../scripts/sync-images.mjs && node ../scripts/generate-posts.mjs && node ../scripts/generate-articles.mjs && terser js/articles.js -o js/articles.min.js --compress --mangle --toplevel",
+    "prebuild": "node ../scripts/sync-images.mjs && node ../scripts/generate-posts.mjs && node ../scripts/generate-articles.mjs && node ../scripts/minify-articles.mjs",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview --host",
