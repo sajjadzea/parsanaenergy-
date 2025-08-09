@@ -14,35 +14,11 @@
   <meta property="og:description" content="مشاوره، فروش و اجاره تجهیزات برق اضطراری و انرژی خورشیدی">
   <meta property="og:url" content="https://parsanaenergy.ir/articles/">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="https://parsanaenergy.ir/images/logo.png">
+  <meta property="og:image" content="../images/logo.png?v=ARTICLES-1">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="وبلاگ پارسانا انرژی">
   <meta name="twitter:description" content="مشاوره، فروش و اجاره تجهیزات برق اضطراری و انرژی خورشیدی">
-  <meta name="twitter:image" content="https://parsanaenergy.ir/images/logo.png">
-<script type="application/ld+json">
-{
- "@context":"https://schema.org",
- "@type":"Blog",
- "name":"وبلاگ پارسانا انرژی",
- "url":"https://parsanaenergy.ir/articles/",
- "blogPost": []
-}
-</script>
-<script>
-fetch('/articles/posts.json').then(r=>r.json()).then(posts=>{
-  const list = {
-    "@context":"https://schema.org",
-    "@type":"ItemList",
-    "itemListElement": posts.slice(0,10).map((p,i)=>({
-      "@type":"ListItem","position": i+1,
-      "url": `https://parsanaenergy.ir/articles/${p.slug}/`
-    }))
-  };
-  const s = document.createElement('script');
-  s.type='application/ld+json'; s.textContent = JSON.stringify(list);
-  document.head.appendChild(s);
-});
-</script>
+  <meta name="twitter:image" content="../images/logo.png?v=ARTICLES-1">
   <link rel="stylesheet" href="/css/style.min.css">
   <link rel="stylesheet" href="/assets/articles-style.css">
 </head>
@@ -55,7 +31,7 @@ fetch('/articles/posts.json').then(r=>r.json()).then(posts=>{
 
   <div class="sticky-header">
     <a href="/" class="header-logo">
-      <img src="/images/logo.png" alt="Parsana Energy logo">
+      <img src="../images/logo.png?v=ARTICLES-1" alt="Parsana Energy logo">
     </a>
     <input type="checkbox" id="menu-toggle" class="menu-toggle" />
     <label for="menu-toggle" class="hamburger">
