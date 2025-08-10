@@ -36,8 +36,17 @@ jobs:
       - name: Guard articles
         run: bash scripts/guard-articles.sh
 
+      - name: Write version file
+        run: |
+          echo "build: $(date -u +'%Y-%m-%dT%H:%M:%SZ') | sha: $(git rev-parse --short HEAD)" > docs/public/version.txt
+
       - name: Build
         run: pnpm run build
+
+      - name: Ensure version file in dist
+        run: |
+          cp docs/public/version.txt docs/dist/version.txt
+          test -f docs/dist/version.txt
 
       - name: Add .nojekyll and CNAME
         run: |
@@ -58,3 +67,7 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Check deployed version
+        run: |
+          curl -sS https://parsanaenergy.ir/version.txt || echo 'Unable to fetch deployed version'
