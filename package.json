@@ -3,17 +3,35 @@
   "private": true,
   "packageManager": "pnpm@8.15.8",
   "type": "module",
+  "engines": {
+    "node": "18.x",
+    "pnpm": "8.15.8"
+  },
   "scripts": {
+    "dev": "pnpm -r run dev",
+
+    "lint": "eslint \"docs/**/*.{js,jsx,ts,tsx}\" \"decision-tree-app/**/*.{js,jsx,ts,tsx}\" --max-warnings=0",
+
     "build": "pnpm -r run build",
     "postbuild": "node update-hashed-assets.js",
-    "dev": "pnpm -r run dev",
-    "lint": "eslint \"docs/**/*.{js,jsx,ts,tsx}\" \"decision-tree-app/**/*.{js,jsx,ts,tsx}\" --max-warnings=0",
+
     "build:widget": "pnpm --filter decision-tree-app run build-widget",
-    "build:site": "pnpm --filter docs run build",
-    "preview:dist": "pnpm -C docs preview",
+
+    // ⬇️ تضمین ترتیب: قبل از build سایت، سنک تایپوگرافی + تولید/مینیفای مقالات اجرا می‌شود
+    "build:site": "pnpm run prebuild:site && pnpm run prebuild:docs && pnpm --filter docs run build",
+
+    // پیش‌نیازهای بیلد سایت (به‌صورت دستی فراخوانی می‌شوند)
+    "prebuild:docs": "pnpm run sync:typography",
+    "prebuild:site": "node scripts/generate-posts.mjs && node scripts/generate-articles.mjs && node scripts/minify-articles.mjs",
+
+    // سنک تایپوگرافی
     "sync:typography": "node scripts/sync-typography.mjs",
-    "prebuild:docs": "pnpm sync:typography",
-    "prebuild:site": "pnpm node scripts/generate-posts.mjs && pnpm node scripts/generate-articles.mjs && pnpm node scripts/minify-articles.mjs"
+
+    // پیش‌نمایش خروجی نهایی
+    "preview:dist": "pnpm -C docs preview",
+
+    // خط لولهٔ مخصوص CI: ترتیب درست + گاردها + وریفای
+    "ci:build": "pnpm run build:widget && pnpm run build:site && bash scripts/guard-articles.sh && bash scripts/verify-docs-build.sh"
   },
   "devDependencies": {
     "@eslint/js": "^9.30.1",
