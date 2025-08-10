@@ -100,3 +100,17 @@ pnpm config get registry
 cat .npmrc
 ```
 
+## Linting
+
+The workspace uses ESLint's [Flat Config](https://eslint.org/docs/latest/use/configure/configuration-files-new) (ESLint v9+) to lint JavaScript sources.
+
+Run linting across all projects with:
+
+```bash
+pnpm lint
+```
+
+The configuration currently reports issues as warnings so development and deployment are not blocked. The GitHub Actions deploy workflow runs this lint step in non-blocking mode, allowing CI to continue even when warnings are present. Once the codebase is cleaned up, warnings can be upgraded to errors.
+
+TypeScript files are not linted. Adding TypeScript support will require `@typescript-eslint` dependencies and corresponding configuration.
+
