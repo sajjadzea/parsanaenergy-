@@ -63,6 +63,9 @@ jobs:
         id: pages
         uses: actions/configure-pages@v5
 
+      - name: Guard articles
+        run: bash scripts/guard-articles.sh
+
       - name: Build docs (Vite)
         run: |
           pnpm -C docs run build -- --base="${{ steps.pages.outputs.base_path }}/"
