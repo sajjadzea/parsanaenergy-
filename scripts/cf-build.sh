@@ -24,9 +24,6 @@ node -v || true
 echo "==> Installing root deps (if any)"
 pnpm install --frozen-lockfile=false || true
 
-# دایرکتوری‌های موردنیاز برای prebuild
-mkdir -p docs/public/articles
-
 echo "==> Running prebuild scripts from repo root"
 # از Node ریشه صدا بزن که مسیرها درست باشه
 pnpm node scripts/sync-images.mjs
