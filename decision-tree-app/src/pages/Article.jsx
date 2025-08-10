@@ -1,11 +1,11 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { getArticle } from '../../../docs/public/articles/index.js';
+import articles from '../../../docs/src/data/articles.js';
 import ReactMarkdown from 'react-markdown';
 
 const Article = () => {
   const { slug } = useParams();
-  const article = getArticle(slug);
+  const article = articles.find(a => a.slug === slug);
 
   if (!article) {
     return (

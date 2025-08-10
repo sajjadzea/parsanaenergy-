@@ -2,8 +2,14 @@ import fs from 'fs';
 import path from 'path';
 
 const postsPath = path.join('docs', 'articles', 'posts.json');
-const posts = JSON.parse(fs.readFileSync(postsPath, 'utf8'));
+let posts = [];
+try {
+  posts = JSON.parse(fs.readFileSync(postsPath, 'utf8'));
+} catch {
+  posts = [];
+}
 const template = fs.readFileSync(path.join('tools', 'templates', 'article.html'), 'utf8');
+const articlesData = [];
 
 function markdownToHtml(md) {
   const lines = md.split(/\r?\n/);
@@ -45,12 +51,18 @@ function markdownToHtml(md) {
 posts.forEach((post, index) => {
   const slug = post.slug;
   const mdPath = path.join('docs', 'public', 'articles', `${slug}.md`);
-  const rawMd = fs.readFileSync(mdPath, 'utf8');
+  let rawMd = '';
+  try {
+    rawMd = fs.readFileSync(mdPath, 'utf8');
+  } catch {
+    rawMd = '';
+  }
   const mdLines = rawMd.split(/\r?\n/);
   if (mdLines[0] && mdLines[0].startsWith('#')) {
     mdLines.shift();
   }
-  const bodyHtml = markdownToHtml(mdLines.join('\n'));
+  const contentMd = mdLines.join('\n');
+  const bodyHtml = markdownToHtml(contentMd);
 
   const canonical = post.canonical || `https://parsanaenergy.ir/articles/${slug}/`;
   const cover = post.cover === 'TODO' ? `/images/articles/${slug}.webp` : post.cover;
@@ -78,4 +90,17 @@ posts.forEach((post, index) => {
   const outDir = path.join('docs', 'articles', slug);
   fs.mkdirSync(outDir, { recursive: true });
   fs.writeFileSync(path.join(outDir, 'index.html'), html);
+
+  articlesData.push({
+    slug,
+    title: post.title,
+    date: post.date,
+    description: post.excerpt,
+    content: contentMd,
+  });
 });
+
+const dataDir = path.join('docs', 'src', 'data');
+fs.mkdirSync(dataDir, { recursive: true });
+const dataPath = path.join(dataDir, 'articles.js');
+fs.writeFileSync(dataPath, `export default ${JSON.stringify(articlesData, null, 2)};\n`);

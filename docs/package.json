@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "prebuild": "pnpm node ../scripts/sync-images.mjs && pnpm node ../scripts/generate-posts.mjs && pnpm node ../scripts/generate-articles.mjs && pnpm node ../scripts/minify-articles.mjs",
+    "prebuild": "pnpm --dir .. exec node scripts/sync-images.mjs && pnpm --dir .. exec node scripts/generate-posts.mjs && pnpm --dir .. exec node scripts/generate-articles.mjs && pnpm --dir .. exec node scripts/minify-articles.mjs",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview --host",
