@@ -77,12 +77,12 @@ docker run --rm -p 8080:8080 \
 Then open `http://localhost:8080`.
 
 ## CI/CD Setup
+A lightweight GitHub Actions workflow runs on each push and pull request. It installs dependencies, executes prebuild scripts,
+builds the `docs` package with Vite, and uploads the resulting `docs/dist` as an artifact. Production deployment is handled
+separately by **Cloudflare Pages**.
 
-As of 2025-03-16, the repository uses **pnpm** exclusively with `pnpm-workspace.yaml` controlling all workspaces.
-
-- All GitHub Actions jobs rely on [`pnpm/action-setup@v4`](https://github.com/pnpm/action-setup) and run on **Node.js 18** unless a job explicitly requires a newer runtime.
-- The change was prompted by a Node.js 20 + pnpm issue involving `URLSearchParams` that caused installs to fail.
-  - See [pnpm/pnpm#7420](https://github.com/pnpm/pnpm/issues/7420) and [nodejs/node#41087](https://github.com/nodejs/node/issues/41087) for details.
+- Node.js `20.19.2`
+- `pnpm` `8.15.8` (via `corepack`)
 
 ### Debugging commands
 For quick environment checks:

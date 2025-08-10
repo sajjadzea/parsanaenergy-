@@ -18,3 +18,5 @@ pnpm dev        # اجرای سرور توسعه
 pnpm build
 pnpm preview    # مشاهدهٔ خروجی build
 ```
+
+خروجی `docs/dist` توسط Cloudflare Pages منتشر می‌شود و در این مخزن هیچ فرایند استقراری از طریق GitHub Pages فعال نیست.
