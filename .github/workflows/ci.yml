@@ -58,9 +58,9 @@ jobs:
       - name: Install docs deps
         run: pnpm -C docs install --frozen-lockfile=false
 
-      # Lint اختیاری (اگر script نبود، fail نشود)
-      - name: Lint (optional)
-        run: pnpm -w run lint || echo "no lint script, skipping"
+      # Lint مستندات
+      - name: Lint docs
+        run: pnpm -C docs run lint
 
       # بیلد سایت (Vite)
       - name: Build docs (Vite)
