@@ -37,7 +37,14 @@ for file in "${required_files[@]}"; do
 done
 
 if [[ ${#missing[@]} -eq 0 ]]; then
-  echo "✅ All required files exist."
+  # extra: ensure CSS for articles exists
+  shopt -s nullglob
+  css=(docs/dist/assets/articles-style*.css)
+  if (( ${#css[@]} == 0 )); then
+    echo "❌ Missing articles CSS in docs/dist/assets/"
+    exit 1
+  fi
+  echo "✅ All required files exist (including articles CSS)."
 else
   echo "❌ Missing files:"
   for f in "${missing[@]}"; do
