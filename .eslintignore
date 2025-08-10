@@ -1,0 +1,11 @@
+node_modules/
+dist/
+build/
+.next/
+out/
+coverage/
+public/vendor/
+gh-pages/
+docs/dist/
+docs/assets/
+docs/widget/assets/
