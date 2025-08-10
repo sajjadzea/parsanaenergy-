@@ -1,99 +1,93 @@
-name: CI — PR build (lint/test soft)
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
 
 permissions:
   contents: read
+  checks: write
 
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
-on:
-  pull_request:
-    branches: [ main ]
-    paths:
-      - 'package.json'
-      - 'pnpm-lock.yaml'
-      - 'decision-tree-app/**'
-      - 'docs/**'
-      - '.github/**'
-  workflow_dispatch:
-
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
 
-      - name: Setup Node.js 18
+      - name: Use Node (from .nvmrc) + Corepack
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version-file: .nvmrc
           cache: 'pnpm'
-
-      - name: Setup pnpm (via Corepack)
+      - name: Enable Corepack (pin pnpm from package.json)
         run: |
           corepack enable
-          pnpm -v
+          corepack prepare --activate
 
+      # Cache pnpm store (پایدارتر از cache=pnpm در پروژه‌های بزرگ)
       - name: Get pnpm store path
         id: pnpm-store
-        run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-
+        run: echo "STORE_PATH=$(pnpm store path)" >> "$GITHUB_OUTPUT"
       - name: Cache pnpm store
         uses: actions/cache@v4
         with:
           path: ${{ steps.pnpm-store.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: ${{ runner.os }}-pnpm-
+          key: pnpm-store-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            pnpm-store-${{ runner.os }}-
 
-      - name: Install workspaces (no-frozen)
-        run: pnpm -w install --no-frozen-lockfile
-
-      - name: Preflight required files
-        shell: bash
+      - name: Install (strict, frozen lockfile)
         run: |
-          set -e
-          test -f docs/package.json || { echo "❌ Missing docs/package.json"; exit 1; }
-          test -f docs/index.html || { echo "❌ Missing docs/index.html"; exit 1; }
-          echo "✅ Preflight checks passed."
+          pnpm --version
+          pnpm fetch
+          pnpm install --frozen-lockfile
 
-      - name: Ensure articles directory exists
-        run: mkdir -p docs/public/articles
+      # ترتیب درست بیلد: اول ویجت، بعد سایت
+      - name: Build decision-tree widget
+        run: pnpm --filter decision-tree-app run build-widget
 
-      - name: Prebuild scripts (robust)
-        shell: bash
+      - name: Build docs site
+        run: pnpm --filter docs run build
+
+      - name: Lint (fail on error)
+        run: pnpm -r run lint
+
+      # گارد محتوا/خروجی
+      - name: Guard articles & verify build
         run: |
-          set -e
-          if [ -f scripts/sync-images.mjs ]; then node scripts/sync-images.mjs; else echo "skip: scripts/sync-images.mjs"; fi
-          node scripts/generate-posts.mjs
-          node scripts/generate-articles.mjs
-          node scripts/minify-articles.mjs
+          bash scripts/guard-articles.sh
+          bash scripts/verify-docs-build.sh
 
-      - name: Lint (soft)
-        run: pnpm -r --if-present lint || true
-        continue-on-error: true
-
-      - name: Unit tests (soft)
-        run: pnpm -r --if-present test || true
-        continue-on-error: true
-
-      - name: Build site (verify)
-        run: pnpm run build
-
-      - name: Verify build outputs
-        shell: bash
+      # Smoke تست ساده برای خروجی dist
+      - name: Smoke test dist
         run: |
-          set -e
-          test -f docs/dist/index.html || { echo "❌ Missing docs/dist/index.html"; exit 1; }
-          test -f docs/dist/404.html || echo "warn: missing 404.html (not fatal)"
-          echo "✅ Build outputs present."
+          node -e "const fs=require('fs'),p=(x)=>fs.existsSync(x)||process.exit(1); p('docs/dist/index.html'); p('docs/dist/widget/index.html'); console.log('dist looks OK')"
 
-      - name: Upload dist as PR artifact (optional)
+      # Artifact برای دیباگ سریع
+      - name: Upload dist artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: preview-dist
+          name: dist-${{ github.sha }}
           path: docs/dist
-          if-no-files-found: warn
+          retention-days: 5
+
+      - name: Job Summary
+        if: always()
+        run: |
+          {
+            echo "## CI Summary"
+            echo "- Node: $(node -v)"
+            echo "- pnpm: $(pnpm --version)"
+            echo "- Dist size: $(du -sh docs/dist | cut -f1)"
+          } >> $GITHUB_STEP_SUMMARY
