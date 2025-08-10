@@ -30,8 +30,8 @@ jobs:
           cache: 'pnpm'
           cache-dependency-path: '**/pnpm-lock.yaml'
 
-      # نصب pnpm به‌صورت قطعی با Corepack
-      - name: Install pnpm (Corepack)
+      # نصب pnpm به صورت قطعی با Corepack (بدون تکیه به اکشن خارجی)
+      - name: Install pnpm via Corepack
         shell: bash
         run: |
           set -e
@@ -46,10 +46,10 @@ jobs:
         shell: bash
         run: |
           set -e
-          test -f docs/package.json || { echo "❌ Missing docs/package.json"; exit 1; }
-          test -f docs/index.html || { echo "❌ Missing docs/index.html"; exit 1; }
+          test -f docs/package.json || { echo "Missing docs/package.json"; exit 1; }
+          test -f docs/index.html || { echo "Missing docs/index.html"; exit 1; }
           mkdir -p docs/public/articles
-          echo "✅ Preflight passed"
+          echo "Preflight passed"
 
       - name: Run prebuild scripts
         shell: bash
@@ -78,12 +78,15 @@ jobs:
           exit 0
 
       - name: Write version file
-        run: echo "build: $(date -u +'%Y-%m-%dT%H:%M:%SZ') | sha: $(git rev-parse --short HEAD)" > docs/public/version.txt
+        shell: bash
+        run: |
+          echo "build: $(date -u +'%Y-%m-%dT%H:%M:%SZ') | sha: $(git rev-parse --short HEAD)" > docs/public/version.txt
 
       - name: Build site
         run: pnpm run build
 
       - name: Finalize dist
+        shell: bash
         run: |
           mkdir -p docs/dist
           cp docs/public/version.txt docs/dist/version.txt
@@ -110,4 +113,6 @@ jobs:
         uses: actions/deploy-pages@v4
 
       - name: Check deployed version
-        run: curl -sS https://parsanaenergy.ir/version.txt || echo 'Unable to fetch deployed version'
+        shell: bash
+        run: |
+          curl -sS https://parsanaenergy.ir/version.txt || echo 'Unable to fetch deployed version'
