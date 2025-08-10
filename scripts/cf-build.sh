@@ -1,51 +1,43 @@
-#!/usr/bin/env sh
-# Cloudflare Pages build script (monorepo + pnpm)
-# Build command in CF:  sh scripts/cf-build.sh
-# Output directory:     docs/dist
+#!/usr/bin/env bash
+set -euo pipefail
 
-set -e
+# همیشه از ریشه‌ی ریپو اجرا کن
+ROOT_DIR="$(cd "$(dirname "$0")/.."; pwd)"
+cd "$ROOT_DIR"
 
-echo "Node: $(node -v)"
-echo "npm:  $(npm -v)"
-echo "NODE_ENV=${NODE_ENV:-unset}"
+echo "==> Using repo root: $ROOT_DIR"
 
-# 1) Force a clean, known pnpm (v9) because CF pre-activates pnpm@10
-npm rm -g pnpm >/dev/null 2>&1 || true
-npm i -g pnpm@9 --force
-echo "pnpm: $(pnpm -v)"
-
-# 2) Install workspaces WITH devDependencies (critical for vite)
-# If CF sets NODE_ENV=production, ensure dev deps still install:
-#   - either NODE_ENV=development (via CF env)
-#   - or pass --include=dev explicitly:
-pnpm -w install --no-frozen-lockfile --include=dev
-
-# ensure native bins like esbuild are ready (pnpm@10 earlier may have skipped)
-pnpm -w rebuild esbuild || true
-
-# 3) Preflight & folders
-mkdir -p docs/public/articles
-[ -f docs/package.json ] || { echo "Missing docs/package.json"; exit 1; }
-[ -f docs/index.html   ] || { echo "Missing docs/index.html";   exit 1; }
-
-# 4) Prebuild content (robust)
-[ -f scripts/sync-images.mjs ] && node scripts/sync-images.mjs || echo "skip: sync-images"
-node scripts/generate-posts.mjs
-node scripts/generate-articles.mjs
-node scripts/minify-articles.mjs
-
-# 5) Build docs (prefer docs-local vite; fallback to workspace; finally dlx)
-if pnpm -C docs exec vite --version >/dev/null 2>&1; then
-  echo "✓ vite found in docs. Building..."
-  pnpm -C docs exec vite build
-elif pnpm -w exec vite --version >/dev/null 2>&1; then
-  echo "✓ vite found in workspace. Building from docs cwd..."
-  (cd docs && pnpm -w exec vite build)
-else
-  echo "⚠ vite not found in docs/workspace. Using dlx fallback..."
-  (cd docs && pnpm dlx vite@5 build)
+# هم‌نسخه کردن pnpm با ریپو (از packageManager ریشه)
+# اگر corepack فعاله، همین کافیه
+if command -v corepack >/dev/null 2>&1; then
+  corepack enable || true
+  corepack prepare pnpm@8.15.8 --activate
 fi
 
-# 6) Verify output
-[ -f docs/dist/index.html ] || { echo "❌ Build output missing: docs/dist/index.html"; exit 1; }
-echo "✅ Build OK: docs/dist"
+echo "==> pnpm version:"
+pnpm -v || true
+
+echo "==> Node version:"
+node -v || true
+
+# رفع هشدار/ایراد lockfile ناسازگار: اجازه بده نصب انجام بشه حتی اگر نسخه‌ی pnpm فرق داره
+echo "==> Installing root deps (if any)"
+pnpm install --frozen-lockfile=false || true
+
+# دایرکتوری‌های موردنیاز برای prebuild
+mkdir -p docs/public/articles
+
+echo "==> Running prebuild scripts from repo root"
+# از Node ریشه صدا بزن که مسیرها درست باشه
+pnpm node scripts/sync-images.mjs
+pnpm node scripts/generate-posts.mjs
+pnpm node scripts/generate-articles.mjs
+pnpm node scripts/minify-articles.mjs
+
+echo "==> Installing docs deps"
+pnpm -C docs install --frozen-lockfile=false
+
+echo "==> Building Vite (docs)"
+pnpm -C docs run build
+
+echo "==> Build finished. Output at docs/dist"
