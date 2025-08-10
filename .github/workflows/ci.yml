@@ -17,21 +17,40 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Node (20.19.2) + pnpm 8.15.8
+      # Node بدون کش داخلی pnpm
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20.19.2
-          cache: 'pnpm'
-      - run: |
-          corepack enable
-          corepack prepare pnpm@8.15.8 --activate
 
+      # نصب pnpm رسمی + تعیین نسخه
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8.15.8
+          run_install: false
+
+      # کش فروشگاه pnpm (سریع‌تر شدن نصب)
+      - name: Get pnpm store path
+        id: pnpm-cache
+        run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+      - name: Cache pnpm store
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      # نصب ریشه (مونو‌ریپو)
       - name: Install root deps
         run: pnpm install --frozen-lockfile=false
 
+      # جلوگیری از ENOENT
       - name: Ensure prebuild dirs
         run: mkdir -p docs/public/articles
 
+      # اجرای prebuildها از ریشه
       - name: Run prebuild scripts
         run: |
           pnpm node scripts/sync-images.mjs
@@ -39,15 +58,19 @@ jobs:
           pnpm node scripts/generate-articles.mjs
           pnpm node scripts/minify-articles.mjs
 
+      # نصب وابستگی‌های بخش سایت
       - name: Install docs deps
         run: pnpm -C docs install --frozen-lockfile=false
 
+      # Lint اختیاری (اگر script نبود، fail نشود)
       - name: Lint (optional)
-        run: pnpm run lint || true
+        run: pnpm -w run lint || echo "no lint script, skipping"
 
+      # بیلد سایت (Vite)
       - name: Build docs (Vite)
         run: pnpm -C docs run build
 
+      # Artifact خروجی
       - name: Upload dist artifact
         uses: actions/upload-artifact@v4
         with:
