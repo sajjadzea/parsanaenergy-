@@ -46,10 +46,6 @@ jobs:
       - name: Install root deps
         run: pnpm install --frozen-lockfile=false
 
-      # جلوگیری از ENOENT
-      - name: Ensure prebuild dirs
-        run: mkdir -p docs/public/articles
-
       # اجرای prebuildها از ریشه
       - name: Run prebuild scripts
         run: |
