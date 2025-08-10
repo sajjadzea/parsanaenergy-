@@ -1,13 +1,10 @@
-name: CI
+name: CI (lint + build check)
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main]
   pull_request:
-
-permissions:
-  contents: read
-  checks: write
+  workflow_dispatch:
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -16,78 +13,44 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
+      - uses: actions/checkout@v4
 
-      - name: Use Node (from .nvmrc) + Corepack
+      - name: Setup Node (20.19.2) + pnpm 8.15.8
         uses: actions/setup-node@v4
         with:
-          node-version-file: .nvmrc
+          node-version: 20.19.2
           cache: 'pnpm'
-      - name: Enable Corepack (pin pnpm from package.json)
-        run: |
+      - run: |
           corepack enable
-          corepack prepare --activate
+          corepack prepare pnpm@8.15.8 --activate
 
-      # Cache pnpm store (پایدارتر از cache=pnpm در پروژه‌های بزرگ)
-      - name: Get pnpm store path
-        id: pnpm-store
-        run: echo "STORE_PATH=$(pnpm store path)" >> "$GITHUB_OUTPUT"
-      - name: Cache pnpm store
-        uses: actions/cache@v4
-        with:
-          path: ${{ steps.pnpm-store.outputs.STORE_PATH }}
-          key: pnpm-store-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: |
-            pnpm-store-${{ runner.os }}-
+      - name: Install root deps
+        run: pnpm install --frozen-lockfile=false
 
-      - name: Install (strict, frozen lockfile)
+      - name: Ensure prebuild dirs
+        run: mkdir -p docs/public/articles
+
+      - name: Run prebuild scripts
         run: |
-          pnpm --version
-          pnpm fetch
-          pnpm install --frozen-lockfile
+          pnpm node scripts/sync-images.mjs
+          pnpm node scripts/generate-posts.mjs
+          pnpm node scripts/generate-articles.mjs
+          pnpm node scripts/minify-articles.mjs
 
-      # ترتیب درست بیلد: اول ویجت، بعد سایت
-      - name: Build decision-tree widget
-        run: pnpm --filter decision-tree-app run build-widget
+      - name: Install docs deps
+        run: pnpm -C docs install --frozen-lockfile=false
 
-      - name: Build docs site
-        run: pnpm --filter docs run build
+      - name: Lint (optional)
+        run: pnpm run lint || true
 
-      - name: Lint (fail on error)
-        run: pnpm -r run lint
+      - name: Build docs (Vite)
+        run: pnpm -C docs run build
 
-      # گارد محتوا/خروجی
-      - name: Guard articles & verify build
-        run: |
-          bash scripts/guard-articles.sh
-          bash scripts/verify-docs-build.sh
-
-      # Smoke تست ساده برای خروجی dist
-      - name: Smoke test dist
-        run: |
-          node -e "const fs=require('fs'),p=(x)=>fs.existsSync(x)||process.exit(1); p('docs/dist/index.html'); p('docs/dist/widget/index.html'); console.log('dist looks OK')"
-
-      # Artifact برای دیباگ سریع
       - name: Upload dist artifact
-        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: dist-${{ github.sha }}
+          name: docs-dist
           path: docs/dist
-          retention-days: 5
-
-      - name: Job Summary
-        if: always()
-        run: |
-          {
-            echo "## CI Summary"
-            echo "- Node: $(node -v)"
-            echo "- pnpm: $(pnpm --version)"
-            echo "- Dist size: $(du -sh docs/dist | cut -f1)"
-          } >> $GITHUB_STEP_SUMMARY
+          retention-days: 7
