@@ -1,11 +1,15 @@
-name: CI - Lint & Test (PR-only, soft)
+name: CI — PR build (lint/test soft)
+
 permissions:
   contents: read
+
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
+
 on:
   pull_request:
+    branches: [ main ]
     paths:
       - 'package.json'
       - 'pnpm-lock.yaml'
@@ -18,30 +22,78 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
-          node-version: '18.x'
-          check-latest: true
-      - uses: pnpm/action-setup@v4
+          fetch-depth: 0
+
+      - name: Setup Node.js 18
+        uses: actions/setup-node@v4
         with:
-          run_install: false
+          node-version: '18'
+          cache: 'pnpm'
+
+      - name: Setup pnpm (via Corepack)
+        run: |
+          corepack enable
+          pnpm -v
+
       - name: Get pnpm store path
         id: pnpm-store
         run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-      - uses: actions/cache@v4
+
+      - name: Cache pnpm store
+        uses: actions/cache@v4
         with:
           path: ${{ steps.pnpm-store.outputs.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: ${{ runner.os }}-pnpm-
+
       - name: Install workspaces (no-frozen)
+        run: pnpm -w install --no-frozen-lockfile
+
+      - name: Preflight required files
+        shell: bash
         run: |
-          pnpm -w install --no-frozen-lockfile
-          pnpm -C decision-tree-app install --no-frozen-lockfile || true
-          pnpm -C docs install --no-frozen-lockfile || true
+          set -e
+          test -f docs/package.json || { echo "❌ Missing docs/package.json"; exit 1; }
+          test -f docs/index.html || { echo "❌ Missing docs/index.html"; exit 1; }
+          echo "✅ Preflight checks passed."
+
+      - name: Ensure articles directory exists
+        run: mkdir -p docs/public/articles
+
+      - name: Prebuild scripts (robust)
+        shell: bash
+        run: |
+          set -e
+          if [ -f scripts/sync-images.mjs ]; then node scripts/sync-images.mjs; else echo "skip: scripts/sync-images.mjs"; fi
+          node scripts/generate-posts.mjs
+          node scripts/generate-articles.mjs
+          node scripts/minify-articles.mjs
+
       - name: Lint (soft)
         run: pnpm -r --if-present lint || true
         continue-on-error: true
-      - name: Test (soft)
+
+      - name: Unit tests (soft)
         run: pnpm -r --if-present test || true
         continue-on-error: true
+
+      - name: Build site (verify)
+        run: pnpm run build
+
+      - name: Verify build outputs
+        shell: bash
+        run: |
+          set -e
+          test -f docs/dist/index.html || { echo "❌ Missing docs/dist/index.html"; exit 1; }
+          test -f docs/dist/404.html || echo "warn: missing 404.html (not fatal)"
+          echo "✅ Build outputs present."
+
+      - name: Upload dist as PR artifact (optional)
+        uses: actions/upload-artifact@v4
+        with:
+          name: preview-dist
+          path: docs/dist
+          if-no-files-found: warn
