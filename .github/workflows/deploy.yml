@@ -30,11 +30,21 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+ codex/add-step-to-ensure-articles-directory-exists
+      - name: Ensure articles directory exists
+        working-directory: docs
+        run: mkdir -p docs/public/articles
+
+      - name: Docs Prebuild
+        working-directory: docs
+        run: pnpm node ../scripts/sync-images.mjs && pnpm node ../scripts/generate-posts.mjs && pnpm node ../scripts/generate-articles.mjs && pnpm node ../scripts/minify-articles.mjs
+
       - name: Lint (non-blocking)
         run: pnpm lint || true
 
       - name: Prebuild
         run: pnpm -r run prebuild
+ main
 
       - name: Guard articles
         run: bash scripts/guard-articles.sh
