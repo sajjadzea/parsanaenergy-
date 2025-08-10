@@ -1,0 +1,85 @@
+name: Deploy (GitHub Pages)
+
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: 'pnpm'
+
+      - name: Enable Corepack (pin pnpm)
+        run: |
+          corepack enable
+          corepack prepare --activate
+
+      - name: Get pnpm store path
+        id: pnpm-store
+        run: echo "STORE_PATH=$(pnpm store path)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache pnpm store
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-store.outputs.STORE_PATH }}
+          key: pnpm-store-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            pnpm-store-${{ runner.os }}-
+
+      - name: Install (frozen)
+        run: |
+          pnpm fetch
+          pnpm install --frozen-lockfile
+
+      - name: Build widget
+        run: pnpm --filter decision-tree-app run build-widget
+
+      - name: Build site
+        run: pnpm --filter docs run build
+
+      # اطمینان از وجود CNAME برای دامنه سفارشی:
+      # حالت ۱: اگر فایل CNAME در docs/public هست، کپی می‌کنیم.
+      # حالت ۲: اگر Secret با نام CUSTOM_DOMAIN داری، می‌سازیم.
+      - name: Ensure CNAME
+        run: |
+          mkdir -p docs/dist
+          if [ -f docs/public/CNAME ]; then
+            cp docs/public/CNAME docs/dist/CNAME
+          elif [ ! -z "${CUSTOM_DOMAIN:-}" ]; then
+            echo "$CUSTOM_DOMAIN" > docs/dist/CNAME
+          fi
+        env:
+          CUSTOM_DOMAIN: ${{ secrets.CUSTOM_DOMAIN }}
+
+      - name: Upload artifact to Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
