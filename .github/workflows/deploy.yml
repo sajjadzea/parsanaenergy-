@@ -30,10 +30,10 @@ jobs:
           node-version: '18'
           cache: 'pnpm'
 
-      - name: Setup pnpm
+      - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: 8
           run_install: false
 
       - name: Get pnpm store path
@@ -45,11 +45,12 @@ jobs:
         with:
           path: ${{ steps.pnpm-store.outputs.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: ${{ runner.os }}-pnpm-
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
 
-      # همسان با CI: از no-frozen-lockfile استفاده می‌کنیم تا اختلاف قفل‌فایل باعث شکست دیپلوی نشود
-      - name: Install dependencies (workspaces)
-        run: pnpm -w install --no-frozen-lockfile
+      # نصب وابستگی‌ها با استفاده از workspace
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
       - name: Preflight required files
         shell: bash
@@ -57,9 +58,10 @@ jobs:
           set -e
           test -f docs/index.html || { echo "❌ Missing docs/index.html"; exit 1; }
           test -f docs/package.json || { echo "❌ Missing docs/package.json"; exit 1; }
+          test -f decision-tree-app/package.json || { echo "❌ Missing decision-tree-app/package.json"; exit 1; }
           echo "✅ Preflight checks passed."
 
-      # ایجاد مسیر مقالات — از ریشه اجرا می‌شود
+      # ایجاد مسیر مقالات — بدون working-directory برای جلوگیری از مسیر تودرتو
       - name: Ensure articles directory exists
         run: mkdir -p docs/public/articles
 
@@ -68,7 +70,7 @@ jobs:
         shell: bash
         run: |
           set -e
-          if [ -f scripts/sync-images.mjs ]; then node scripts/sync-images.mjs; else echo "skip: scripts/sync-images.mjs"; fi
+          # حذف sync-images.mjs چون در مخزن وجود ندارد
           node scripts/generate-posts.mjs
           node scripts/generate-articles.mjs
           node scripts/minify-articles.mjs
@@ -90,6 +92,7 @@ jobs:
             code=$?
             if [[ $code -ne 0 ]]; then
               echo "warn: guard-articles failed (soft) with exit $code"
+              echo "⚠️  WARNING: No articles found, but continuing deployment"
             fi
           else
             echo "skip: scripts/guard-articles.sh not found"
@@ -99,6 +102,10 @@ jobs:
       - name: Write version file
         run: |
           echo "build: $(date -u +'%Y-%m-%dT%H:%M:%SZ') | sha: $(git rev-parse --short HEAD)" > docs/public/version.txt
+
+      # ساخت ویجت درخت تصمیم
+      - name: Build decision tree widget
+        run: pnpm --dir decision-tree-app run build-widget
 
       - name: Build site
         run: pnpm run build
