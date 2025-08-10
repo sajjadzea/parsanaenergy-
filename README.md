@@ -32,9 +32,6 @@ pnpm build
 pnpm preview   # preview the built files
 ```
 
-The Vite configuration sets `base: '/parsanaenergy/'` so that assets load
-correctly when deploying the site under `https://<user>.github.io/parsanaenergy/`.
-
 ### `decision-tree-app`
 Interactive decision tree widget built with React and Vite.
 
@@ -56,9 +53,6 @@ pnpm build          # build to dist/
 pnpm preview        # preview production build
 pnpm run build-widget # build and copy into docs/widget
 ```
-
-This app also uses `base: '/parsanaenergy/'` in `vite.config.js` so the widget
-works correctly when served from the GitHub Pages subdirectory.
 
 Before committing changes to the repository, run `pnpm --filter decision-tree-app run build-widget`
 to refresh the files inside `docs/widget`. This keeps the deployed
@@ -110,7 +104,7 @@ Run linting across all projects with:
 pnpm lint
 ```
 
-The configuration currently reports issues as warnings so development and deployment are not blocked. The GitHub Actions deploy workflow runs this lint step in non-blocking mode, allowing CI to continue even when warnings are present. Once the codebase is cleaned up, warnings can be upgraded to errors.
+The configuration currently reports issues as warnings so development and deployment are not blocked. The GitHub Actions CI workflow runs this lint step in non-blocking mode, allowing CI to continue even when warnings are present. Once the codebase is cleaned up, warnings can be upgraded to errors.
 
 TypeScript files are not linted. Adding TypeScript support will require `@typescript-eslint` dependencies and corresponding configuration.
 

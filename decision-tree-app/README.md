@@ -14,6 +14,5 @@ pnpm install          # install dependencies
 pnpm dev              # start development server
 pnpm build            # build to dist/
 pnpm preview          # preview the built app
-pnpm run deploy       # build and publish to GitHub Pages
 pnpm run build-widget # build and copy files to ../docs/widget
 ```

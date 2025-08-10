@@ -7,7 +7,7 @@ import eslintConfigPrettier from 'eslint-config-prettier'
 
 /** @type {import('eslint').Linter.FlatConfig[]} */
 export default [
-  { ignores: ['node_modules/**','dist/**','build/**','.next/**','out/**','coverage/**','public/vendor/**','gh-pages/**','docs/dist/**','docs/assets/**','docs/widget/assets/**'] },
+  { ignores: ['node_modules/**','dist/**','build/**','.next/**','out/**','coverage/**','public/vendor/**','docs/dist/**','docs/assets/**','docs/widget/assets/**'] },
 
   js.configs.recommended,
 
