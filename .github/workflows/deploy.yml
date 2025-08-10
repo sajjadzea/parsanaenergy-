@@ -30,6 +30,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Lint (non-blocking)
+        run: pnpm lint || true
+
       - name: Prebuild
         run: pnpm -r run prebuild
 
