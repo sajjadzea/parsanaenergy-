@@ -7,7 +7,7 @@
   <meta name="description" content="مشاوره، فروش و اجاره تجهیزات برق اضطراری و انرژی خورشیدی">
   <link rel="canonical" href="https://parsanaenergy.ir/articles/">
   <meta http-equiv="Strict-Transport-Security" content="max-age=63072000; includeSubDomains; preload">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; font-src 'self' data:; style-src 'self'; script-src 'self'">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta http-equiv="Referrer-Policy" content="same-origin">
   <meta property="og:title" content="وبلاگ پارسانا انرژی">
@@ -23,7 +23,7 @@
   <link rel="stylesheet" href="/styles/fonts.css">
   <link rel="stylesheet" href="../assets/css/site-a4c0b310.css">
   <link rel="stylesheet" href="/css/header-awatt.css">
-  <link rel="stylesheet" href="../assets/articles-style-905ce326.css">
+  <link rel="stylesheet" href="/src/styles/articles.css">
   <script type="module" src="/js/header-awatt.js"></script>
 </head>
 <body>
@@ -82,14 +82,8 @@
     <h1>مقالات تخصصی</h1>
   </header>
 
-  <main class="articles-wrapper">
-    <div class="articles-main">
-      <div id="articles-grid" class="articles-grid"></div>
-    </div>
-    <aside class="sidebar">
-      <h2>آخرین مقالات</h2>
-      <ul id="latest-articles"></ul>
-    </aside>
+  <main class="articles-container">
+    <div id="articles-grid" class="articles-grid" aria-live="polite"></div>
   </main>
 
   <footer>
@@ -128,7 +122,6 @@
     </div>
   </footer>
 
-  <script src="../js/articles.min-09761c5b.js"></script>
-  <script src="../js/main.min-dd9475b0.js"></script>
+  <script type="module" src="/src/pages/articles-list.js"></script>
 </body>
 </html>
