@@ -1,18 +1,20 @@
 #!/bin/bash
 
-# Build the decision-tree-app and copy the output to docs/widget
+# Build script to copy decision-tree widget output to docs/public widgets directory
 set -e
 
-# Dependencies are installed via pnpm-workspace at the repo root
-pnpm run build
+DEST_DIR="../docs/public/widgets/decision-tree"
 
-# Replace docs/widget contents with the new build
-mkdir -p ../docs/widget/assets
-rm -f ../docs/widget/assets/*
-cp dist/assets/* ../docs/widget/assets/
-cp dist/index.html ../docs/widget/index.html
+# Ensure destination directories exist
+mkdir -p "$DEST_DIR/assets"
+
+# Replace existing assets with new build
+rm -f "$DEST_DIR/assets"/*
+cp dist/assets/* "$DEST_DIR/assets/"
+cp dist/index.html "$DEST_DIR/index.html"
 
 # Update HTML references with new hashed filenames
-node ../scripts/update-html-hashes.js dist ../docs/widget/index.html
+node ../scripts/update-html-hashes.js dist "$DEST_DIR/index.html"
 
-echo "✅ build completed and files copied to docs/widget"
+echo "✅ build completed and files copied to $DEST_DIR"
+
