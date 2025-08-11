@@ -19,36 +19,64 @@
   <meta name="twitter:title" content="وبلاگ پارسانا انرژی">
   <meta name="twitter:description" content="مشاوره، فروش و اجاره تجهیزات برق اضطراری و انرژی خورشیدی">
   <meta name="twitter:image" content="../images/logo.png">
+  <link rel="icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/styles/fonts.css">
   <link rel="stylesheet" href="../assets/css/site-a4c0b310.css">
+  <link rel="stylesheet" href="/css/header-awatt.css">
   <link rel="stylesheet" href="../assets/articles-style-905ce326.css">
+  <script type="module" src="/js/header-awatt.js"></script>
 </head>
 <body>
-  <div class="top-bar">
-    <span class="phone"><i class="fa fa-phone"></i>  تماس :۰۹۱۵۰۱۰۰۶۳۳ </span>
-    <span class="email"><i class="fa fa-envelope"></i> info@parsana-energy.ir</span>
-    <span class="hours"><i class="fa fa-clock"></i> 8:00-18:00</span>
+<header class="header" dir="rtl">
+  <div class="header-bar">
+    <div class="social">
+      <a href="https://t.me/..." aria-label="Telegram">
+        <svg viewBox="0 0 24 24"><path d="M9.9 16.2l-.4 5.7c.6 0 .8-.2 1.1-.5l2.6-2.5 5.4 4c1 .6 1.6.3 1.9-.9l3.5-16.4v0c.3-1.3-.5-1.8-1.5-1.5L1.8 9.6c-1.2.4-1.2 1.1-.2 1.4l5.6 1.7L18.9 6c.6-.4 1.1-.2.6.2"/></svg>
+      </a>
+      <a href="https://instagram.com/..." aria-label="Instagram">
+        <svg viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm6.5-.8a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4z"/></svg>
+      </a>
+      <div class="call">
+        <a href="#" class="btn">تماس سریع</a>
+        <div class="panel">
+          <div>۰۵۱۳۵۳۵۰۳۰۶</div>
+          <div>۰۹۱۵۰۱۰۰۶۳۳</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="search" role="search">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M10 2a8 8 0 105.3 14l4.4 4.4 1.4-1.4-4.4-4.4A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z"/></svg>
+      <input type="search" placeholder="جستجو کنید..." aria-label="جستجو">
+    </div>
+
+    <div class="brand">
+      <div>
+        <div class="name">پارسـانا انرژی</div>
+        <div class="tagline">تأمین برق پایدار</div>
+      </div>
+      <img src="/images/logo.png" alt="Parsana Energy">
+    </div>
   </div>
 
-  <div class="sticky-header">
-    <a href="/" class="header-logo">
-        <img src="../images/logo.png" alt="Parsana Energy logo">
-    </a>
-    <input type="checkbox" id="menu-toggle" class="menu-toggle" />
-    <label for="menu-toggle" class="hamburger">
-      <span></span>
-    </label>
-    <nav>
-      <ul class="nav-menu">
-        <li><a href="/">خانه</a></li>
-        <li><a href="/#services">خدمات</a></li>
-        <li><a href="/#projects">پروژه‌ها</a></li>
-        <li><a href="/records/">سوابق</a></li>
-        <li><a href="/articles/">مقالات</a></li>
-        <li><a href="/catalog/catalog.html">کاتالوگ</a></li>
-        <li><a href="/#contact">تماس با ما</a></li>
+  <nav class="navbar" aria-label="Main">
+    <div class="navbar-inner">
+      <ul class="nav-list">
+        <li><a href="/" data-path="/">صفحه اصلی</a></li>
+        <li class="dropdown">
+          <a href="/services/" data-path="/services/" aria-haspopup="true" aria-expanded="false">خدمات ما</a>
+          <div class="dropdown-menu" role="menu">
+            <a href="/services/genset/">ژنراتور و برق اضطراری</a>
+            <a href="/services/solar/">نیروگاه خورشیدی</a>
+          </div>
+        </li>
+        <li><a href="/articles/" data-path="/articles/">مقالات</a></li>
+        <li><a href="/about/" data-path="/about/">درباره ما</a></li>
+        <li><a href="/contact/" data-path="/contact/">تماس با ما</a></li>
       </ul>
-    </nav>
-  </div>
+    </div>
+  </nav>
+</header>
 
   <header class="articles-header">
     <h1>مقالات تخصصی</h1>
