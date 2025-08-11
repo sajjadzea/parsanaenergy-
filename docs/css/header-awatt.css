@@ -4,7 +4,7 @@
   background: var(--bg);
   border-bottom: 1px solid #eaeaea;
   position: sticky; top:0; z-index: 1000;
-  font-family: 'Vazirmatn', sans-serif;
+  font-family: 'Vazirmatn', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 .header-bar {
   max-width: 1200px; margin: 0 auto; padding: 10px 16px;

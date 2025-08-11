@@ -9,7 +9,7 @@
 *{box-sizing:border-box;margin:0;padding:0}
 
 body{
-  font-family:'Vazirmatn','IranSans',sans-serif;
+  font-family:'Vazirmatn',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
   line-height:1.7;
   background:#fff;
   color:#333;
@@ -50,7 +50,7 @@ body{
 .nav-menu a{
   text-decoration:none;
   color:var(--dark-blue);
-  font-family:'Vazirmatn','IranSans',sans-serif;
+  font-family:'Vazirmatn',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
 }
 .menu-toggle{display:none}
 .hamburger{display:none;cursor:pointer;width:30px;height:24px;position:relative}
