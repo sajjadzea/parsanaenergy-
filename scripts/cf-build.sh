@@ -23,18 +23,10 @@ node -v || true
 # رفع هشدار/ایراد lockfile ناسازگار: اجازه بده نصب انجام بشه حتی اگر نسخه‌ی pnpm فرق داره
 echo "==> Installing root deps (if any)"
 pnpm install --frozen-lockfile=false || true
-
-echo "==> Running prebuild scripts from repo root"
-# از Node ریشه صدا بزن که مسیرها درست باشه
-pnpm node scripts/sync-images.mjs
-pnpm node scripts/generate-posts.mjs
-pnpm node scripts/generate-articles.mjs
-pnpm node scripts/minify-articles.mjs
-
 echo "==> Installing docs deps"
 pnpm -C docs install --frozen-lockfile=false
 
-echo "==> Building Vite (docs)"
-pnpm -C docs run build
+echo "==> Running full build (widget + site)"
+pnpm run build
 
 echo "==> Build finished. Output at docs/dist"
