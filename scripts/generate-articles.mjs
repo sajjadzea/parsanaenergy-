@@ -91,6 +91,23 @@ posts.forEach((post, index) => {
   fs.mkdirSync(outDir, { recursive: true });
   fs.writeFileSync(path.join(outDir, 'index.html'), html);
 
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    datePublished: post.date,
+    author: {
+      '@type': 'Organization',
+      name: 'Parsana Energy'
+    },
+    image: cover,
+    mainEntityOfPage: canonical
+  };
+  fs.writeFileSync(
+    path.join(outDir, 'structured-data.json'),
+    JSON.stringify(structuredData, null, 2)
+  );
+
   articlesData.push({
     slug,
     title: post.title,
