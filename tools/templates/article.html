@@ -9,8 +9,8 @@
   <meta property="og:type" content="article" />
   <meta property="og:url" content="{{canonical}}" />
   <meta property="og:image" content="{{cover}}" />
-  <link rel="stylesheet" href="/css/style.min.css" />
-  <link rel="stylesheet" href="/assets/articles-style.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/article-style.css" />
 </head>
 <body>
   <main class="article">
@@ -19,19 +19,7 @@
     <img src="{{cover}}" alt="{{title}}" class="article-cover" loading="lazy" width="1200" height="675" />
     {{content}}
   </main>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "headline": "{{title}}",
-    "datePublished": "{{date}}",
-    "author": {
-      "@type": "Organization",
-      "name": "Parsana Energy"
-    },
-    "image": "{{cover}}",
-    "mainEntityOfPage": "{{canonical}}"
-  }
-  </script>
+  <script type="application/ld+json" src="./structured-data.json"></script>
+  <script src="/js/main.js"></script>
 </body>
 </html>

@@ -19,32 +19,9 @@
   <meta name="twitter:title" content="وبلاگ پارسانا انرژی">
   <meta name="twitter:description" content="مشاوره، فروش و اجاره تجهیزات برق اضطراری و انرژی خورشیدی">
   <meta name="twitter:image" content="https://parsanaenergy.ir/images/logo.png">
-<script type="application/ld+json">
-{
- "@context":"https://schema.org",
- "@type":"Blog",
- "name":"وبلاگ پارسانا انرژی",
- "url":"https://parsanaenergy.ir/articles/",
- "blogPost": []
-}
-</script>
-<script>
-fetch('/articles/posts.json').then(r=>r.json()).then(posts=>{
-  const list = {
-    "@context":"https://schema.org",
-    "@type":"ItemList",
-    "itemListElement": posts.slice(0,10).map((p,i)=>({
-      "@type":"ListItem","position": i+1,
-      "url": `https://parsanaenergy.ir/articles/${p.slug}/`
-    }))
-  };
-  const s = document.createElement('script');
-  s.type='application/ld+json'; s.textContent = JSON.stringify(list);
-  document.head.appendChild(s);
-});
-</script>
-  <link rel="stylesheet" href="/css/style.min-53eac289.css">
-  <link rel="stylesheet" href="/assets/articles-style-905ce326.css">
+  <script type="application/ld+json" src="/articles/blog.json"></script>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/article-style.css">
 </head>
 <body>
   <div class="top-bar">
@@ -124,7 +101,7 @@ fetch('/articles/posts.json').then(r=>r.json()).then(posts=>{
     </div>
   </footer>
 
-  <script src="/js/articles.min-09761c5b.js"></script>
-  <script src="/js/main.min-dd9475b0.js"></script>
+  <script src="/js/articles.js"></script>
+  <script src="/js/main.js"></script>
 </body>
 </html>
