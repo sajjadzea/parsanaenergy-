@@ -72,6 +72,11 @@ jobs:
       - name: Build docs (Vite)
         run: pnpm -C docs run build
 
+      - name: Verify widget assets present
+        run: |
+          test -f docs/dist/widgets/decision-tree/index.html
+          test -d docs/dist/widgets/decision-tree/assets
+
       # Artifact خروجی
       - name: Upload dist artifact
         uses: actions/upload-artifact@v4
