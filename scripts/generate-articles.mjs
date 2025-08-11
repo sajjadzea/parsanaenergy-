@@ -64,8 +64,10 @@ posts.forEach((post, index) => {
   const contentMd = mdLines.join('\n');
   const bodyHtml = markdownToHtml(contentMd);
 
-  const canonical = post.canonical || `https://parsanaenergy.ir/articles/${slug}/`;
-  const cover = post.cover === 'TODO' ? `/images/articles/${slug}.webp` : post.cover;
+  const canonical = `https://parsanaenergy.ir/articles/${slug}/`;
+  const cover = !post.cover || post.cover === 'TODO'
+    ? `/images/articles/${slug}.webp`
+    : post.cover;
 
   const prev = posts[index - 1];
   const next = posts[index + 1];

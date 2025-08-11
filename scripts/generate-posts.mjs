@@ -4,6 +4,16 @@ import path from 'path';
 const articlesDir = path.join('docs', 'public', 'articles');
 const outputDir = path.join('docs', 'articles');
 const outputFile = path.join(outputDir, 'posts.json');
+const publicOutputDir = path.join('docs', 'public', 'articles');
+
+let existing = [];
+try {
+  const raw = await fs.readFile(outputFile, 'utf8');
+  existing = JSON.parse(raw);
+} catch {
+  existing = [];
+}
+const existingMap = new Map(existing.map(p => [p.slug, p]));
 
 async function fileExists(p) {
   try {
@@ -47,34 +57,29 @@ async function processMarkdown(file) {
     excerpt = excerpt.replace(/[.\s]*$/, '') + '…';
   }
   const stats = await fs.stat(filePath);
-  const date = stats.mtime.toISOString().split('T')[0];
+  const prev = existingMap.get(slug);
+  const date = prev?.date || stats.mtime.toISOString().split('T')[0];
 
   const coverPath = path.join('docs', 'images', 'articles', `${slug}.webp`);
-  const cover = (await fileExists(coverPath))
+  const cover = prev?.cover || ((await fileExists(coverPath))
     ? `/images/articles/${slug}.webp`
-    : '/images/articles/default.webp';
-
-  const categoryMap = {
-    'monthly-generator-pm-checklist': ['ژنراتور'],
-  };
+    : '/images/articles/default.webp');
 
   const tagsMap = {
     'monthly-generator-pm-checklist': ['PM', 'ژنراتور', 'چک‌لیست'],
   };
 
-  const post = {
-    title,
+  return {
     slug,
+    title,
+    cover,
     date,
-    category: categoryMap[slug] || [],
+    readingTime: calculateReadingTime(content),
     tags: tagsMap[slug] || [],
     excerpt,
-    cover,
-    author: { name: 'Parsana Energy' },
-    readingTime: calculateReadingTime(content),
-    canonical: `https://parsanaenergy.ir/articles/${slug}/`,
+    author: 'Parsana Energy',
+    published: true
   };
-  return post;
 }
 
 async function build() {
@@ -88,6 +93,8 @@ async function build() {
   posts.sort((a, b) => b.date.localeCompare(a.date));
   await fs.mkdir(outputDir, { recursive: true });
   await fs.writeFile(outputFile, JSON.stringify(posts, null, 2), 'utf8');
+  await fs.mkdir(publicOutputDir, { recursive: true });
+  await fs.writeFile(path.join(publicOutputDir, 'posts.json'), JSON.stringify(posts, null, 2), 'utf8');
 }
 
 build();
