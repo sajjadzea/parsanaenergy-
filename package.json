@@ -11,8 +11,8 @@
   },
   "scripts": {
     "build:widget": "pnpm --filter decision-tree-app run build-widget",
-    "prebuild": "pnpm run build:widget && pnpm node scripts/sync-images.mjs && pnpm node scripts/generate-posts.mjs && pnpm node scripts/generate-articles.mjs && pnpm node scripts/minify-articles.mjs",
-    "build": "pnpm run prebuild && pnpm -C docs run build",
+    "prebuild": "pnpm node scripts/sync-images.mjs && pnpm node scripts/generate-posts.mjs && pnpm node scripts/generate-articles.mjs && pnpm node scripts/minify-articles.mjs",
+    "build": "pnpm run build:widget && pnpm run prebuild && pnpm -C docs run build",
     "test:widget-build": "node scripts/verify-widget-build.mjs"
   }
 }
