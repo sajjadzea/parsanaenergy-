@@ -46,6 +46,12 @@ jobs:
       - name: Install root deps
         run: pnpm install --frozen-lockfile=false
 
+      # Build decision-tree widget and verify assets
+      - name: Build widget
+        run: pnpm run build:widget
+      - name: Verify widget build output
+        run: pnpm node scripts/verify-widget-build.mjs
+
       # اجرای prebuildها از ریشه
       - name: Run prebuild scripts
         run: |

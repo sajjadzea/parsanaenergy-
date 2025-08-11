@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
-    "build-widget": "vite build && mkdir -p ../docs/widget && cp -r dist/* ../docs/widget/",
+    "build-widget": "vite build && bash ./build-widget.sh",
     "lint": "eslint \"**/*.{js,jsx,ts,tsx}\" --max-warnings=0",
     "preview": "vite preview --host"
   },
