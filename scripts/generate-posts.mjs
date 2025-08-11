@@ -65,19 +65,14 @@ async function processMarkdown(file) {
     ? `/images/articles/${slug}.webp`
     : '/images/articles/default.webp');
 
-  const tagsMap = {
-    'monthly-generator-pm-checklist': ['PM', 'ژنراتور', 'چک‌لیست'],
-  };
-
   return {
     slug,
     title,
     cover,
     date,
     readingTime: calculateReadingTime(content),
-    tags: tagsMap[slug] || [],
     excerpt,
-    author: 'Parsana Energy',
+    tags: [],
     published: true
   };
 }
